@@ -1,0 +1,74 @@
+<div class="row m-3">
+    <div class="col bg-light border border-1 border-dark rounded-3 m-0 p-0">
+        <table class="table w-100">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">DATE</th>
+                    <th scope="col">EMPLOYES</th>
+                    <th scope="col">FONCTIONS</th>
+                    <th scope="col">ENTREES</th>
+                    <th scope="col">SORTIES</th>
+                </tr>
+            </thead>
+            <tbody id="corps">
+                <script type="text/javascript">
+
+                    let infos = '';
+                    var data = {};
+
+                    var sessionId = sessionStorage.getItem('idSociete');
+                    SearchPointageEnd/id/Datefin
+
+                    fetch("https://face.activactions.net/api/Pointage/SearchPointageEnd/" + idProfil + "/" + datefin, {
+                        method: 'GET',
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        // body: JSON.stringify(data)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            for (let item of data) {
+                                // infos += `<tr><td>${item.PointageJour}</td><td>${item.PointageHeureEntree}</td><td>${item.PointageHeureSortie} </td><td>${item.EmployeNom} ${item.EmployePrenom}</td><td>${item.EmployeTelephone}</td></tr>`;
+                                infos += `<tr><td>${formatComplet(item.PointageJour)}</td><td>${item.EmployeNom} ${item.EmployePrenom}</td><td>${item.EmployeTitre}</td><td>${formatHeure(item.PointageHeureEntree)}</td><td>${formatHeure(item.PointageHeureSortie)}</td></tr>`;
+                            }
+                            document.getElementById('corps').innerHTML = infos;
+                        });
+                </script>
+                <!--
+                <tr>
+                    <td>Jeudi 18 Mai 2023</td>
+                    <td>Serme Mariam</td>
+                    <td>Developpeur</td>
+                    <td>08h20min17s</td>
+                    <td>19h00min17s</td>
+                </tr>
+                <tr>
+                    <td>Jeudi 18 Mai 2023</td>
+                    <td>Serme Mariam</td>
+                    <td>Developpeur</td>
+                    <td>08h20min17s</td>
+                    <td>19h00min17s</td>
+                </tr>
+                <tr>
+                    <td>Jeudi 18 Mai 2023</td>
+                    <td>Serme Mariam</td>
+                    <td>Developpeur</td>
+                    <td>08h20min17s</td>
+                    <td>19h00min17s</td>
+                </tr>
+               -->
+
+                <!--
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                </tr>
+                -->
+            </tbody>
+        </table>
+    </div>
+
+</div>

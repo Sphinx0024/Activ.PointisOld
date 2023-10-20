@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PointisModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Connexion">
+    <Key>
+      <PropertyRef Name="ConnexionID" />
+    </Key>
+    <Property Name="ConnexionID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmployeID" Type="bigint" />
+    <Property Name="Role" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="DetailsConnexion">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="telephone_imei" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="date_connexion" Type="datetime" Nullable="false" />
+    <Property Name="numero_telephone" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Longitude" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Latitude" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ApplicationID" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employes">
+    <Key>
+      <PropertyRef Name="EmployeID" />
+    </Key>
+    <Property Name="EmployeID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Prenom" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Telephone" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Sexe" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="SocieteID" Type="bigint" Nullable="false" />
+    <Property Name="Titre" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Matricule" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Notifications">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NotifcationBody" Type="varchar(max)" Nullable="false" />
+    <Property Name="SMSNumber" Type="varchar" MaxLength="50" />
+    <Property Name="SMSSender" Type="varchar" MaxLength="50" />
+    <Property Name="MAILFrom" Type="varchar" MaxLength="50" />
+    <Property Name="MAILTo" Type="varchar" MaxLength="50" />
+    <Property Name="MAILSubject" Type="varchar" MaxLength="255" />
+    <Property Name="NotifcationNature" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="NotificationStatus" Type="tinyint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Pointage">
+    <Key>
+      <PropertyRef Name="PointageID" />
+    </Key>
+    <Property Name="PointageID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Jour" Type="date" Nullable="false" />
+    <Property Name="HeureEntree" Type="datetime" Nullable="false" />
+    <Property Name="HeureSortie" Type="datetime" />
+    <Property Name="EmployesID" Type="bigint" />
+    <Property Name="Imei_employe_entree" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Imei_employe_sortie" Type="varchar" MaxLength="50" />
+    <Property Name="Imei_verificateur_entree" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Imei_verificateur_sortie" Type="varchar" MaxLength="50" />
+    <Property Name="Application_id_entree" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Application_id_sortie" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Societe">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RaisonSociale" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="RCCM" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Telephone" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+  <EntityType Name="V_Pointage">
+    <Key>
+      <PropertyRef Name="EmployeID" />
+      <PropertyRef Name="EmployeNom" />
+      <PropertyRef Name="EmployePrenom" />
+      <PropertyRef Name="EmployeEmail" />
+      <PropertyRef Name="EmployeTelephone" />
+      <PropertyRef Name="EmployeSexe" />
+      <PropertyRef Name="SocieteID" />
+      <PropertyRef Name="SocieteRaisonSociale" />
+      <PropertyRef Name="PointageID" />
+      <PropertyRef Name="PointageJour" />
+      <PropertyRef Name="PointageHeureEntree" />
+      <PropertyRef Name="EmployeTitre" />
+      <PropertyRef Name="EmployeMatricule" />
+    </Key>
+    <Property Name="EmployeID" Type="bigint" Nullable="false" />
+    <Property Name="EmployeNom" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmployePrenom" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmployeEmail" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmployeTelephone" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmployeSexe" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="SocieteID" Type="bigint" Nullable="false" />
+    <Property Name="SocieteRaisonSociale" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="SocieteRCCM" Type="varchar" MaxLength="50" />
+    <Property Name="SocieteEmail" Type="varchar" MaxLength="50" />
+    <Property Name="SocieteTelephone" Type="varchar" MaxLength="50" />
+    <Property Name="PointageID" Type="bigint" Nullable="false" />
+    <Property Name="PointageJour" Type="date" Nullable="false" />
+    <Property Name="PointageHeureEntree" Type="datetime" Nullable="false" />
+    <Property Name="PointageHeureSortie" Type="datetime" />
+    <Property Name="PointageDureeSeconde" Type="int" />
+    <Property Name="PointageDureeHeure" Type="int" />
+    <Property Name="PointageDureeMinute" Type="int" />
+    <Property Name="EmployeTitre" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="EmployeMatricule" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Connexion_Employes">
+    <End Role="Employes" Type="Self.Employes" Multiplicity="0..1" />
+    <End Role="Connexion" Type="Self.Connexion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employes">
+        <PropertyRef Name="EmployeID" />
+      </Principal>
+      <Dependent Role="Connexion">
+        <PropertyRef Name="EmployeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employes_Societe">
+    <End Role="Societe" Type="Self.Societe" Multiplicity="1" />
+    <End Role="Employes" Type="Self.Employes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Societe">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Employes">
+        <PropertyRef Name="SocieteID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pointage_Employes">
+    <End Role="Employes" Type="Self.Employes" Multiplicity="0..1" />
+    <End Role="Pointage" Type="Self.Pointage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employes">
+        <PropertyRef Name="EmployeID" />
+      </Principal>
+      <Dependent Role="Pointage">
+        <PropertyRef Name="EmployesID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PointisModelStoreContainer">
+    <EntitySet Name="Connexion" EntityType="Self.Connexion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DetailsConnexion" EntityType="Self.DetailsConnexion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employes" EntityType="Self.Employes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Notifications" EntityType="Self.Notifications" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pointage" EntityType="Self.Pointage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Societe" EntityType="Self.Societe" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="V_Pointage" EntityType="Self.V_Pointage" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [V_Pointage].[EmployeID] AS [EmployeID], 
+    [V_Pointage].[EmployeNom] AS [EmployeNom], 
+    [V_Pointage].[EmployePrenom] AS [EmployePrenom], 
+    [V_Pointage].[EmployeEmail] AS [EmployeEmail], 
+    [V_Pointage].[EmployeTelephone] AS [EmployeTelephone], 
+    [V_Pointage].[EmployeSexe] AS [EmployeSexe], 
+    [V_Pointage].[SocieteID] AS [SocieteID], 
+    [V_Pointage].[SocieteRaisonSociale] AS [SocieteRaisonSociale], 
+    [V_Pointage].[SocieteRCCM] AS [SocieteRCCM], 
+    [V_Pointage].[SocieteEmail] AS [SocieteEmail], 
+    [V_Pointage].[SocieteTelephone] AS [SocieteTelephone], 
+    [V_Pointage].[PointageID] AS [PointageID], 
+    [V_Pointage].[PointageJour] AS [PointageJour], 
+    [V_Pointage].[PointageHeureEntree] AS [PointageHeureEntree], 
+    [V_Pointage].[PointageHeureSortie] AS [PointageHeureSortie], 
+    [V_Pointage].[PointageDureeSeconde] AS [PointageDureeSeconde], 
+    [V_Pointage].[PointageDureeHeure] AS [PointageDureeHeure], 
+    [V_Pointage].[PointageDureeMinute] AS [PointageDureeMinute], 
+    [V_Pointage].[EmployeTitre] AS [EmployeTitre], 
+    [V_Pointage].[EmployeMatricule] AS [EmployeMatricule]
+    FROM [dbo].[V_Pointage] AS [V_Pointage]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Connexion_Employes" Association="Self.FK_Connexion_Employes">
+      <End Role="Employes" EntitySet="Employes" />
+      <End Role="Connexion" EntitySet="Connexion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employes_Societe" Association="Self.FK_Employes_Societe">
+      <End Role="Societe" EntitySet="Societe" />
+      <End Role="Employes" EntitySet="Employes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pointage_Employes" Association="Self.FK_Pointage_Employes">
+      <End Role="Employes" EntitySet="Employes" />
+      <End Role="Pointage" EntitySet="Pointage" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

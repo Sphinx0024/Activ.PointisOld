@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Activ.Pointis.Android.PersonnelUI.ComptePage"
+             Title="Mot de passe">
+    <Grid Grid.RowSpan="5" Grid.Row="1" Margin="20,0,20,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="1" Text="Ajouter un mot de passe de 4 chiffres" HorizontalOptions="Center" FontSize="Subtitle"/>
+        <StackLayout Grid.Row="2" Orientation="Vertical" HorizontalOptions="CenterAndExpand">
+            <Frame BackgroundColor="Transparent" BorderColor="#8BC34A" HorizontalOptions="CenterAndExpand" Padding="0" CornerRadius="30" Margin="0,15,0,0" WidthRequest="300">
+                <StackLayout Orientation="Horizontal">
+                    <Frame BackgroundColor="SkyBlue" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                        <Image Source="Ressources/Images/password.jpeg" Aspect="AspectFill" Margin="0"/>
+                    </Frame>
+                    <Entry x:Name="password" Placeholder="Mot de passe " TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" IsPassword="True" Keyboard="Numeric"/>
+                </StackLayout>
+            </Frame>
+            <Frame BackgroundColor="Transparent" BorderColor="#8BC34A" HorizontalOptions="CenterAndExpand" Padding="0" CornerRadius="30" Margin="0,15,0,0" WidthRequest="300">
+                <StackLayout Orientation="Horizontal">
+                    <Frame BackgroundColor="SkyBlue" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                        <Image Source="Ressources/Images/password.jpeg" Aspect="AspectFill" Margin="0"/>
+                    </Frame>
+                    <Entry x:Name="passwordconfirm" Placeholder="Confirmer mot de passe " TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" IsPassword="True" Keyboard="Numeric"/>
+                </StackLayout>
+            </Frame>
+            <Button Text="Valider" FontAttributes="Bold" TextColor="White" BackgroundColor="#8BC34A" Margin="0,50,0,0" CornerRadius="30" WidthRequest="200" Clicked="valierClick"/>
+        </StackLayout>
+
+    </Grid>
+</ContentPage>

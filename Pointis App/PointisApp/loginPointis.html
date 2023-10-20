@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>POINTIS</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="#">
+    <link rel="stylesheet" href="css/style.css">
+    
+
+</head>
+
+<script>
+
+
+    function validation() {
+
+        var expressionReguliere = /^(([^<>()[]\.,;:s@]+(.[^<>()[]\.,;:s@]+)*)|(.+))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/;
+        var phoneRegex = /^\d{10}$/;
+        if (expressionReguliere.test(document.getElementById("log").value)) {
+            fetch('https://face.activactions.net/api/Societe/Get')
+                .then(res => res.json())
+                .then(data => {
+                    for (let item of data) {
+                        var id = item.ID;
+                        //console.log(i);
+                        fetch('https://face.activactions.net/api/Connexion/Get/' + id)
+                            .then(res => res.json())
+                            .then(data => {
+                                let log = document.getElementById("log").value;
+                                let pwd = document.getElementById("pass").value;
+                                for (let item of data) {
+                                    let login = item.Login;
+                                    let passe = item.Password;
+                                    // console.log(t);
+                                    if (login == log && passe == pwd) {
+                                        let idSociete = item.SocieteID;
+                                        //sessionStorage.setItem("q", i);
+
+                                        /*sessionStorage.setItem("socID", idS);
+                                        // sessionStorage.setItem('admin', 1);
+                                        sessionStorage.setItem('role', rol);
+                                        sessionStorage.setItem('log', log);
+
+                                        var code = sessionStorage.getItem("role")*/
+
+                                        fetch('https://face.activactions.net/api/Employes/Get/' + idSociete)
+                                            .then(res => res.json())
+                                            .then(data => {
+
+                                                /*console.log(data);
+                                                console.log(i);*/
+
+
+                                                for (let item of data) {
+                                                    let emailAd = item.Email;
+                                                    if (log == emailAd) {
+
+                                                        let nameAd = item.Nom;
+                                                        let prenomAd = item.Prenom;
+                                                        let idEmploye = item.EmployeID;
+                                                        let idSociete = item.SocieteID;
+
+                                                        sessionStorage.setItem('emailAd', emailAd);
+                                                        sessionStorage.setItem('nameAd', nameAd);
+                                                        sessionStorage.setItem('prenomAd', prenomAd);
+                                                        sessionStorage.setItem('idEmployeUser', idEmploye);
+                                                        sessionStorage.setItem('idSociete', idSociete);
+
+                                                        fetch('https://face.activactions.net/api/Societe/Get/' + idSociete)
+                                                            .then(res => res.json())
+                                                            .then(data => {
+                                                                for (let item of data) {
+                                                                    let nameSociete = item.RaisonSociale;
+                                                                    sessionStorage.setItem('nameSoc', nameSociete);
+                                                                    location.replace('./Accueil.html');
+
+                                                                    //var idsoc = item.ID;
+                                                                    //if (i == idsoc) {
+                                                                    /*var nameSociete = item.RaisonSociale;
+                                                                    sessionStorage.setItem('nameSoc', nameSociete);
+                                                                    location.replace('./Accueil.html');
+                                                                //}*/
+                                                                }
+                                                                console.log(data);
+
+                                                            });
+
+                                                    }
+                                                }
+                                            });
+
+                                    }
+
+                                    /*else {
+                                        alert("Votre Login ou votre mot de passe est incorrect");
+                                    }*/
+                                }
+                            });
+                    }
+                });
+
+        }
+        else
+            if (phoneRegex.test(document.getElementById("log").value)) {
+                //console.log("Telephone");
+                fetch('https://face.activactions.net/api/Societe/Get')
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        for (let item of data) {
+                            let id = item.ID;
+                            //console.log(id);
+                            //sessionStorage.setItem("r",g);
+                            // console.log(g);
+                            fetch('https://face.activactions.net/api/Employes/Get/' + id)
+                                .then(res => res.json())
+                                .then(data => {
+                                    //console.log(data);
+                                    for (let item of data) {
+                                        let login = document.getElementById("log").value;
+                                        let pwd = document.getElementById("pass").value;
+                                        let tel = item.Telephone;
+                                        let passe = item.Password;
+                                        //var responsableItem = item.Responsable;
+
+                                        if (login == tel && pwd == passe) {
+                                            var email = item.Email;
+                                            var nom = item.Nom;
+                                            var prenom = item.Prenom;
+                                            var responsable = item.Responsable;
+                                            var idEmploye = item.EmployeID;
+                                            var idSociete = item.SocieteID;
+
+                                            sessionStorage.setItem('nameAd', nom);
+                                            sessionStorage.setItem('prenomAd', prenom);
+                                            sessionStorage.setItem('monresponsable', responsable);
+
+                                            fetch('https://face.activactions.net/api/Connexion/Get/' + idSociete)
+                                                .then(res => res.json())
+                                                .then(data => {
+                                                    for (let item of data) {
+                                                        var log = item.Login;
+                                                        if (login == log) {
+                                                            fetch('https://face.activactions.net/api/Societe/Get/' + idSociete)
+                                                                .then(res => res.json())
+                                                                .then(data => {
+                                                                    for (let item of data) {
+                                                                        let nameSociete = item.RaisonSociale;
+                                                                        sessionStorage.setItem('nameSoc', nameSociete);
+                                                                        sessionStorage.setItem("idSociete", idSociete);
+                                                                        sessionStorage.setItem("idEmployeUser", idEmploye);
+                                                                        location.replace('./Accueil.html');
+                                                                    }
+
+                                                                });
+
+                                                        }
+                                                        else {
+                                                            fetch('https://face.activactions.net/api/Societe/Get/' + idSociete)
+                                                                .then(res => res.json())
+                                                                .then(data => {
+                                                                    for (let item of data) {
+                                                                        let nameSociete = item.RaisonSociale;
+                                                                        sessionStorage.setItem('nameSoc', nameSociete);
+                                                                        sessionStorage.setItem("idSociete", idSociete);
+                                                                        sessionStorage.setItem("idEmployeNOUser", idEmploye);
+                                                                        location.replace('./Accueil.html');
+                                                                    }
+
+                                                                });
+
+                                                        }
+                                                    }
+                                                })
+
+
+
+                                        }
+
+                                    }
+
+                                });
+                        }
+
+                    });
+
+
+            }
+            else {
+                alert("Le login n'est pas correct");
+            }
+    }
+
+</script>
+
+<body class="corp h-100">
+    <header class="site-navbar js-sticky-header site-navbar-target"
+        role="banner">
+
+        <div class="container">
+          <div class="row align-items-center">
+
+            <div class="col-6 col-xl-2">
+              <div class="mb-0 site-logo"><a href="index.html" class="mb-0"><img
+                    src=""
+                    class="img-fluid" width="40%" alt=""><span
+                    class="text-primary"></span> </a></div>
+            </div>
+
+            <div class="col-12 col-md-10 d-none d-xl-block">
+              <nav class="site-navigation position-relative text-right"
+                role="navigation">
+
+                <ul class="site-menu main-menu js-clone-nav mr-auto d-none
+                  d-lg-block">
+                  <li class="social"><a href="index.html"
+                      class="nav-link"><span class=""> <img
+                          src="images/home.png" alt="" class="img-fluid" ></span></a></li>
+                </ul>
+              </nav>
+            </div>
+
+            <div class="col-6 d-inline-block d-xl-none ml-md-0 py-3"
+              style="position: relative; top: 3px;"><a href="#"
+                class="site-menu-toggle js-menu-toggle float-right"><span
+                  class="icon-menu h3 text-black"></span></a>
+            </div>
+
+          </div>
+        </div>
+
+      </header>
+
+    <div class="grid grid-cols-2 gap-2">
+            <div>
+                    <img src="images/img-login.png"/>
+                    <form class="mt-10">
+                        <div class="form-group">
+                           <label for="username" class="">Login:
+                           </label>
+                           
+                           <!-- <input class="border-lime-700" type="text" id="username" name="username" placeholder="Nom d'utilisateur"  required> -->
+                           <input class="border-2 border-lime-600 rounded-lg ml-32 w-80 h-14 "id="log">
+                        </div>
+                        <div class="form-group">
+                           <label for="password">Mot de passe:
+                           </label>
+                           <input class="border-2 border-lime-600 rounded-lg ml-32 w-80 h-14 " id="pass"  >
+                           <!-- <input class="border-green-600" type="password" id="password" name="password" placeholder="Mot de passe" required> -->
+                         
+                        </div>
+                        <input type="submit" value="Login" id="submit" class="submit h-14 bg-green-600" onclick="validation()">
+                        <span class="ml-56 "></span><br/>
+                        <a href=""><span class="ml-60 "></span></a>
+                      </form>   
+            </div>
+            <div>
+
+                <img src="images/LOGIIIN2.png" width="500px" class="mr-0"/>
+            </div>
+    </div>
+</body>

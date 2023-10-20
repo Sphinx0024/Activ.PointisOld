@@ -1,0 +1,306 @@
+<!-- chart Js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<!-- JQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"
+    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+
+<script>
+    // Ou est stocke Id sessionStorage de societé chez employé
+    // let sessionId = sessionStorage.getItem("emp"),
+    var pointage = document.getElementById('pointage-value'),
+        selectPointage = document.getElementById('option-affichage'),
+        selectPointage2 = document.querySelector('.option-affichage'),
+        sessionId = sessionStorage.getItem('idSociete'),
+        sessionIdEmp = employeID(),
+
+        //retardRespoJour = 'https://localhost:44350//api/Pointage/GetRetardJourRespo?id=3508&nom=' + nom + '&prenom=' + prenom;
+
+        entreeJourEmp = 'https://face.activactions.net/api/Pointage/Entree/' + sessionIdEmp,
+        entreeSemEmp = 'https://face.activactions.net/api/Pointage/EntreeSemaine/' + sessionIdEmp,
+        entreeMoisEmp = 'https://face.activactions.net/api/Pointage/EntreeMois/' + sessionIdEmp,
+        entreeTrimestreEmp = 'https://face.activactions.net/api/Pointage/EntreeTrimestre/' + sessionIdEmp,
+        entreeAnneeEmp = 'https://face.activactions.net/api/Pointage/EntreeAnnee/' + sessionIdEmp,
+
+        retardJourEmp = 'https://face.activactions.net/api/Pointage/RetardJour/' + sessionIdEmp,
+        retardSemEmp = 'https://face.activactions.net/api/Pointage/RetardSemaine/' + sessionIdEmp,
+        retardMoisEmp = 'https://face.activactions.net/api/Pointage/RetardMois/' + sessionIdEmp;
+        retardTrimestreEmp = 'https://face.activactions.net/api/Pointage/RetardTrimestre/' + sessionIdEmp;
+        retardAnneeEmp = 'https://face.activactions.net/api/Pointage/RetardAnnee/' + sessionIdEmp;
+
+    // Retard ?
+
+    function formatComplet(arg) {
+        let format = new Date(arg),
+            ret;
+        ret = format.toLocaleDateString('fr-fr', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
+        return ret
+    }
+
+    function formatHeure(arg) {
+        if (arg === undefined) {
+            let infos = "Pas encore pointé";
+            return infos;
+        }
+        else {
+            let format = new Date(arg),
+                ret;
+            ret = format.getHours() + "h:" + format.getMinutes() + "mn:" + format.getSeconds() + "s";
+            return ret
+        }
+    }
+
+    function convertion(minutes) {
+        var hours = Math.floor(minutes / 60); // Nombre entier d'heures
+        var remainingMinutes = minutes % 60; // Minutes restantes
+
+        return hours + " h " + remainingMinutes + " mn";
+    }
+
+    function convert(minutes) {
+        var hours = Math.floor(minutes / 60); // Nombre entier d'heures
+        var remainingMinutes = minutes % 60; // Minutes restantes
+        var seconds = remainingMinutes * 60; // Secondes
+
+        return hours + "h " + remainingMinutes + " mn " + seconds + " s";
+    }
+
+    function convertirEnHeureMinuteSeconde(minutes) {
+        // Calcul des heures, minutes et secondes
+        var heures = Math.floor(minutes / 60);
+        var resteMinutes = minutes % 60;
+        var secondes = Math.floor(resteMinutes * 60);
+
+        // Formatage des valeurs en chaînes de caractères
+        var heureString = heures.toString().padStart(2, '0');
+        var minuteString = resteMinutes.toString().padStart(2, '0');
+        var min = Math.floor(minuteString);
+        var secondeString = secondes.toString().padStart(2, '0');
+        var sec = secondeString.substr(0, 2)
+
+        // Renvoyer le résultat sous la forme d'une chaîne de caractères
+        return heureString + 'h:' + min + 'mn:' + sec + 's';
+    }
+
+</script>
+
+
+<div class="">
+    <div class="row">
+        <div class="col">
+            <div>
+                <select id="mySelect" class="form-control" onchange="appelBoard()">
+                    <option>Vue</option>
+                    <option value="Jour">Jour</option>
+                    <option value="Semaine">Semaine</option>
+                    <option value="Mois">Mois</option>
+                    <option value="Trimestre">Trimestre</option>
+                    <option value="Annuelle">Annuelle</option>
+                </select>
+            </div>
+
+        </div>
+    </div>
+    <!--<div class="row">
+        <div class="col">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header text-center" id="flush-headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne"
+                            id="vueboard">
+                            Vue du Jour
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                        data-bs-parent="#accordionFlushExample">
+                        <ul class="accordion-body">
+                            <li><a onclick="appelPagePointage('boardJour','Vue du Jour')">Jour</a></li>
+                            <li><a onclick="appelPagePointage('boardSemaine','Vue de la semaine')">Semaine</a></li>
+                            <li><a onclick="appelPagePointage('boardMois','Vue du mois')">Mois</a></li>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>-->
+
+    <script>
+        function appelPagePointage(lien, periode) {
+
+            //alert("test");
+            var lienComplet = 'pages/utilisateur/' + lien + '.html';
+            $.ajax({
+
+                url: lienComplet,
+                method: 'GET',
+                dataType: 'html',
+                success: function (data) {
+                    $('#showboard').html(data);
+                },
+                error: function () {
+                    $('#showboard').html('Erreur lors du chargement des données.');
+                }
+            });
+            $("#vueboard").html(periode);
+            // });
+        }
+
+    </script>
+
+
+
+    <script>
+
+    </script>
+
+    <div id="showboard">
+        <div class="row m-3 d-flex justify-content-between">
+
+            <div class="col-12 col-lg-3 d-flex flex-row p-2 border border-1 border-dark rounded-3"
+                style="background-color: whitesmoke;">
+                <img src="images/import/absence.png" alt="" width="50px">
+                <div class="d-flex flex-column">
+                    <span id="absence">
+                        <script>
+                            fetch(absenceJour)
+                                .then(res => res.json())
+                                .then(data => {
+                                    var absence = data;
+                                    var absenceInf = '0' + absence;
+
+                                    if (absence > 0) {
+                                        if (absence < 10) {
+                                            document.getElementById('absence').innerHTML = absenceInf;
+                                        }
+                                        else {
+                                            document.getElementById('absence').innerHTML = absence;
+                                        }
+                                    } else {
+                                        document.getElementById('absence').innerHTML = '00';
+                                    }
+                                });
+                        </script>
+                    </span>
+                    <span>Mon Absence</span>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-3 d-flex flex-row p-2 border border-1 border-dark rounded-3"
+                style="background-color: whitesmoke;">
+                <img src="images/import/clock.png" alt="" width="50px">
+                <div class="d-flex flex-column">
+                    <span id="retard">
+                        <script>
+                            fetch(retardJourEmp)
+                                .then(res => res.json())
+                                .then(data => {
+                                    console.log(retardJourEmp);
+                                    console.log(data);
+                                    var retardInner = data;
+
+                                    if (retardInner > 0) {
+                                        document.getElementById('retard').innerHTML = convertirEnHeureMinuteSeconde(retardInner);
+                                        //document.getElementById('absence').innerHTML = ;
+                                    } else {
+                                        document.getElementById('retard').innerHTML = '00';
+                                    }
+                                });
+                        </script>
+                    </span>
+                    <span>Mon Retard</span>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-3 d-flex flex-row p-2 border border-1 border-dark rounded-3"
+                style="background-color: whitesmoke;">
+                <img src="images/import/attendance.png" alt="" width="50px">
+                <div class="d-flex flex-column">
+                    <span id="presence">
+                        <script>
+
+                            fetch(entreeJourEmp)
+                                .then(res => res.json())
+                                .then(data => {
+                                    console.log(data);
+                                    console.log(entreeJourEmp);
+                                    var presence = data;
+                                    var presenceAff = '0' + presence;
+
+                                    if (presence > 0) {
+                                        if (presence < 10) {
+                                            document.getElementById('presence').innerHTML = presenceAff;
+                                        }
+                                        else {
+                                            document.getElementById('presence').innerHTML = presence;
+                                        }
+                                    } else {
+                                        document.getElementById('presence').innerHTML = '00';
+                                    }
+                                });
+                        </script>
+                    </span>
+                    <span>Mon Pointage</span>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row m-3">
+            <div class="col bg-light border border-1 border-dark rounded-3 m-0 p-0">
+                <table class="table w-100">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">DATE</th>
+                            <th scope="col">ENTREES</th>
+                            <th scope="col">SORTIES</th>
+                            <th scope="col">DUREE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpsPoint">
+
+                        <script type="text/javascript">
+                            console.log(PointJour);
+                            fetch(PointJour)
+                                .then(res => res.json())
+                                .then(data => {
+                                    console.log(data);
+                                    let infosPointJour = '';
+                                    for (let item of data) {
+                                        infosPointJour += `<tr><td>${formatComplet(item.PointageJour)}</td><td>${formatHeure(item.PointageHeureEntree)}</td><td>${formatHeure(item.PointageHeureSortie)}</td><td>${diffBetweenDates(item.PointageHeureEntree, item.PointageHeureSortie)}</td></tr>`;
+                                    }
+                                    document.getElementById('corpsPoint').innerHTML = infosPointJour;
+                                });
+                        </script>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function appelBoard() {
+   
+            var selectBox = document.getElementById("mySelect");
+            var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+            var lienComplet = 'pages/utilisateur/board' + selectedValue + '.html';
+
+            $.ajax({
+                url: lienComplet,
+                method: 'GET',
+                dataType: 'html',
+                success: function (data) {
+                    $('#showboard').html(data);
+                },
+                error: function () {
+                    $('#showboard').html('Erreur lors du chargement des données.');
+                }
+            });
+        }
+   
+   </script>

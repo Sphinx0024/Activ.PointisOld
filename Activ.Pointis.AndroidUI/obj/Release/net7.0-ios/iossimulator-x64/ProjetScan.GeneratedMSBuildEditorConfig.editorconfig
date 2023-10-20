@@ -1,0 +1,107 @@
+is_global = true
+build_property.TargetFramework = net7.0-ios
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = ProjetScan
+build_property.ProjectDir = D:\source\repos\ProjetScan\
+
+[D:/source/repos/ProjetScan/AccueilPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetScan.AccueilPage.xaml
+build_metadata.AdditionalFiles.TargetPath = AccueilPage.xaml
+build_metadata.AdditionalFiles.RelativePath = AccueilPage.xaml
+
+[D:/source/repos/ProjetScan/AddEmployePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetScan.AddEmployePage.xaml
+build_metadata.AdditionalFiles.TargetPath = AddEmployePage.xaml
+build_metadata.AdditionalFiles.RelativePath = AddEmployePage.xaml
+
+[D:/source/repos/ProjetScan/AddHorairePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetScan.AddHorairePage.xaml
+build_metadata.AdditionalFiles.TargetPath = AddHorairePage.xaml
+build_metadata.AdditionalFiles.RelativePath = AddHorairePage.xaml
+
+[D:/source/repos/ProjetScan/AddUserPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetScan.AddUserPage.xaml
+build_metadata.AdditionalFiles.TargetPath = AddUserPage.xaml
+build_metadata.AdditionalFiles.RelativePath = AddUserPage.xaml
+
+[D:/source/repos/ProjetScan/App.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetScan.App.xaml
+build_metadata.AdditionalFiles.TargetPath = App.xaml
+build_metadata.AdditionalFiles.RelativePath = App.xaml
+
+[D:/source/repos/ProjetScan/AppShell.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetScan.AppShell.xaml
+build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
+build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
+
+[D:/source/repos/ProjetScan/AProposPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetScan.AProposPage.xaml
+build_metadata.AdditionalFiles.TargetPath = AProposPage.xaml
+build_metadata.AdditionalFiles.RelativePath = AProposPage.xaml
+
+[D:/source/repos/ProjetScan/HoraireTravailPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetScan.HoraireTravailPage.xaml
+build_metadata.AdditionalFiles.TargetPath = HoraireTravailPage.xaml
+build_metadata.AdditionalFiles.RelativePath = HoraireTravailPage.xaml
+
+[D:/source/repos/ProjetScan/LoginPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetScan.LoginPage.xaml
+build_metadata.AdditionalFiles.TargetPath = LoginPage.xaml
+build_metadata.AdditionalFiles.RelativePath = LoginPage.xaml
+
+[D:/source/repos/ProjetScan/MainPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetScan.MainPage.xaml
+build_metadata.AdditionalFiles.TargetPath = MainPage.xaml
+build_metadata.AdditionalFiles.RelativePath = MainPage.xaml
+
+[D:/source/repos/ProjetScan/Resources/Styles/Colors.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetScan.Resources.Styles.Colors.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
+
+[D:/source/repos/ProjetScan/Resources/Styles/Styles.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetScan.Resources.Styles.Styles.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
+
+[D:/source/repos/ProjetScan/ScannerPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetScan.ScannerPage.xaml
+build_metadata.AdditionalFiles.TargetPath = ScannerPage.xaml
+build_metadata.AdditionalFiles.RelativePath = ScannerPage.xaml
+
+[D:/source/repos/ProjetScan/ScanSortiePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetScan.ScanSortiePage.xaml
+build_metadata.AdditionalFiles.TargetPath = ScanSortiePage.xaml
+build_metadata.AdditionalFiles.RelativePath = ScanSortiePage.xaml
+
+[D:/source/repos/ProjetScan/user.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetScan.user.xaml
+build_metadata.AdditionalFiles.TargetPath = user.xaml
+build_metadata.AdditionalFiles.RelativePath = user.xaml
+
+[D:/source/repos/ProjetScan/UtilisateurPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ProjetScan.UtilisateurPage.xaml
+build_metadata.AdditionalFiles.TargetPath = UtilisateurPage.xaml
+build_metadata.AdditionalFiles.RelativePath = UtilisateurPage.xaml

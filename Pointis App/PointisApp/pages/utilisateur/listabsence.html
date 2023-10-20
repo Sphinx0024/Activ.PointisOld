@@ -1,0 +1,80 @@
+<div class="m-3">
+    <div class="row m-3">
+        <div class="col-5">
+            <h2>Etat des absences</h2>
+        </div>
+    </div>
+    <div class="row m-3">
+        <div class="col">
+            <div>
+                <select id="mySelect" class="form-control" onchange="appelAbsence()">
+                    <option>Vue</option>
+                    <option value="Jour">Jour</option>
+                    <option value="Semaine">Semaine</option>
+                    <option value="Mois">Mois</option>
+                    <option value="Trimestre">Trimestre</option>
+                    <option value="Annuelle">Annuelle</option>
+                </select>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="" id="show">
+        <div class="row m-3">
+            <div class="col bg-light border border-1 border-dark rounded-3 m-0 p-0">
+                <table class="table w-100">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">EMPLOYES</th>
+                            <th scope="col">NOMBRE DE RETARD</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corps">
+        
+                       <!-- <script type="text/javascript">
+        
+                            fetch(pointageAll)
+                                .then(res => res.json())
+                                .then(data => {
+                                    console.log(pointageAll);
+                                    let infos = '';
+        
+                                    for (let item of data) {
+                                        infos += `<tr><td>${formatComplet(item.PointageJour)}</td><td>${item.EmployeNom} ${item.EmployePrenom}</td><td>${item.EmployeTitre}</td><td>${formatHeure(item.PointageHeureEntree)}</td><td>${formatHeure(item.PointageHeureSortie)}</td><td>${diffBetweenDates(item.PointageHeureEntree,item.PointageHeureSortie)}</td></tr>`;
+                                    }
+                                    document.getElementById('corps').innerHTML = infos;
+                                });
+                        </script>-->
+                    </tbody>
+                </table>
+            </div>
+        
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function appelAbsence() {
+
+var selectBox = document.getElementById("mySelect");
+var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+var lienComplet = 'pages/listabsence' + selectedValue + '.html';
+$.ajax({
+
+    url: lienComplet,
+    method: 'GET',
+    dataType: 'html',
+    success: function (data) {
+        $('#show').html(data);
+    },
+    error: function () {
+        $('#show').html('Erreur lors du chargement des données.');
+    }
+});
+//$("#vu").html(periode);
+// });
+}
+</script>

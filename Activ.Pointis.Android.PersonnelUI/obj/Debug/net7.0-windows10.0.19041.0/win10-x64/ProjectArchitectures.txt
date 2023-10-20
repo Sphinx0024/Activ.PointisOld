@@ -1,0 +1,1 @@
+D:\source\repos\Pointis\Activ.Pointis.Android.PersonnelUI\Activ.Pointis.Android.PersonnelUI.csproj;x64

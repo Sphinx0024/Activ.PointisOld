@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PointisModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Connexion">
+    <Key>
+      <PropertyRef Name="ConnexionID" />
+    </Key>
+    <Property Name="ConnexionID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SocieteID" Type="Int64" Nullable="false" />
+    <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Verification" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Societe" Relationship="Self.FK_Connexion_Societe" FromRole="Connexion" ToRole="Societe" />
+  </EntityType>
+  <EntityType Name="DetailsConnexion">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="telephone_imei" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="date_connexion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="numero_telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ApplicationID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employes">
+    <Key>
+      <PropertyRef Name="EmployeID" />
+    </Key>
+    <Property Name="EmployeID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Prenom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Sexe" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SocieteID" Type="Int64" Nullable="false" />
+    <Property Name="Titre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Matricule" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EquipeID" Type="Int64" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Responsable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="EquipeTravail" Relationship="Self.FK_Employes_EquipeTravail" FromRole="Employes" ToRole="EquipeTravail" />
+    <NavigationProperty Name="Societe" Relationship="Self.FK_Employes_Societe" FromRole="Employes" ToRole="Societe" />
+    <NavigationProperty Name="Pointage" Relationship="Self.FK_Pointage_Employes" FromRole="Employes" ToRole="Pointage" />
+  </EntityType>
+  <EntityType Name="EquipeTravail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="HeureDebutService" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HeureFinService" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SocieteID" Type="Int64" />
+    <NavigationProperty Name="Employes" Relationship="Self.FK_Employes_EquipeTravail" FromRole="EquipeTravail" ToRole="Employes" />
+    <NavigationProperty Name="Societe" Relationship="Self.FK_EquipeTravail_Societe" FromRole="EquipeTravail" ToRole="Societe" />
+  </EntityType>
+  <EntityType Name="Notifications">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NotifcationBody" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SMSNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SMSSender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MAILFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MAILTo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MAILSubject" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="NotifcationNature" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NotificationStatus" Type="Byte" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Pointage">
+    <Key>
+      <PropertyRef Name="PointageID" />
+    </Key>
+    <Property Name="PointageID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Jour" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="HeureEntree" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="HeureSortie" Type="DateTime" Precision="3" />
+    <Property Name="EmployesID" Type="Int64" Nullable="false" />
+    <Property Name="Imei_employe_entree" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Imei_employe_sortie" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="longitude_entree" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="longitude_sortie" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="latitude_entree" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="latitude_sortie" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Employes" Relationship="Self.FK_Pointage_Employes" FromRole="Pointage" ToRole="Employes" />
+  </EntityType>
+  <EntityType Name="Societe">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RaisonSociale" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RCCM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Localisation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Connexion" Relationship="Self.FK_Connexion_Societe" FromRole="Societe" ToRole="Connexion" />
+    <NavigationProperty Name="Employes" Relationship="Self.FK_Employes_Societe" FromRole="Societe" ToRole="Employes" />
+    <NavigationProperty Name="EquipeTravail" Relationship="Self.FK_EquipeTravail_Societe" FromRole="Societe" ToRole="EquipeTravail" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="V_Employes">
+    <Key>
+      <PropertyRef Name="Nom" />
+      <PropertyRef Name="EmployeID" />
+      <PropertyRef Name="Prenom" />
+      <PropertyRef Name="Email" />
+      <PropertyRef Name="Telephone" />
+      <PropertyRef Name="Sexe" />
+      <PropertyRef Name="SocieteID" />
+      <PropertyRef Name="Titre" />
+      <PropertyRef Name="Matricule" />
+    </Key>
+    <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EmployeID" Type="Int64" Nullable="false" />
+    <Property Name="Prenom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Sexe" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SocieteID" Type="Int64" Nullable="false" />
+    <Property Name="Titre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Matricule" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EquipeID" Type="Int64" />
+    <Property Name="EquipeNom" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="EquipeDebutService" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="EquipeFinService" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="SocieteRaisonSociale" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="SocieteRCCM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SocieteEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SocieteTelephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="V_Pointage">
+    <Key>
+      <PropertyRef Name="EmployeID" />
+      <PropertyRef Name="EmployeNom" />
+      <PropertyRef Name="EmployePrenom" />
+      <PropertyRef Name="EmployeEmail" />
+      <PropertyRef Name="EmployeTelephone" />
+      <PropertyRef Name="EmployeSexe" />
+      <PropertyRef Name="SocieteID" />
+      <PropertyRef Name="SocieteRaisonSociale" />
+      <PropertyRef Name="SocieteRCCM" />
+      <PropertyRef Name="SocieteEmail" />
+      <PropertyRef Name="SocieteTelephone" />
+      <PropertyRef Name="PointageID" />
+      <PropertyRef Name="PointageHeureEntree" />
+      <PropertyRef Name="EquipeHeureDebut" />
+      <PropertyRef Name="EquipeHeureFin" />
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Expr1" />
+    </Key>
+    <Property Name="EmployeID" Type="Int64" Nullable="false" />
+    <Property Name="EmployeNom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EmployePrenom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EmployeEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EmployeTelephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EmployeSexe" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EmployeResponsable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SocieteID" Type="Int64" Nullable="false" />
+    <Property Name="SocieteRaisonSociale" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SocieteRCCM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SocieteEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SocieteTelephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PointageID" Type="Int64" Nullable="false" />
+    <Property Name="PointageJour" Type="DateTime" Precision="0" />
+    <Property Name="PointageHeureEntree" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="PointageHeureSortie" Type="DateTime" Precision="3" />
+    <Property Name="PointageDureeSeconde" Type="Int32" />
+    <Property Name="PointageDureeHeure" Type="Int32" />
+    <Property Name="PointageDureeMinute" Type="Int32" />
+    <Property Name="EmployeTitre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="EmployeMatricule" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EquipeTitre" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="EquipeHeureDebut" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EquipeHeureFin" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ID" Type="Int64" Nullable="false" />
+    <Property Name="Expr1" Type="Int64" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Connexion_Societe">
+    <End Role="Societe" Type="Self.Societe" Multiplicity="1" />
+    <End Role="Connexion" Type="Self.Connexion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Societe">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Connexion">
+        <PropertyRef Name="SocieteID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employes_EquipeTravail">
+    <End Role="EquipeTravail" Type="Self.EquipeTravail" Multiplicity="1" />
+    <End Role="Employes" Type="Self.Employes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EquipeTravail">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Employes">
+        <PropertyRef Name="EquipeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employes_Societe">
+    <End Role="Societe" Type="Self.Societe" Multiplicity="1" />
+    <End Role="Employes" Type="Self.Employes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Societe">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Employes">
+        <PropertyRef Name="SocieteID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pointage_Employes">
+    <End Role="Employes" Type="Self.Employes" Multiplicity="1" />
+    <End Role="Pointage" Type="Self.Pointage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employes">
+        <PropertyRef Name="EmployeID" />
+      </Principal>
+      <Dependent Role="Pointage">
+        <PropertyRef Name="EmployesID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EquipeTravail_Societe">
+    <End Role="Societe" Type="Self.Societe" Multiplicity="0..1" />
+    <End Role="EquipeTravail" Type="Self.EquipeTravail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Societe">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="EquipeTravail">
+        <PropertyRef Name="SocieteID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PointisEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Connexion" EntityType="Self.Connexion" />
+    <EntitySet Name="DetailsConnexion" EntityType="Self.DetailsConnexion" />
+    <EntitySet Name="Employes" EntityType="Self.Employes" />
+    <EntitySet Name="EquipeTravail" EntityType="Self.EquipeTravail" />
+    <EntitySet Name="Notifications" EntityType="Self.Notifications" />
+    <EntitySet Name="Pointage" EntityType="Self.Pointage" />
+    <EntitySet Name="Societe" EntityType="Self.Societe" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="V_Employes" EntityType="Self.V_Employes" />
+    <EntitySet Name="V_Pointage" EntityType="Self.V_Pointage" />
+    <AssociationSet Name="FK_Connexion_Societe" Association="Self.FK_Connexion_Societe">
+      <End Role="Societe" EntitySet="Societe" />
+      <End Role="Connexion" EntitySet="Connexion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employes_EquipeTravail" Association="Self.FK_Employes_EquipeTravail">
+      <End Role="EquipeTravail" EntitySet="EquipeTravail" />
+      <End Role="Employes" EntitySet="Employes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employes_Societe" Association="Self.FK_Employes_Societe">
+      <End Role="Societe" EntitySet="Societe" />
+      <End Role="Employes" EntitySet="Employes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pointage_Employes" Association="Self.FK_Pointage_Employes">
+      <End Role="Employes" EntitySet="Employes" />
+      <End Role="Pointage" EntitySet="Pointage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EquipeTravail_Societe" Association="Self.FK_EquipeTravail_Societe">
+      <End Role="Societe" EntitySet="Societe" />
+      <End Role="EquipeTravail" EntitySet="EquipeTravail" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,252 @@
+<style>
+    .none {
+        display: none;
+    }
+
+    .accordion-body li:hover {
+        cursor: pointer;
+        background-color: whitesmoke;
+    }
+</style>
+
+
+<script>
+    // Ou est stocke Id sessionStorage de societé chez employé
+    // let sessionId = sessionStorage.getItem("emp"),
+    var pointage = document.getElementById('pointage-value'),
+        selectPointage = document.getElementById('option-affichage'),
+        selectPointage2 = document.querySelector('.option-affichage'),
+        sessionId = sessionStorage.getItem('idSociete'),
+
+        entree = 'https://face.activactions.net/api/Pointage/Day/' + sessionId,
+        sorties = 'https://face.activactions.net/api/Pointage/Sortie/' + sessionId,
+        absence = 'https://face.activactions.net/api/Pointage/AbsenceJour/' + sessionId,
+
+        RetardDay = 'https://face.activactions.net/api/Pointage/Late/' + sessionId,
+        retardWeek = 'https://face.activactions.net/api/Pointage/LateWeek/' + sessionId,
+        retardMonth = 'https://face.activactions.net/api/Pointage/LateMounth/' + sessionId,
+
+        utilisateurs = 'https://face.activactions.net/api/Connexion/Get/' + sessionId,
+        employes = 'https://face.activactions.net/api/Employes/Get/' + sessionId,
+
+        url20Jour = 'https://face.activactions.net/api/Pointage/DayTwenty/' + sessionId,
+        pointageDay = "https://face.activactions.net/api/Pointage/DayTwenty/" + sessionId,
+        pointageWeek = "https://face.activactions.net/api/Pointage/Week/" + sessionId,
+        pointageMonth = "https://face.activactions.net/api/Pointage/Month/" + sessionId,
+
+        sortiesDay = 'https://face.activactions.net/api/Pointage/Sortie/' + sessionId,
+        sortiesWeek = 'https://face.activactions.net/api/Pointage/SortieSemaine/' + sessionId,
+        sortiesMonth = 'https://face.activactions.net/api/Pointage/SortieMois/' + sessionId,
+
+        entreeDay = 'https://face.activactions.net/api/Pointage/Entree/Day/' + sessionId,
+        entreeWeek = 'https://face.activactions.net/api/Pointage/Entree/week/' + sessionId,
+        entreeMonth = 'https://face.activactions.net/api/Pointage/Entree/Mounth/' + sessionId,
+
+        absenceDay = 'https://face.activactions.net/api/Pointage/AbsenceJour/' + sessionId,
+        absenceWeek = 'https://face.activactions.net/api/Pointage/AbsenceSemaine/' + sessionId,
+        absenceMonth = 'https://face.activactions.net/api/Pointage/AbsenceMois/' + sessionId;
+
+    // Retard ?
+
+    function formatComplet(arg) {
+        let format = new Date(arg),
+            ret;
+        ret = format.toLocaleDateString('fr-fr', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
+        return ret
+    }
+
+    function formatHeure(arg) {
+        if (arg === undefined) {
+            let infos = "Pas encore pointé";
+            return infos;
+        }
+        else {
+            let format = new Date(arg),
+                ret;
+            ret = format.getHours() + "h:" + format.getMinutes() + "mn:" + format.getSeconds() + "s";
+            return ret
+        }
+    }
+
+    function diffBetweenDates(date1, date2) {
+        // console.log(date1);
+        // console.log(date2);
+        if (date1 === undefined || date2 === undefined) {
+            var retour = "Pas encore défini";
+            return retour;
+
+            // Renvoyer un objet contenant les différences calculées
+            // return {
+            //     days: diffInDays,
+            //     hours: diffInHours % 24,
+            //     minutes: diffInMinutes % 60,
+            //     seconds: diffInSeconds % 60
+            // };
+        }
+        else {
+            // Convertir les dates en objets Date
+            var datetime1 = new Date(date1);
+            var datetime2 = new Date(date2);
+            // Calculer la différence en millisecondes
+            var diffInMilliseconds = Math.abs(datetime2 - datetime1);
+            //console.log(diffInMilliseconds);
+
+            // Calculer les différences en heures, minutes et secondes
+            var diffInSeconds = Math.floor(diffInMilliseconds / 1000);
+            var hours = Math.floor(diffInSeconds / 3600);
+            var minutes = Math.floor((diffInSeconds % 3600) / 60);
+            var seconds = diffInSeconds % 60;
+
+            var retour = hours + " h " + minutes + " mn " + seconds + " s";
+
+            return retour;
+        }
+    }
+
+</script>
+
+
+
+<div class="m-3">
+    <div class="row m-3">
+        <div class="col-5">
+            <h2>Etat des pointages</h2>
+        </div>
+        <form class="col-7 d-flex flex-row justify-content-center align-items-center" id="formSearch">
+            <label for="name-search">Nom</label>
+            <!-- <input type="text" placeholder="Nom" id="name-search"> -->
+            <select class="form-control" id="name-search" name="name-search" placeholder="">
+                <script type="text/javascript">
+                    var sessionIdSoc = sessionStorage.getItem('idSociete');
+
+                    fetch('https://face.activactions.net/api/Employes/Get/' + sessionIdSoc)
+                        .then(res => res.json())
+                        .then(data => {
+                            console.log(data);
+                            let donneesEmployes = '';
+
+                            for (let item of data) {
+                                donneesEmployes += `<option id="" attr.data-value="${item.EmployeID}">${item.Nom} - ${item.Prenom} - ${item.Telephone} </option>`
+                            }
+                            document.getElementById('name-search').innerHTML = donneesEmployes;
+                        });
+
+                </script>
+
+            </select>
+            <label for="start-search">Du</label>
+            <input type="date" class="form-control" placeholder="Date de debut" id="start-search">
+            <label for="end-search">Au</label>
+            <input type="date" class="form-control" placeholder="Date de fin" id="end-search">
+            <input type="button" class="form-control" onclick="appelPagePointageSearch('searchAll','Recherche')"
+                value="Rechercher" style="background-color: #8dc63f; color: white;">
+        </form>
+
+
+    </div>
+    <div class="row m-3">
+        <div class="col">
+            <div>
+                <select id="mySelect" class="form-control" onchange="appelPointage()">
+                    <option>Vue</option>
+                    <option value="Jour">Jour</option>
+                    <option value="Semaine">Semaine</option>
+                    <option value="Mois">Mois</option>
+                    <option value="Trimestre">Trimestre</option>
+                    <option value="Annuelle">Annuelle</option>
+                    <option value="Test">Test</option>
+                </select>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="" id="show">
+        <div class="row m-3">
+            <div class="col bg-light border border-1 border-dark rounded-3 m-0 p-0">
+                <table class="table w-100">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">DATE</th>
+                            <th scope="col">EMPLOYES</th>
+                            <th scope="col">FONCTIONS</th>
+                            <th scope="col">ENTREES</th>
+                            <th scope="col">SORTIES</th>
+                            <th scope="col">DUREE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corps" style="tr:nth-of-type(even) {background-color: brown;}">
+
+                        <script type="text/javascript">
+
+                            fetch(pointageAll)
+                                .then(res => res.json())
+                                .then(data => {
+                                    console.log(pointageAll);
+                                    let infos = '';
+
+                                    for (let item of data) {
+                                        infos += `<tr><td>${formatComplet(item.PointageJour)}</td><td>${item.EmployeNom} ${item.EmployePrenom}</td><td>${item.EmployeTitre}</td><td>${formatHeure(item.PointageHeureEntree)}</td><td>${formatHeure(item.PointageHeureSortie)}</td><td>${diffBetweenDates(item.PointageHeureEntree, item.PointageHeureSortie)}</td></tr>`;
+                                    }
+                                    document.getElementById('corps').innerHTML = infos;
+                                });
+                        </script>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    var jour = document.getElementById('flush-headingOne'),
+        mois = document.getElementById('mois'),
+        semaine = document.getElementById('semaine'),
+        semaineBlock = document.getElementById('corpsSemaines'),
+        moisBlock = document.getElementById('corpsMois'),
+        jourBlock = document.getElementById('corps');
+
+    function appelPointage() {
+
+        var selectBox = document.getElementById("mySelect");
+        var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+        var lienComplet = 'pages/pointage' + selectedValue + '.html';
+        $.ajax({
+
+            url: lienComplet,
+            method: 'GET',
+            dataType: 'html',
+            success: function (data) {
+                $('#show').html(data);
+            },
+            error: function () {
+                $('#show').html('Erreur lors du chargement des données.');
+            }
+        });
+    }
+
+    function appelPagePointageSearch(lien, periode) {
+
+        //alert("test");
+        var lienComplet = 'pages/' + lien + '.html';
+        $.ajax({
+
+            url: lienComplet,
+            method: 'GET',
+            dataType: 'html',
+            success: function (data) {
+                $('#show').html(data);
+            },
+            error: function () {
+                $('#show').html('Erreur lors du chargement des données.');
+            }
+        });
+        $("#vu").html(periode);
+        // });
+    }
+
+</script>

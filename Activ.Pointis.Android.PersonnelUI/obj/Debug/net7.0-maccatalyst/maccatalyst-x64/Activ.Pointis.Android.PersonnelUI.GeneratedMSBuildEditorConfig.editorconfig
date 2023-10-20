@@ -1,0 +1,101 @@
+is_global = true
+build_property.TargetFramework = net7.0-maccatalyst
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Activ.Pointis.Android.PersonnelUI
+build_property.ProjectDir = D:\source\repos\Pointis\Activ.Pointis.Android.PersonnelUI\
+
+[D:/source/repos/Pointis/Activ.Pointis.Android.PersonnelUI/AbsencePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Activ.Pointis.Android.PersonnelUI.AbsencePage.xaml
+build_metadata.AdditionalFiles.TargetPath = AbsencePage.xaml
+build_metadata.AdditionalFiles.RelativePath = AbsencePage.xaml
+
+[D:/source/repos/Pointis/Activ.Pointis.Android.PersonnelUI/App.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Activ.Pointis.Android.PersonnelUI.App.xaml
+build_metadata.AdditionalFiles.TargetPath = App.xaml
+build_metadata.AdditionalFiles.RelativePath = App.xaml
+
+[D:/source/repos/Pointis/Activ.Pointis.Android.PersonnelUI/AppShell.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Activ.Pointis.Android.PersonnelUI.AppShell.xaml
+build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
+build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
+
+[D:/source/repos/Pointis/Activ.Pointis.Android.PersonnelUI/ComptePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Activ.Pointis.Android.PersonnelUI.ComptePage.xaml
+build_metadata.AdditionalFiles.TargetPath = ComptePage.xaml
+build_metadata.AdditionalFiles.RelativePath = ComptePage.xaml
+
+[D:/source/repos/Pointis/Activ.Pointis.Android.PersonnelUI/LoginPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Activ.Pointis.Android.PersonnelUI.LoginPage.xaml
+build_metadata.AdditionalFiles.TargetPath = LoginPage.xaml
+build_metadata.AdditionalFiles.RelativePath = LoginPage.xaml
+
+[D:/source/repos/Pointis/Activ.Pointis.Android.PersonnelUI/MainPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Activ.Pointis.Android.PersonnelUI.MainPage.xaml
+build_metadata.AdditionalFiles.TargetPath = MainPage.xaml
+build_metadata.AdditionalFiles.RelativePath = MainPage.xaml
+
+[D:/source/repos/Pointis/Activ.Pointis.Android.PersonnelUI/PointageMois.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Activ.Pointis.Android.PersonnelUI.PointageMois.xaml
+build_metadata.AdditionalFiles.TargetPath = PointageMois.xaml
+build_metadata.AdditionalFiles.RelativePath = PointageMois.xaml
+
+[D:/source/repos/Pointis/Activ.Pointis.Android.PersonnelUI/PointagePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Activ.Pointis.Android.PersonnelUI.PointagePage.xaml
+build_metadata.AdditionalFiles.TargetPath = PointagePage.xaml
+build_metadata.AdditionalFiles.RelativePath = PointagePage.xaml
+
+[D:/source/repos/Pointis/Activ.Pointis.Android.PersonnelUI/PointageSem.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Activ.Pointis.Android.PersonnelUI.PointageSem.xaml
+build_metadata.AdditionalFiles.TargetPath = PointageSem.xaml
+build_metadata.AdditionalFiles.RelativePath = PointageSem.xaml
+
+[D:/source/repos/Pointis/Activ.Pointis.Android.PersonnelUI/Resources/Styles/Colors.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Activ.Pointis.Android.PersonnelUI.Resources.Styles.Colors.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
+
+[D:/source/repos/Pointis/Activ.Pointis.Android.PersonnelUI/Resources/Styles/Styles.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Activ.Pointis.Android.PersonnelUI.Resources.Styles.Styles.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
+
+[D:/source/repos/Pointis/Activ.Pointis.Android.PersonnelUI/RetardPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Activ.Pointis.Android.PersonnelUI.RetardPage.xaml
+build_metadata.AdditionalFiles.TargetPath = RetardPage.xaml
+build_metadata.AdditionalFiles.RelativePath = RetardPage.xaml
+
+[D:/source/repos/Pointis/Activ.Pointis.Android.PersonnelUI/Views/AbsencePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Activ.Pointis.Android.PersonnelUI.Views.AbsencePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\AbsencePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\AbsencePage.xaml
+
+[D:/source/repos/Pointis/Activ.Pointis.Android.PersonnelUI/Views/AccueilPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Activ.Pointis.Android.PersonnelUI.Views.AccueilPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\AccueilPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\AccueilPage.xaml
+
+[D:/source/repos/Pointis/Activ.Pointis.Android.PersonnelUI/Views/AProposPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Activ.Pointis.Android.PersonnelUI.Views.AProposPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\AProposPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\AProposPage.xaml

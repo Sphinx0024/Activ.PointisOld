@@ -1,0 +1,182 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<!-- JQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"
+    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+
+
+
+<div class="">
+    <div class="row m-3">
+        <div class="col">
+            <h2>Repartition par secteur d'activité</h2>
+        </div>
+    </div>
+    <div class="row d-flex flex-row justify-content-center align-items-center m-3">
+        <div class="col col-lg-6 d-flex flex-row">
+            <div class="d-flex flex-column">
+                <div class="m-2 border-dark p-2 border-bottom-1">
+                    <span class="" style="width: 50px; height: 50px; border: 1px solid #122c6c; border-radius: 50px; background-color: #122c6c; color: #122c6c;">...</span>
+                    <span>Directeur general</span>
+                </div>
+                <div class="m-2 border-dark p-2 border-bottom-1">
+                    <span class="" style="width: 50px; height: 50px; border: 1px solid #005694; border-radius: 50px; background-color: #005694; color: #005694;">...</span>
+                    <span>Services techniques</span>
+                </div>
+                <div class="m-2 border-dark p-2 border-bottom-1">
+                    <span class="" style="width: 50px; height: 50px; border: 1px solid #0081b4; border-radius: 50px; background-color: #0081b4; color: #0081b4;">...</span>
+                    <span>Services ressources humaines</span>
+                </div>
+            </div>
+            <div class="d-flex flex-column">
+                <div class="m-2 border-dark p-2 border-bottom-1">
+                    <span class="" style="width: 50px; height: 50px; border: 1px solid #3edad8; border-radius: 50px; background-color: #3edad8; color: #3edad8;">...</span>
+                    <span>Services marketing</span>
+                </div>
+                <div class="m-2 border-dark p-2 border-bottom-1">
+                    <span class="" style="width: 50px; height: 50px; border: 1px solid #00aeca; border-radius: 50px; background-color: #00aeca; color: #00aeca;">...</span>
+                    <span>Services juridiques</span>
+                </div>
+                <div class="m-2 border-dark p-2 border-bottom-1">
+                    <span class="" style="width: 50px; height: 50px; border: 1px solid #0081b4; border-radius: 50px; background-color: #0081b4; color: #0081b4;">...</span>
+                    <span>Comptabilité</span>
+                </div>
+            </div>
+
+        </div>
+        <div class="col col-6">
+            <div id="myChartSecteur1" style="width:100%; max-width:600px; height:500px;">
+            </div>
+        </div>
+    </div>
+    <div class="row m-3 text-light">
+        <div class="col col-6">
+            <canvas id="myChartSecteur2" style="width:100%;max-width:600px"></canvas>
+            <div class="d-flex flex-row" style="background-color: #8dc63f;">
+                <img src="images/import/clock.png" class="p-3 me-4" width="100px" height="100px" alt="">
+                <div class="d-flex flex-column">
+                    <div class="d-flex flex-row justify-content-center align-items-center">
+                        <span style="font-size: 50px;">45%</span>
+                        <span>Inserer un texte ici</span>
+                    </div>
+                    <progress></progress>
+                </div>
+            </div>
+        </div>
+        <div class="col col-6">
+            <canvas id="myChartSecteur3" style="width:100%;max-width:600px"></canvas>
+            <div class="d-flex flex-row" style="background-color: #8dc63f;">
+                <img src="images/import/absence.png" class="p-3 me-4" width="100px" height="100px" alt="...">
+                <div class="d-flex flex-column">
+                    <div class="d-flex flex-row justify-content-center align-items-center">
+                        <span style="font-size: 50px;">45%</span>
+                        <span>Inserer un texte ici</span>
+                    </div>
+                    <progress></progress>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    // Chart Secteur 1
+    
+
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        const data = google.visualization.arrayToDataTable([
+            ['Directeur General', 'Mhl'],
+            [' Services techniques', 54.8],
+            ['France', 48.6],
+            ['Spain', 44.4],
+            ['USA', 23.9],
+            ['Argentina', 14.5]
+        ]);
+
+        /*
+        const options = {
+            title: 'World Wide Wine Production'
+        };
+        */
+
+        const chart = new google.visualization.PieChart(document.getElementById('myChartSecteur1'));
+        chart.draw(data);
+        // chart.draw(data, options);
+    }
+
+    // End
+
+    // Chart Secteur 2
+
+    const xValuesSec2 = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150];
+    const yValuesSec2 = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15];
+
+    new Chart("myChartSecteur2", {
+        type: "line",
+        data: {
+            labels: xValuesSec2,
+            datasets: [{
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "rgba(0,0,255,1.0)",
+                borderColor: "rgba(0,0,255,0.1)",
+                data: yValuesSec2
+            }]
+        },
+        options: {
+            legend: { display: false },
+            scales: {
+                yAxes: [{ ticks: { min: 6, max: 16 } }],
+            },
+            title: {
+                display: true,
+                text: "RETARD MOYENNE PAR SERVICE"
+            }
+
+
+        }
+    });
+
+
+    // End
+
+
+
+    // Chart Secteur 3
+
+    const xValuesSec3 = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150];
+    const yValuesSec3 = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15];
+
+    new Chart("myChartSecteur3", {
+        type: "line",
+        data: {
+            labels: xValuesSec3,
+            datasets: [{
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "rgba(0,0,255,1.0)",
+                borderColor: "rgba(0,0,255,0.1)",
+                data: yValuesSec3
+            }]
+        },
+        options: {
+            legend: { display: false },
+            scales: {
+                yAxes: [{ ticks: { min: 6, max: 16 } }],
+            },
+            title: {
+                display: true,
+                text: "ABSENCE MOYENNE PAR SERVICE"
+            }
+        }
+
+    });
+</script>

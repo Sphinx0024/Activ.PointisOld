@@ -1,0 +1,202 @@
+<div class="row">
+    <button class="btn col-2 d-flex flex-row btn btn-para text-uppercase text-light mt-2" type="button"
+        data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" id="addEmploye">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+            class="bi bi-person-plus-fill text-light" viewBox="0 0 16 16">
+            <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+            <path fill-rule="evenodd"
+                d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
+        </svg>
+        <span>Ajouter un employe</span>
+    </button>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Ajouter un employé</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body" id="">
+            <!-- <div class="offcanvas-body" id="showAddEmployes"> -->
+        
+            <form action="" method="" class="col-12 d-flex flex-column">
+                <div class="d-flex flex-row flex-wrap flex-wrap bg-light m-2 p-2">
+                    <div class="input-block d-flex flex-column me-2">
+                        <label for="Nom" class="">Nom</label>
+                        <input type="text" class="form-control" id="Nom" name="Nom" placeholder="">
+
+                    </div>
+                    <div class="input-block d-flex flex-column me-2">
+                        <label for="Email" class="">Email</label>
+                        <input type="text" class="form-control" id="Email" name="Email" placeholder="">
+                    </div>
+                    <div class="input-block d-flex flex-column me-2">
+                        <label for="Prenom" class="">Prenoms</label>
+                        <input type="text" class="form-control" id="Prenom" name="Prenom" placeholder="">
+                    </div>
+
+                    <div class="input-block d-flex flex-column me-2">
+                        <label for="Titre" class="">Titre</label>
+                        <input type="text" class="form-control" id="Titre" name="Titre" placeholder="">
+                    </div>
+
+
+                    <div class="input-block d-flex flex-column me-2">
+                        <label for="Telephone" class="">Telephone</label>
+                        <input type="text" class="form-control" id="Telephone" name="Telephone" placeholder="">
+                    </div>
+
+                    <div class="input-block d-flex flex-column me-2">
+                        <label for="Matricule" class="">Matricule</label>
+                        <input type="text" class="form-control" id="Matricule" name="Matricule" placeholder="">
+                    </div>
+
+                    <div class="input-block d-flex flex-column me-2">
+                        <label for="equipe" class="">Selectionner horaire</label>
+
+                        <select class="form-control" id="equipe" name="equipe" placeholder="">
+                            <script type="text/javascript">
+                                fetch('https://face.activactions.net/api/EquipeTravail/Get/' + socID)
+                                    .then(res => res.json())
+                                    .then(data => {
+                                        let donnees = '';
+
+                                        for (let item of data) {
+                                            donnees += `<option id="horaire" attr.data-value=${item.ID}>${item.HeureDebutService}-${item.HeureFinService}</option>`
+                                        }
+                                        document.getElementById('equipe').innerHTML = donnees;
+                                    });
+
+                            </script>
+
+                        </select>
+                    </div>
+
+                    <div class="input-block d-flex flex-column me-2">
+                        <label for="Responsable" class="">Responsable</label>
+
+                        <select class="form-control" id="Responsable" name="Responsable" placeholder="">
+                            <script type="text/javascript">
+                                // var sessionIdSoc = sessionStorage.getItem('idSociete');
+                                fetch('https://face.activactions.net/api/Employes/Get/' + socID)
+                                    .then(res => res.json())
+                                    .then(data => {
+                                        console.log(data);
+                                        let donneesEmployes = '';
+                
+                                        for (let item of data) {
+                                            donneesEmployes += `<option id="" attr.data-value="${item.EmployeID}">${item.Nom} - ${item.Prenom} - ${item.Telephone} </option>`
+                                        }
+                                        document.getElementById('Responsable').innerHTML = donneesEmployes;
+                                    });
+                            </script>
+                        </select>
+                    </div>
+                    <div class="input-block d-flex flex-column me-2">
+                        <label for="Sexe" class="">Sexe</label>
+                        <select class="form-control" id="Sexe" name="Sexe" placeholder="">
+                            <option value="">-- Choisissez un genre --</option>
+                            <option value="">Masculin</option>
+                            <option value="">Feminin</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-block d-flex flex-column align-self-start">
+                    <input type="button" id="envoyer" onclick="ajouterSociete();"
+                        class="btn btn-primary form-control border-0" value="Envoyer" />
+                </div>
+            </form>
+
+            <script>
+                // document.getElementById('add').innerHTML = 'Ajouter employés';
+            </script>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+<div class="table-responsive">
+    <table class="table">
+        <!-- <thead style="border-color: transparent;"> -->
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Adresse mail</th>
+                <th>Telephone</th>
+                <th>Titre</th>
+                <!-- <th>Fonction</th> -->
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody id="corps">
+            <script type="text/javascript">
+                fetch('https://face.activactions.net/api/Employes/Get/' + socID)
+                    .then(res => res.json())
+                    .then(data => {
+                        let infosDelete = '';
+                        // <tr style="display:flex; flex-direction: row; justify-content: space-between; align-items: center;">
+
+                        console.log(data);
+                        for (let item of data) {
+                            infosDelete += `
+                            <tr>
+                                <td>${item.Nom}</td>
+                                <td>${item.Prenom}</td>
+                                <td>${item.Email}</td>
+                                <td>${item.Telephone}</td>
+                                <td>${item.Titre}</td>
+                                <td >
+                                    <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightUpdate" aria-controls="offcanvasRight" class="btn" Onclick ="modifier(${item.EmployeID},'updateEmployes.html')" style="padding: 10px 10px ;margin-left:2px;background-color:#F3F3F9;width:5px; background: url(image/crayon.png); background-repeat: no-repeat; background-size: 20px; background-position: center;" id="update"></button>
+                                    <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightBadge" aria-controls="offcanvasRight" class="btn" Onclick ="badge(${item.EmployeID},'qrcode.html')" style="padding: 10px 10px ;margin-left:2px;border-color:darkgray;width:5px; background: url(image/des-employes.png); background-repeat: no-repeat; background-size: 20px; background-position: center;" id="badge"></button>
+                                    <button class="btn" Onclick ="supprimer('https://face.activactions.net/api/Employes/Delete',${item.EmployeID},'listeEmploye.html')" style="padding: 10px 10px ;margin-left:2px;border-color:darkgray;width:5px; background: url(image/supprimer.png); background-repeat: no-repeat; background-size: 20px; background-position: center;"></button>
+                                </td>
+                            </tr>`;
+                        }
+                        document.getElementById('corps').innerHTML = infosDelete;
+                        //place.innerHTML = infos;
+                    });
+
+            </script>
+
+
+        </tbody>
+        <tfoot>
+
+        </tfoot>
+    </table>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightUpdate" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Modification</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body" id="showUdpade">
+
+            
+
+
+        </div>
+    </div>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightBadge" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Badge</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body" id="showBadge">
+
+        </div>
+    </div>
+
+
+</div>
+
+
+<script>
+    document.getElementById('add').innerHTML = 'Liste employés';
+
+</script>

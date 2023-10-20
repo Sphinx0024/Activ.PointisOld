@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+        x:Class="Activ.Pointis.Android.PersonnelUI.AppShell"
+        xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:local="clr-namespace:Activ.Pointis.Android.PersonnelUI"
+        xmlns:view="clr-namespace:Activ.Pointis.Android.PersonnelUI.Views"
+        Shell.TabBarIsVisible="False">
+
+    <!--<Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <Grid BackgroundColor="Black"
+                  HeightRequest="200">
+                <Image Aspect="AspectFill"
+                       Source="Ressources/Images/username.png"
+                       Opacity="0.6" />
+                <Label Text="{Binding Nom}"/>
+            </Grid>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>-->
+
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate local:loginPage}"
+        Route="Login" 
+        Shell.FlyoutItemIsVisible="False"
+        Shell.FlyoutBehavior="Disabled"/>
+
+    <ShellContent
+        Title="Mot de passe"
+        ContentTemplate="{DataTemplate local:ComptePage}"
+        Route="Compte" 
+        Shell.FlyoutItemIsVisible="False"
+        Shell.FlyoutBehavior="Disabled"/>
+
+    <FlyoutItem Route="MainPage" FlyoutDisplayOptions="AsMultipleItems" >
+
+        <ShellContent Title="Accueil" Icon="Ressources/Images/accueil.jpeg" ContentTemplate="{DataTemplate local:MainPage}" />
+        
+        <Tab Title="Pointage" Icon="Ressources/Images/presence.png">
+            <ShellContent Title="Jour" ContentTemplate="{DataTemplate local:PointagePage}" />
+            <ShellContent Title="Semaine" ContentTemplate="{DataTemplate local:PointageSem}" />
+            <ShellContent Title="Mois" ContentTemplate="{DataTemplate local:PointageMois}" />
+        </Tab>
+        
+        <Tab Title="Retard" Icon="Ressources/Images/image1.png">
+            <ShellContent Title="Jour" ContentTemplate="{DataTemplate local:RetardPage}" />
+            <ShellContent Title="Semaine" ContentTemplate="{DataTemplate local:RetardPage}" />
+            <ShellContent Title="Mois" ContentTemplate="{DataTemplate local:RetardPage}" />
+        </Tab>
+        
+        <Tab Title="Absence" Icon="Ressources/Images/absent.png">
+            <ShellContent Title="Jour" ContentTemplate="{DataTemplate local:AbsencePage}" />
+            <ShellContent Title="Semaine" ContentTemplate="{DataTemplate local:AbsencePage}" />
+            <ShellContent Title="Mois" ContentTemplate="{DataTemplate local:AbsencePage}" />
+        </Tab>
+
+        <!--<ShellContent Title="Absence" ContentTemplate="{DataTemplate view:AbsencePage}"/>
+        <ShellContent Title="Accueil" ContentTemplate="{DataTemplate view:AccueilPage}" />
+        <ShellContent Title="A Propos" ContentTemplate="{DataTemplate view:AProposPage}"/>-->
+ 
+    </FlyoutItem>
+
+    <Shell.FlyoutFooterTemplate>
+        <DataTemplate>
+            <StackLayout>
+                <Label Text="Activ'"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" />
+                <Label Text="Copyright@2023"
+                       HorizontalOptions="Center" />
+            </StackLayout>
+        </DataTemplate>
+    </Shell.FlyoutFooterTemplate>
+
+</Shell>

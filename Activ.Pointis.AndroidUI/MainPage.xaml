@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProjetScan.MainPage" Background="White"
+             Shell.FlyoutItemIsVisible="True">
+
+
+    <!--<ContentPage.Background>
+        <ImageBrush Source="Ressources/Images/2.png" />
+    </ContentPage.Background>-->
+
+
+        <VerticalStackLayout Margin="90">
+        <Label 
+            Text="Clicker sur le bouton !"
+            FontSize="16"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            />
+        <Label 
+            Text="(pour effectuer un scan)"
+            FontSize="16"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            />
+
+        <Image Source="Ressources/Images/fleche.jpeg" MinimumHeightRequest="150" MaximumWidthRequest="80" Margin="0,50,0,0" />
+
+        <StackLayout Orientation="Horizontal" Margin="0,50,0,0">
+            <Frame HeightRequest="100" WidthRequest="100" BackgroundColor="#f3f3f9" Margin="-20,0,0,0">
+                <ImageButton Source="Ressources/Images/entree.jpeg" Clicked="OnScannerEntreeClick" Margin="0,0,0,0" Aspect="AspectFill" />    
+            </Frame>
+            <Frame HeightRequest="100" WidthRequest="100" BackgroundColor="#f3f3f9" Margin="20,0,0,0">
+                <ImageButton Source="Ressources/Images/sortie.jpeg" Clicked="OnScannerSortieClick" Margin="0,0,0,0" Aspect="AspectFill" BackgroundColor="Gray"/>
+            </Frame>
+           
+        </StackLayout>
+
+        <!--<ImageButton 
+            Margin="0,15,0,0"
+            CornerRadius="10"
+            MinimumHeightRequest="150"
+            Clicked="OnScannerEntreeClick"
+            BorderColor="Black"
+            BorderWidth="2"
+            BackgroundColor="White"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Source="Ressources/Images/qrcode1.jpeg"
+            ></ImageButton>-->
+        
+        <!--<ImageButton 
+            Margin="0,20,0,0"
+            CornerRadius="10"
+            MinimumHeightRequest="150"
+            Clicked="OnScannerSortieClick"
+            SemanticProperties.HeadingLevel="Level4"
+            BorderColor="Black"
+            BorderWidth="2"
+            BackgroundColor="White"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Source="Ressources/Images/qrcode2.png"
+            ></ImageButton>-->
+
+       <!-- <StackLayout Orientation="Horizontal">
+            <Frame HeightRequest="150" WidthRequest="150" Padding="0" Margin="20">
+                <ImageButton Source="Ressources/Images/sortie.jpeg" Margin="0" Aspect="AspectFill" />
+            </Frame>
+        </StackLayout>-->
+
+        <!--<Image 
+            Source="Ressources/Images/sortie.jpeg"
+            Margin="0,10,0,0" 
+            MaximumHeightRequest="150"
+            MaximumWidthRequest="150"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"/>-->
+
+        <Image 
+            Source="Ressources/Images/pointis.png"
+            Margin="0,150,0,0" />
+
+
+
+    </VerticalStackLayout>
+    
+
+</ContentPage>

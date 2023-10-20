@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Pointis</title>
+    <!-- Favicon icon -->
+    <!-- <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png"> -->
+
+    <!-- favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+
+    <!-- Pignose Calender -->
+    <link href="./plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
+    <!-- Chartist -->
+    <link rel="stylesheet" href="./plugins/chartist/css/chartist.min.css">
+    <link rel="stylesheet" href="./plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
+    <!-- Custom Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+
+    <!-- chart Js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+    <style>
+        #deconnexion {
+            position: absolute;
+            bottom: 20px;
+
+        }
+
+       .activePage {
+        color: #3ab44c;
+       }
+    </style>
+
+
+    <script>
+
+        function retour() {
+            sessionStorage.removeItem("idEquipeUser");
+            location.replace('index.html');
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            if (sessionStorage.getItem('idSociete') === null) {
+                location.replace('../PointisWeb/loginPointis.html');
+            }
+            else {
+                var menu = document.getElementById('menu');
+                var idSoc = sessionStorage.getItem("idSociete");
+                let nom = sessionStorage.getItem("nameAd");
+                let prenom = sessionStorage.getItem("prenomAd");
+
+                let nomPrenom = prenom + " " + nom;
+
+                var admin = document.getElementById("pageAdminUtil");
+                var equipeDiv = document.getElementById("equip");
+                var equipePage = document.getElementById("pageEquipeUtil");
+
+
+                if (sessionStorage.getItem('idEquipeUser') != null) {
+                    sessionStorage.setItem("idemploy", sessionStorage.getItem('idEquipeUser'));
+                    equipeDiv.style.display = "none";
+                    menu.innerHTML = `
+                                    <li>
+                                        <a class="" onclick="retour()" aria-expanded="false" style="color: white;">
+                                            <!-- <i class="icon-notebook menu-icon"></i> -->
+                                            <!--<i class="fa fa-cog text-light" aria-hidden="true"></i>-->
+                                            <span class="nav-text">Mon Espace Personnel</span>
+                                        </a>
+                                    </li><br />
+                                    <li>
+                                        <a class="" onclick="appel('board')" aria-expanded="false"
+                                            style="color: white;">
+                                            <!-- <i class="icon-notebook menu-icon"></i> -->
+                                            <i class="fa fa-th-large text-light" aria-hidden="true"></i>
+                                            <span class="nav-text">Tableau de bord</span>
+                                        </a>
+                                    </li><br />
+                                    <li id="pointage">
+                                        <a  class="" onclick="appel('pointage')" aria-expanded="false" style="color: white;">
+                                            <!-- <i class="icon-notebook menu-icon"></i> -->
+                                            <i class="fa fa-map text-light " aria-hidden="true"></i>
+                                            <span class="nav-text">Pointage</span>
+                                        </a>
+                                    </li><br />
+                                    <li id="deconnexion">
+                                        <a class="" href="deconnect.html" aria-expanded="false" style="color: white;">
+                                            <!-- <i class="icon-notebook menu-icon"></i> -->
+                                            <i class="fa fa-sign-out text-light" aria-hidden="true"></i>
+                                            <span class="nav-text">Deconnexion</span>
+                                        </a>
+                                    </li>
+                                    `;
+                }
+
+                else {
+
+                    if (sessionStorage.getItem('idEmployeUser') === null) {
+                        sessionStorage.setItem("idemploy", sessionStorage.getItem('idEmployeNOUser'));
+                        //admin.style.display = "none";
+                        equipeDiv.style.display = "none";
+                        //equipePage.style.display = "none";
+                        menu.innerHTML = `
+                                    <li>
+                                        <a class="" onclick="appel('board')" aria-expanded="false"
+                                            style="color: white;">
+                                            <!-- <i class="icon-notebook menu-icon"></i> -->
+                                            <i class="fa fa-th-large text-light" aria-hidden="true"></i>
+                                            <span class="nav-text">Tableau de bord</span>
+                                        </a>
+                                    </li><br />
+                                    <li id="pointage">
+                                        <a  class="" onclick="appel('pointage')" aria-expanded="false" style="color: white;">
+                                            <!-- <i class="icon-notebook menu-icon"></i> -->
+                                            <i class="fa fa-map text-light " aria-hidden="true"></i>
+                                            <span class="nav-text">Pointage</span>
+                                        </a>
+                                    </li><br />
+                                    <li id="profile">
+                                        <a class="" onclick="appel('profile')" aria-expanded="false"
+                                            style="color: white;">
+                                            <!-- <i class="icon-notebook menu-icon"></i> -->
+                                            <i class="fa fa-user-circle-o text-light" aria-hidden="true"></i>
+                                            <span class="nav-text">Profile</span>
+                                        </a>
+                                    </li><br />
+                                    <li id="deconnexion">
+                                        <a class="" href="deconnect.html" aria-expanded="false" style="color: white;">
+                                            <!-- <i class="icon-notebook menu-icon"></i> -->
+                                            <i class="fa fa-sign-out text-light" aria-hidden="true"></i>
+                                            <span class="nav-text">Deconnexion</span>
+                                        </a>
+                                    </li>
+                                    `;
+
+                        fetch('https://face.activactions.net/api/Employes/Get/' + idSoc)
+                            .then(res => res.json())
+                            .then(data => {
+                                //console.log(data);
+                                for (let item of data) {
+                                    let resp = item.Responsable;
+                                    let mail = item.Email;
+                                    //console.log(res);
+                                    if (nomPrenom == resp) {
+                                        equipeDiv.style.display = "flex";
+                                        //equipePage.style.display = "flex";
+                                        menu.innerHTML = `
+                                                    <li>
+                                                        <a class="" onclick="appel('board')" aria-expanded="false"
+                                                            style="color: white;">
+                                                            <!-- <i class="icon-notebook menu-icon"></i> -->
+                                                            <i class="fa fa-th-large text-light" aria-hidden="true"></i>
+                                                            <span class="nav-text">Tableau de bord</span>
+                                                        </a>
+                                                    </li><br />
+                                                    <li id="pointage">
+                                                        <a class="" onclick="appel('pointage')" aria-expanded="false" style="color: white;">
+                                                            <!-- <i class="icon-notebook menu-icon"></i> -->
+                                                            <i class="fa fa-cog text-light" aria-hidden="true"></i>
+                                                            <span class="nav-text">Pointage</span>
+                                                        </a>
+                                                    </li><br />
+                                                    <li>
+                                                        <a class="" onclick="appel('equipe')" aria-expanded="false"
+                                                            style="color: white;">
+                                                            <!-- <i class="icon-notebook menu-icon"></i> -->
+                                                            <i class="fa fa-map text-light" aria-hidden="true"></i>
+                                                            <span class="nav-text">Equipe</span>
+                                                        </a>
+                                                    </li><br />
+                                                    <li id="profile">
+                                                        <a class="" onclick="appel('profile')" aria-expanded="false"
+                                                            style="color: white;">
+                                                                <!-- <i class="icon-notebook menu-icon"></i> -->
+                                                                <i class="fa fa-user-circle-o text-light" aria-hidden="true"></i>
+                                                                <span class="nav-text">Profile</span>
+                                                        </a>
+                                                    </li><br />
+                                                    <li id="deconnexion">
+                                                        <a class="" href="deconnect.html" aria-expanded="false" style="color: white; margin-top: 150px;">
+                                                            <!-- <i class="icon-notebook menu-icon"></i> -->
+                                                            <i class="fa fa-sign-out text-light" aria-hidden="true"></i>
+                                                            <span class="nav-text">Deconnexion</span>
+                                                        </a>
+                                                    </li>
+                                                                    `;
+                                    }
+                                }
+                            });
+                    }
+
+                    else {
+                        sessionStorage.setItem("idemploy", sessionStorage.getItem('idEmployeUser'));
+                        //admin.style.display = "flex";
+                        equipeDiv.style.display = "none";
+                        //equipePage.style.display = "none";
+                        menu.innerHTML = `
+                                                    <li>
+                                                        <a class="" onclick="appel('board')" aria-expanded="false"
+                                                            style="color: white;">
+                                                            <!-- <i class="icon-notebook menu-icon"></i> -->
+                                                            <i class="fa fa-th-large text-light" aria-hidden="true"></i>
+                                                            <span class="nav-text">Tableau de bord</span>
+                                                        </a>
+                                                    </li><br />
+                                                    <li id="pointage">
+                                                        <a class="" onclick="appel('pointage')" aria-expanded="false" style="color: white;">
+                                                            <!-- <i class="icon-notebook menu-icon"></i> -->
+                                                            <i class="fa fa-map text-light " aria-hidden="true"></i>
+                                                            <span class="nav-text">Pointage</span>
+                                                        </a>
+                                                    </li><br />
+                                                    <li id="Administrateur">
+                                                        <a class="" href="index-1.html" aria-expanded="false" style="color: white;">
+                                                            <!-- <i class="icon-notebook menu-icon"></i> -->
+                                                            <i class="fa fa-cog text-light" aria-hidden="true"></i>
+                                                            <span class="nav-text">Administrateur</span>
+                                                        </a>
+                                                    </li><br />
+                                                    <li id="profile">
+                                                        <a class="" onclick="appel('profile')" aria-expanded="false"
+                                                            style="color: white;">
+                                                                <!-- <i class="icon-notebook menu-icon"></i> -->
+                                                                <i class="fa fa-user-circle-o text-light" aria-hidden="true"></i>
+                                                                <span class="nav-text">Profile</span>
+                                                        </a>
+                                                    </li><br />
+                                                    <li id="deconnexion">
+                                                        <a class="" href="deconnect.html" aria-expanded="false" style="color: white;">
+                                                            <!-- <i class="icon-notebook menu-icon"></i> -->
+                                                            <i class="fa fa-sign-out text-light" aria-hidden="true"></i>
+                                                            <span class="nav-text">Deconnexion</span>
+                                                        </a>
+                                                    </li>
+                                                                    `;
+
+
+                        fetch('https://face.activactions.net/api/Employes/Get/' + idSoc)
+                            .then(res => res.json())
+                            .then(data => {
+                                //console.log(data);
+                                for (let item of data) {
+                                    let resp = item.Responsable;
+                                    console.log(resp);
+                                    if (nomPrenom == resp) {
+                                        equipeDiv.style.display = "flex";
+                                        //equipePage.style.display = "flex";
+                                        menu.innerHTML = `
+                                                    <li>
+                                                        <a class="" onclick="appel('board')" aria-expanded="false"
+                                                            style="color: white;">
+                                                            <!-- <i class="icon-notebook menu-icon"></i> -->
+                                                            <i class="fa fa-th-large text-light" aria-hidden="true"></i>
+                                                            <span class="nav-text">Tableau de bord</span>
+                                                        </a>
+                                                    </li><br />
+                                                    <li>
+                                                        <a class="" onclick="appel('pointage')" aria-expanded="false" style="color: white;">
+                                                            <!-- <i class="icon-notebook menu-icon"></i> -->
+                                                            <i class="fa fa-map text-light " aria-hidden="true"></i>
+                                                            <span class="nav-text">Pointage</span>
+                                                        </a>
+                                                    </li><br />
+                                                    <li>
+                                                        <a class=""  onclick="appel('equipe')" aria-expanded="false"
+                                                            style="color: white;">
+                                                            <i class="fa fa-pie-chart text-light" aria-hidden="true"></i>
+                                                            <span class="nav-text">Equipe</span>
+                                                        </a>
+                                                    </li><br />
+                                                    <li>
+                                                        <a class="" href="index-1.html" aria-expanded="false" style="color: white;">
+                                                            <!-- <i class="icon-notebook menu-icon"></i> -->
+                                                            <i class="fa fa-cog text-light" aria-hidden="true"></i>
+                                                            <span class="nav-text">Administrateur</span>
+                                                        </a>
+                                                    </li><br />
+                                                    <li>
+                                                        <a class="" onclick="appel('profile')" aria-expanded="false"
+                                                            style="color: white;">
+                                                                <!-- <i class="icon-notebook menu-icon"></i> -->
+                                                                <i class="fa fa-user-circle-o text-light" aria-hidden="true"></i>
+                                                                <span class="nav-text">Profile</span>
+                                                        </a>
+                                                    </li><br />
+                                                    <li id="deconnexion">
+                                                        <a class="" href="deconnect.html" aria-expanded="false" style="color: white;">
+                                                            <!-- <i class="icon-notebook menu-icon"></i> -->
+                                                            <i class="fa fa-sign-out text-light" aria-hidden="true"></i>
+                                                            <span class="nav-text">Deconnexion</span>
+                                                        </a>
+                                                    </li>
+                                                                    `;
+                                    }
+                                }
+                            });
+                    }
+                }
+
+
+            }
+
+
+        });
+
+        function appel(lien) {
+
+            //$('#pageBoardUtil').click(function () {
+            //alert("test");
+            var lienComplet = 'pages/utilisateur/' + lien + '.html';
+            $.ajax({
+
+                url: lienComplet,
+                method: 'GET',
+                dataType: 'html',
+                success: function (data) {
+                    $('#content-main').html(data);
+                },
+                error: function () {
+                    $('#content-main').html('Erreur lors du chargement des données.');
+                }
+            });
+            // });
+        }
+
+    </script>
+
+
+    <script>
+        function employeID() {
+            var id = sessionStorage.getItem('idEquipeUser');
+            //var id = sessionStorage.getItem('idEmployeUser');
+            if (sessionStorage.getItem('idEquipeUser') === null) {
+                id = sessionStorage.getItem('idEmployeUser');
+
+                if (sessionStorage.getItem('idEmployeUser') === null) {
+                    id = sessionStorage.getItem('idEmployeNOUser');
+                }
+            }
+            return id;
+        }
+
+        function employeInfos() {
+            var nomPrenoms = sessionStorage.getItem('nomEmpEquip') + " " + sessionStorage.getItem('prenomEmpEquip');
+            if (sessionStorage.getItem('idEquipeUser') === null) {
+                nomPrenoms = sessionStorage.getItem("nameAd") + ' ' + sessionStorage.getItem("prenomAd");
+
+                if (sessionStorage.getItem('idEmployeUser') === null) {
+                    nomPrenoms = sessionStorage.getItem("nameAd") + ' ' + sessionStorage.getItem("prenomAd");
+                }
+            }
+            return nomPrenoms;
+        }
+        // Ou est stocke Id sessionStorage de societé chez employé
+        // let sessionId = sessionStorage.getItem("emp"),
+        var pointage = document.getElementById('pointage-value');
+        selectPointage = document.getElementById('option-affichage');
+        selectPointage2 = document.querySelector('.option-affichage');
+        sessionEmpId = employeID();
+        sessionId = sessionStorage.getItem('idSociete');
+        let nom = sessionStorage.getItem("nameAd");
+        let prenom = sessionStorage.getItem("prenomAd");
+
+
+
+
+        var entree = 'https://face.activactions.net/api/Pointage/Day/' + sessionId;
+        sorties = 'https://face.activactions.net/api/Pointage/Sortie/' + sessionId;
+        absence = 'https://face.activactions.net/api/Pointage/AbsenceJour/' + sessionId;
+
+
+        RetardJour = 'https://face.activactions.net/api/Pointage/RetardJour/' + sessionEmpId,
+            retardSemaine = 'https://face.activactions.net/api/Pointage/retardSemaine/' + sessionEmpId,
+            retardMois = 'https://face.activactions.net/api/Pointage/retardMois/' + sessionEmpId,
+
+            utilisateurs = 'https://face.activactions.net/api/Connexion/Get/' + sessionId,
+            employes = 'https://face.activactions.net/api/Employes/GetRespo?id=' + sessionId + '&nom=' + nom + '&prenom=' + prenom;
+
+        retardEquipeJour = 'https://face.activactions.net/api/Pointage/GetRetardJourRespo?id=' + sessionId + '&nom=' + nom + '&prenom=' + prenom;
+        retardEquipeSem = 'https://face.activactions.net/api/Pointage/GetRetardSemRespo?id=' + sessionId + '&nom=' + nom + '&prenom=' + prenom;
+        retardEquipeMois = 'https://face.activactions.net/api/Pointage/GetRetardMoisRespo?id=' + sessionId + '&nom=' + nom + '&prenom=' + prenom;
+
+        PointageEquipe = 'https://face.activactions.net/api/Pointage/GetRespoPoint?id=' + sessionId + '&nom=' + nom + '&prenom=' + prenom;
+        // retardEquipeMois = 'https://face.activactions.net/api/Pointage/GetRetardMoisRespo?id=' + sessionId + '&nom=' + nom + '&prenom=' + prenom;
+        // retardEquipeMois = 'https://face.activactions.net/api/Pointage/GetRetardMoisRespo?id=' + sessionId + '&nom=' + nom + '&prenom=' + prenom;
+        // retardEquipeMois = 'https://face.activactions.net/api/Pointage/GetRetardMoisRespo?id=' + sessionId + '&nom=' + nom + '&prenom=' + prenom;
+
+
+        employesById = 'https://face.activactions.net/api/Employes/Get/' + sessionEmpId,
+
+            PointageJour = 'https://face.activactions.net/api/Pointage/Jour/' + sessionEmpId,
+            pointageSem = "https://face.activactions.net/api/Pointage/Semaine/" + sessionEmpId,
+            pointageMois = "https://face.activactions.net/api/Pointage/Mois/" + sessionEmpId,
+
+
+            // Retard ?
+
+            function formatComplet(arg) {
+                let format = new Date(arg),
+                    ret;
+                ret = format.toLocaleDateString('fr-fr', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
+                return ret
+            }
+
+        function formatHeure(arg) {
+            if (arg === undefined) {
+                let infos = "Pas encore pointé";
+                return infos;
+            }
+            else {
+                let format = new Date(arg),
+                    ret;
+                ret = format.getHours() + "h:" + format.getMinutes() + "mn:" + format.getSeconds() + "s";
+                return ret
+            }
+        }
+
+    </script>
+
+
+
+
+
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header bg-light">
+            <div class="brand-logo">
+                <a href="index.html">
+                    <span class="brand-title text-light">
+                        <img src="images/import/_pointIS.png" alt="" width="80px">
+                    </span>
+                </a>
+            </div>
+            <img src="images/import/_pointIS.png" alt="" width="50px">
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">
+            <div class="header-content clearfix">
+
+                <div class="nav-control">
+                    <div class="hamburger">
+                        <span class="toggle-icon"><i class="icon-menu"></i></span>
+                    </div>
+                </div>
+
+                <div class="header-right">
+
+                    <ul class="clearfix">
+                        <li class="icons">
+                            <span id="nameConnect"></span>&nbsp;
+                            (<em id="societeAd"></em>)
+                        </li>
+
+                        <li class="icons dropdown">
+                            <div class="user-img c-pointer position-relative" data-toggle="dropdown">
+                                <span class="activity active"></span>
+                                <img src="images/user/1.png" height="40" width="40" alt="">
+                            </div>
+                            <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
+                                <div class="dropdown-content-body">
+                                    <ul>
+                                        <!--
+                                        <li>
+                                            <a href="#"><i class="icon-user"></i>
+                                                <span>Profile</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void()">
+                                                <i class="icon-envelope-open"></i> <span>Inbox</span>
+                                                <div class="badge gradient-3 badge-pill gradient-1">3</div>
+                                            </a>
+                                        </li>
+
+                                        <hr class="my-2">
+                                       -->
+
+                                        <li><a href="deconnect.html"><i class="icon-key"></i>
+                                                <span>Deconnexion</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="nk-sidebar">
+            <div class="nk-nav-scroll" style="background-color: #203f9a;">
+                <ul class="metismenu text-light" id="menu" style="background-color: #203f9a;">
+                    <!-- <li class="nav-label">Pages</li> -->
+                    <br />
+                    <!--
+                    <li>
+                        <a class="" href="javascript:void()" id="pageBoardUtil" aria-expanded="false"
+                            style="color: white;">
+                            <i class="fa fa-th-large text-light" aria-hidden="true"></i>
+                            <span class="nav-text">Tableau de bord</span>
+                        </a>
+                    </li><br />
+                    <li>
+                        <a class="" href="javascript:void()" id="pageEquipeUtil" aria-expanded="false"
+                            style="color: white;">
+                            <i class="fa fa-map text-light" aria-hidden="true"></i>
+                            <span class="nav-text">Equipe</span>
+                        </a>
+                    </li><br />
+                    <li id="Profile">
+                        <a class="" href="javascript:void()" id="pageParametreUtil" aria-expanded="false"
+                            style="color: white;">
+                            <i class="fa fa-cog text-light" aria-hidden="true"></i>
+                            <span class="nav-text">Profile</span>
+                        </a>
+                    </li><br />
+                    <li id="parametre">
+                        <a class="" href="index.html" id="pageAdminUtil" aria-expanded="false" style="color: white;">
+                            <i class="fa fa-cog text-light" aria-hidden="true"></i>
+                            <span class="nav-text">Administration</span>
+                        </a>
+                    </li><br />
+                    <li>
+                        <a class="" href="deconnect.html" aria-expanded="false"
+                            style="color: white; margin-top: 150px;">
+                            <i class="fa fa-sign-out text-light" aria-hidden="true"></i>
+                            <span class="nav-text">Deconnexion</span>
+                        </a>
+                    </li>
+                -->
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-body" id="content-main">
+
+            <div class="row m-3">
+                <div class="col-6 d-flex flex-column">
+                    <h2 class="border-dark border-bottom-1">Accueil</h2>
+                    <div class="col-12" style="background-color: rgba(245, 245, 245, 0.384);">
+                        <div id="carouselExampleControls" class="carousel slide p-5 text-center " data-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active d-flex flex-row justify-content-around">
+                                    <!-- <img class="d-block w-25" src="images/import/Code-QR.png" alt="First slide"> -->
+                                    <img src="" alt="" width="100" class="img-fluid img-thumbnail shadow-sm bg-success"
+                                        id="qrCodeImg" alt="votre qrCode">
+
+                                    <p>Mon espace de suivie<br /> Utilisateur <br /> POINTIS !!</p>
+                                </div>
+
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
+                                data-slide="prev">
+                                <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleControls" role="button"
+                                data-slide="next">
+                                <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    <canvas class="shadow-lg" id="myChart" style="width:100%;max-width:600px"></canvas>
+                </div>
+
+            </div>
+            <div class="row m-3">
+                <div class="col">
+                    <h3 class="text-success">Pointage du jour</h3>
+                </div>
+            </div>
+            <div class="row m-3">
+                <div class="col-8 bg-light border border-1 rounded-3">
+                    <table class="table">
+                        <thead class="" style="border-bottom: 2px solid black;">
+                            <tr>
+                                <th scope="col">DATE</th>
+                                <th scope="col">HORAIRE</th>
+                                <th scope="col">ENTREE</th>
+                                <th scope="col">SORTIE</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corps">
+                            <script type="text/javascript">
+                                fetch(PointageJour)
+                                    .then(res => res.json())
+                                    .then(data => {
+                                        console.log(data);
+                                        let infos = '';
+                                        console.log(data);
+                                        for (let item of data) {
+                                            infos += `<tr><td>${formatComplet(item.PointageJour)}</td><td>${item.EquipeHeureDebut} ${item.EquipeHeureFin}</td><td>${formatHeure(item.PointageHeureEntree)}</td><td>${formatHeure(item.PointageHeureSortie)}</td></tr>`;
+                                        }
+                                        document.getElementById('corps').innerHTML = infos;
+                                    });
+                            </script>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-4" id="equip">
+                    <div class="card bg-light mb-4 text-center shadow-lg" style="max-width: 25rem;">
+                        <div class="card-header">Mon équipe</div>
+                        <table class="table">
+                            <thead class="" style="border-bottom: 2px solid black;">
+                                <tr>
+                                    <th scope="col">NOM</th>
+                                    <th scope="col">PRENOMS</th>
+                                    <th scope="col">TELEPHONE</th>
+                                </tr>
+                            </thead>
+                            <tbody id="corpequipe">
+                                <script>
+                                    let infosEmp = '';
+                                    fetch(employes)
+                                        .then(res => res.json())
+                                        .then(data => {
+                                            console.log(data);
+                                            for (let item of data) {
+                                                infosEmp += `<tr><td>${item.Nom}</td><td>${item.Prenom}</td><td>${item.Telephone}</td></tr>`;
+
+                                            }
+                                            document.getElementById('corpequipe').innerHTML = infosEmp;
+                                        });
+                                </script>
+
+                            </tbody>
+
+                        </table>
+                        <!--<div class="card-body d-flex flex-column">
+                            <div class="d-flex flex-row justify-content-between m-1">
+                                <img src="" alt="" class="border border-1 border-dark rounded-5" width="35" height="35">
+                                <img src="" alt="" class="border border-1 border-dark rounded-5" width="35" height="35">
+                                <img src="" alt="" class="border border-1 border-dark rounded-5" width="35" height="35">
+                            </div>
+                            <div class="d-flex flex-row justify-content-between m-1">
+                                <img src="" alt="" class="border border-1 border-dark rounded-5" width="35" height="35">
+                                <img src="" alt="" class="border border-1 border-dark rounded-5" width="35" height="35">
+                                <img src="" alt="" class="border border-1 border-dark rounded-5" width="35" height="35">
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        var nomC = document.getElementById('nameConnect');
+        var nomSoc = document.getElementById('societeAd');
+
+        nomC.innerHTML = employeInfos();
+        nomSoc.innerHTML = sessionStorage.getItem("nameSoc");
+
+    </script>
+
+
+    <script src="js/qrCode.js"></script>
+
+
+
+
+    <script src="plugins/common/common.min.js"></script>
+    <script src="js/custom.min.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/gleek.js"></script>
+    <script src="js/styleSwitcher.js"></script>
+
+    <!-- Chartjs -->
+    <script src="./plugins/chart.js/Chart.bundle.min.js"></script>
+    <!-- Circle progress -->
+    <script src="./plugins/circle-progress/circle-progress.min.js"></script>
+    <!-- Datamap -->
+    <script src="./plugins/d3v3/index.js"></script>
+    <script src="./plugins/topojson/topojson.min.js"></script>
+    <script src="./plugins/datamaps/datamaps.world.min.js"></script>
+    <!-- Morrisjs -->
+    <script src="./plugins/raphael/raphael.min.js"></script>
+    <script src="./plugins/morris/morris.min.js"></script>
+    <!-- Pignose Calender -->
+    <script src="./plugins/moment/moment.min.js"></script>
+    <script src="./plugins/pg-calendar/js/pignose.calendar.min.js"></script>
+    <!-- ChartistJS -->
+    <script src="./plugins/chartist/js/chartist.min.js"></script>
+    <script src="./plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+
+    <!-- Chart Js -->
+    <script src="js/chartJs/scriptJs.js"></script>
+
+    <!-- JQuery -->
+    <script src="js/appelPages.js"></script>
+
+
+
+    <script src="./js/dashboard/dashboard-1.js"></script>
+
+</body>
+
+</html>

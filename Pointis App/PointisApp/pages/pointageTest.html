@@ -1,0 +1,35 @@
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.2.0/mustache.min.js"></script>
+</head>
+
+<div class="row m-3">
+    <div class="col bg-light border border-1 border-dark rounded-3 m-0 p-0">
+        <table class="table w-100">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">DATE</th>
+                    <th scope="col">EMPLOYES</th>
+                    <th scope="col">FONCTIONS</th>
+                    <th scope="col">ENTREES</th>
+                    <th scope="col">SORTIES</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script id="table-template" type="text/template">
+    {{#data}}
+        <tr>
+            <td>{{PointageJour}}</td>
+            <td>{{EmployeNom}}</td>
+            <td>{{EmployeTitre}}</td>
+            <td>{{PointageHeureEntree}}</td>
+            <td>{{PointageHeureSortie}}</td>
+        </tr>
+    {{/data}}
+</script>
+<script src="js/Pointage.js"></script>

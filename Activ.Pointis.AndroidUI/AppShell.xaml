@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="ProjetScan.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:ProjetScan"
+    Shell.TabBarIsVisible="False">
+
+    <Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <Grid BackgroundColor="White"
+                  HeightRequest="50">
+                <Image Source="Ressources/Images/pointis.png"
+                />
+            </Grid>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
+
+    <ShellContent
+        Title="Connexion"
+        ContentTemplate="{DataTemplate local:LoginPage}"
+        Route="LoginPage" 
+        Shell.FlyoutItemIsVisible="False"
+        Shell.FlyoutBehavior="Disabled"/>
+
+
+    <!--<FlyoutItem  FlyoutDisplayOptions="AsMultipleItems" StyleClass="Backgroung-color:D7D7D7">
+
+        <ShellContent
+        Title="TABLEAU DE BORD"
+        Icon="Ressources/Images/pointis.png"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="TABLEAU DE BORD" />
+
+    </FlyoutItem>-->
+
+
+    <FlyoutItem Title="Infos Générales" FlyoutDisplayOptions="AsMultipleItems">
+
+        <ShellContent
+        Title="Accueil"
+        Icon="Ressources/Images/accueil.jpeg"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />
+
+        <ShellContent
+        Title="Scanner QR Code à l'entrée"
+        Icon="Ressources/Images/qrcode.png"
+        ContentTemplate="{DataTemplate local:ScannerPage}"
+        Route="Scanner QR Code à l'entrée" />
+
+        <ShellContent
+        Title="Scanner QR Code à la sortie"
+        Icon="Ressources/Images/qrcode.jpeg"
+        ContentTemplate="{DataTemplate local:ScanSortiePage}"
+        Route="Scanner QR Code à la sortie" />
+    </FlyoutItem>
+
+    <ShellContent
+        Title="Employés"
+        Icon="Ressources/Images/user.jpeg"
+        ContentTemplate="{DataTemplate local:UtilisateurPage}"
+        Route="Employés" />
+    
+    <ShellContent
+        Title="Utilisateurs"
+        Icon="Ressources/Images/userimg.jpeg"
+        ContentTemplate="{DataTemplate local:user}"
+        Route="user" />
+
+    <ShellContent
+        Title="Horaires"
+        Icon="Ressources/Images/horaire.jpeg"
+        ContentTemplate="{DataTemplate local:HoraireTravailPage}"
+        Route="horaire" />
+
+    <FlyoutItem Title="Utilisateurs" FlyoutDisplayOptions="AsMultipleItems">
+        
+        <ShellContent
+        Title="Modifier mot de passe"
+        Icon="Ressources/Images/param.jpeg"
+        ContentTemplate="{DataTemplate local:AccueilPage}"
+        Route="Parametre" />
+
+        <ShellContent
+        Title="Déconnexion"
+        Icon="Ressources/Images/deconnexion.jpeg"
+        ContentTemplate="{DataTemplate local:LoginPage}"
+        Route="Déconnexion" />
+    </FlyoutItem>
+
+    <ShellContent
+        Title="A Propos"
+        Icon="Ressources/Images/propos.jpeg"
+        ContentTemplate="{DataTemplate local:AProposPage}"
+        Route="A Propos" />
+
+    <Shell.FlyoutFooterTemplate>
+        <DataTemplate>
+            <StackLayout>
+                <Label Text="Activ'"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" />
+                <Label Text="Copyright@2023"
+                       HorizontalOptions="Center" />
+            </StackLayout>
+        </DataTemplate>
+    </Shell.FlyoutFooterTemplate>
+
+</Shell>

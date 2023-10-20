@@ -1,0 +1,117 @@
+<div class="row m-3 d-flex justify-content-between">
+    
+    <div class="col-12 col-lg-3 d-flex flex-row p-2 border border-1 border-dark rounded-3"
+        style="background-color: whitesmoke;">
+        <img src="images/import/absence.png" alt="" width="50px">
+        <div class="d-flex flex-column">
+            <span id="absence">
+                <script>
+                    fetch(absenceTrimestre)
+                        .then(res => res.json())
+                        .then(data => {
+                            var absence = data;
+                            var absenceInf = '0' + absence;
+
+                            if (absence > 0) {
+                                if (absence < 10) {
+                                    document.getElementById('absence').innerHTML = absenceInf;
+                                }
+                                else {
+                                    document.getElementById('absence').innerHTML = absence;
+                                }
+                            } else {
+                                document.getElementById('absence').innerHTML = '00';
+                            }
+                        });
+                </script>
+            </span>
+            <span>Mes Absences</span>
+        </div>
+    </div>
+    
+    <div class="col-12 col-lg-3 d-flex flex-row p-2 border border-1 border-dark rounded-3"
+        style="background-color: whitesmoke;">
+        <img src="images/import/clock.png" alt="" width="50px">
+        <div class="d-flex flex-column">
+            <span id="retard">
+                <script>
+                    fetch(retardTrimestreEmp)
+                        .then(res => res.json())
+                        .then(data => {
+                            var retardInner = data;
+
+                            if (retardInner > 0) {
+                                document.getElementById('retard').innerHTML = convertirEnHeureMinuteSeconde(retardInner);
+                            } else {
+                                document.getElementById('retard').innerHTML = '00';
+                            }
+                        });
+                </script>
+            </span>
+            <span>Mes Retards</span>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-3 d-flex flex-row p-2 border border-1 border-dark rounded-3"
+        style="background-color: whitesmoke;">
+        <img src="images/import/attendance.png" alt="" width="50px">
+        <div class="d-flex flex-column">
+            <span id="presence">
+                <script>
+                    fetch(entreeTrimestreEmp)
+                        .then(res => res.json())
+                        .then(data => {
+                            var presence = data;
+                            var presenceAff = '0' + presence;
+
+                            if (presence > 0) {
+                                if (presence < 10) {
+                                    document.getElementById('presence').innerHTML = presenceAff;
+                                }
+                                else {
+                                    document.getElementById('presence').innerHTML = presence;
+                                }
+                            } else {
+                                document.getElementById('presence').innerHTML = '00';
+                            }
+                        });
+                </script>
+            </span>
+            <span>Mes Pointage</span>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="row m-3">
+    <div class="col bg-light border border-1 border-dark rounded-3 m-0 p-0">
+        <table class="table w-100">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">DATE</th>
+                    <th scope="col">ENTREES</th>
+                    <th scope="col">SORTIES</th>
+                    <th scope="col">DUREE</th>
+                </tr>
+            </thead>
+            <tbody id="corpsPoint">
+
+                <script type="text/javascript">
+                    console.log(pointTrimestre);
+                    fetch(pointTrimestre)
+                        .then(res => res.json())
+                        .then(data => {
+                            console.log(data);
+                            let infosPointJour = '';
+                            for (let item of data) {
+                                infosPointJour += `<tr><td>${formatComplet(item.PointageJour)}</td><td>${formatHeure(item.PointageHeureEntree)}</td><td>${formatHeure(item.PointageHeureSortie)}</td><td>${diffBetweenDates(item.PointageHeureEntree, item.PointageHeureSortie)}</td></tr>`;
+                            }
+                            document.getElementById('corpsPoint').innerHTML = infosPointJour;
+                        });
+                </script>
+            </tbody>
+        </table>
+    </div>
+
+</div>

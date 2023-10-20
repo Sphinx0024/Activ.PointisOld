@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProjetScan.AccueilPage"
+             Title="Modifier le mot de passe">
+
+    <Grid Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+
+        <StackLayout Orientation="Horizontal"  BackgroundColor="#8BC34A">
+            <Frame HeightRequest="110" WidthRequest="110" Padding="10" Margin="130,100,100,0" BackgroundColor="#f3f3f9">
+                    <Image Source="Ressources/Images/modifier.jpeg" Aspect="AspectFill" Margin="0"/>
+                </Frame>
+            </StackLayout>
+
+        <Grid Grid.RowSpan="5" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="2" Text="Renseigner correctement les champs" HorizontalOptions="Center" FontSize="Subtitle" FontAttributes="Bold" Padding="0" Margin="0"/>
+                <StackLayout Grid.Row="3" Orientation="Vertical" HorizontalOptions="CenterAndExpand">
+                <!--<Frame BackgroundColor="Transparent" BorderColor="#8BC34A" HorizontalOptions="CenterAndExpand" Padding="0" CornerRadius="30" Margin="15,15,15,0" WidthRequest="300">
+                        <StackLayout Orientation="Horizontal">
+                        <Frame BackgroundColor="SkyBlue" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                                <Image Source="Ressources/Images/usermane.jpeg" Aspect="AspectFill" Margin="0"/>
+                            </Frame>
+                            <Entry Text="{Binding User}" Placeholder="Youssouf" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" IsEnabled="False"/>
+                        </StackLayout>
+                </Frame>-->
+                <Frame BackgroundColor="Transparent" BorderColor="#8BC34A" HorizontalOptions="CenterAndExpand" Padding="0" CornerRadius="30" Margin="15,15,15,0" WidthRequest="300">
+                        <StackLayout Orientation="Horizontal">
+                            <Frame BackgroundColor="SkyBlue" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                                <Image Source="Ressources/Images/password.jpeg" Aspect="AspectFill" Margin="0"/>
+                            </Frame>
+                        <Entry x:Name="Password" Placeholder="Ancien mot de passe " TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" IsPassword="True"/>
+                        </StackLayout>
+                    </Frame>
+                <Frame BackgroundColor="Transparent" BorderColor="#8BC34A" HorizontalOptions="CenterAndExpand" Padding="0" CornerRadius="30" Margin="15,15,15,0" WidthRequest="300">
+                        <StackLayout Orientation="Horizontal">
+                            <Frame BackgroundColor="SkyBlue" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                                <Image Source="Ressources/Images/password.jpeg" Aspect="AspectFill" Margin="0"/>
+                            </Frame>
+                        <Entry x:Name="PasswordN" Placeholder="Nouveau mot de passe " TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" IsPassword="True"/>
+                        </StackLayout>
+                    </Frame>
+                <Frame BackgroundColor="Transparent" BorderColor="#8BC34A" HorizontalOptions="CenterAndExpand" Padding="0" CornerRadius="30" Margin="15,15,15,0" WidthRequest="300">
+                        <StackLayout Orientation="Horizontal">
+                            <Frame BackgroundColor="SkyBlue" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                                <Image Source="Ressources/Images/password.jpeg" Aspect="AspectFill" Margin="0"/>
+                            </Frame>
+                        <Entry x:Name="PasswordC" Placeholder="Confirmer mot de passe " TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" IsPassword="True"/>
+                        </StackLayout>
+                </Frame>
+                <Button Text=" Modifier" FontAttributes="Bold" TextColor="White" BackgroundColor="#8BC34A" Margin="0,30,0,0" CornerRadius="30" WidthRequest="200" Clicked="ModifierClick"/>
+                </StackLayout>
+
+        </Grid>
+    </Grid>
+</ContentPage>

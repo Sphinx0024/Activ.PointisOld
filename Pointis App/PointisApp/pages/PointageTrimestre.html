@@ -1,0 +1,44 @@
+<div class="row m-3">
+    <div class="col bg-light border border-1 border-dark rounded-3 m-0 p-0">
+        <table class="table w-100">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">DATE</th>
+                    <th scope="col">EMPLOYES</th>
+                    <th scope="col">FONCTIONS</th>
+                    <th scope="col">ENTREES</th>
+                    <th scope="col">SORTIES</th>
+                    <th scope="col">DUREE</th>
+                </tr>
+            </thead>
+
+            <tbody id="corpsTrimestre">
+
+                <script type="text/javascript">
+
+                    var dataMois = {};
+
+                    var sessionId = sessionStorage.getItem('idSociete');
+
+                    fetch("https://face.activactions.net/api/Pointage/Quarter/" + sessionId, {
+                        method: 'GET',
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            let infosTri = '';
+
+                            for (let item of data) {
+                                infosTri += `<tr><td>${formatComplet(item.PointageJour)}</td><td>${item.EmployeNom} ${item.EmployePrenom}</td><td>${item.EmployeTitre}</td><td>${formatHeure(item.PointageHeureEntree)}</td><td>${formatHeure(item.PointageHeureSortie)}</td><td>${diffBetweenDates(item.PointageHeureEntree,item.PointageHeureSortie)}</td></tr>`;
+                            }
+                            document.getElementById('corpsTrimestre').innerHTML = infosTri;
+                        });
+                </script>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProjetScan.UtilisateurPage"
+             Title="Employés">
+
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Employés" FontSize="Large" TextColor="White" VerticalOptions="Center" HorizontalOptions="FillAndExpand"/>
+            <ImageButton Source="Ressources/Images/ajout.jpeg"
+                         HeightRequest="30"
+                         WidthRequest="30"
+                         Margin="-10,10,10,10"
+                         Clicked="AddClick"/>
+            
+        </StackLayout>
+    </Shell.TitleView>
+
+    <!--<RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
+        <ScrollView>
+            <StackLayout>-->
+
+                <VerticalStackLayout>
+
+                    <Grid ColumnDefinitions="*"
+                  RowDefinitions="Auto,Auto,Auto,Auto">
+
+                        <SearchBar x:Name="Recherche"
+                           HorizontalOptions="Center"
+                           WidthRequest="300"
+                           Placeholder="Nom"/>
+
+                    </Grid>
+
+                    <ListView x:Name="MyListView" ItemsSource="{Binding Data}" VerticalScrollBarVisibility="Always">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextCell Text="{Binding Nom}" Detail="{Binding Telephone}" />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                </VerticalStackLayout>
+                
+            <!--</StackLayout>
+        </ScrollView>
+    </RefreshView>-->
+</ContentPage>

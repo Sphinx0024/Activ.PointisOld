@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProjetScan.ScannerPage"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             Title="Scan à l'entrée"
+             Shell.FlyoutItemIsVisible="True">
+    
+    <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
+
+        <zxing:CameraBarcodeReaderView x:Name="barcodeReader" WidthRequest="250" HeightRequest="300"
+                IsDetecting="True" IsTorchOn="False" BarcodesDetected="CameraBarcodeReaderView_BarcodesDetected" />
+
+        <Label
+                Margin="10"
+                x:Name="barcodeResult"
+                SemanticProperties.HeadingLevel="Level3"
+                FontSize="32"
+                HorizontalOptions="Center" />
+
+        <!--<Label
+                x:Name="dateJour"
+                SemanticProperties.HeadingLevel="Level4"
+                FontSize="32"
+                HorizontalOptions="Center" />-->
+
+        <!--<Button SemanticProperties.HeadingLevel="Level4" 
+                Text="Entree" 
+                BackgroundColor="#8BC34A" 
+                Clicked="ValiderClick"/>-->
+
+
+
+    </VerticalStackLayout>
+</ContentPage>

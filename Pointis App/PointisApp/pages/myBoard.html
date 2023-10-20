@@ -1,0 +1,121 @@
+<!-- chart Js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<!-- JQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"
+    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+
+
+<div class="">
+    <div class="row">
+        <div class="col">
+            <h2 class="border-dark border-bottom-1">Mon tableau de bord</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header text-center" id="flush-headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            Vu du mois de Mai
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                        data-bs-parent="#accordionFlushExample">
+                        <ul class="accordion-body">
+                            <li>Mars</li>
+                            <li>Fevrier</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="row m-3 d-flex justify-content-between">
+        <div class="col-12 col-lg-3 d-flex flex-row p-2 border border-1 border-dark rounded-3"
+            style="background-color: whitesmoke;">
+            <img src="images/import/clock.png" alt="" width="50px">
+            <div class="d-flex flex-column">
+                <span>10</span>
+                <span>Retard</span>
+            </div>
+        </div>
+        <div class="col-12 col-lg-3 d-flex flex-row p-2 border border-1 border-dark rounded-3"
+            style="background-color: whitesmoke;">
+            <img src="images/import/absence.png" alt="" width="50px">
+            <div class="d-flex flex-column">
+                <span>10</span>
+                <span>Absence</span>
+            </div>
+        </div>
+        <div class="col-12 col-lg-3 d-flex flex-row p-2 border border-1 border-dark rounded-3"
+            style="background-color: whitesmoke;">
+            <img src="images/import/attendance.png" alt="" width="50px">
+            <div class="d-flex flex-column">
+                <span>10</span>
+                <span>Presence</span>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col border-bottom-1 border-dark">
+            <h3 class="text-end">Mes pourcentages</h3>
+        </div>
+    </div>
+    <div class="row m-3 d-flex justify-content-between">
+        <div class="col-6">
+            <canvas class="shadow-lg" id="myChartMyBord1" style="width:100%;max-width:600px"></canvas>
+        </div>
+        <div class="col-6">
+            <canvas class="shadow-lg" id="myChartMyBord2" style="width:100%;max-width:600px"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+
+    var xValues = ["LUN", "MAR", "MER", "JEU", "VEN", "SAM", "DIM"];
+    var yValues = [15, 5, 10, 15, 25, 15, 20];
+    var barColors = ["#8dc63f", "#6ba63c", "#8dc63f", "#6ba63c", "#8dc63f", "#6ba63c", "#8dc63f"];
+
+
+    new Chart("myChartMyBord1", {
+        type: "bar",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        },
+        /*
+        options: {
+          legend: {display: false},
+          title: {
+            display: true,
+            text: "Cette semaine"
+          }
+        }
+        */
+        options: {
+            title: {
+                display: true,
+                text: "Cette semaine"
+            }
+        }
+
+    });
+
+
+
+
+</script>

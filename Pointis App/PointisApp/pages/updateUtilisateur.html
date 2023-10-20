@@ -1,0 +1,57 @@
+<form action="" method="" class="col-12 d-flex flex-column">
+    <div class="col-12 d-flex flex-row justify-content-between flex-wrap bg-light m-2 p-2">
+        <div class="input-block d-flex flex-column me-2">
+            <label for="logUtilisateur" class="">Login</label>
+            <input type="text" class="form-control" id="logUtilisateurUpdate" name="logUtilisateur" placeholder="">
+        </div>
+        
+        <div class="input-block d-flex flex-column me-2">
+            <label for="roleUtilisateurUpdate" class="">Role</label>
+            <select name="" id="roleUtilisateurUpdate" class="form-control">
+                <option value="">-- Veuillez choisir le role de l'utilisateur --</option>
+                <option value="">Administrateur</option>
+                <option value="">Utilisateur</option>
+            </select>
+        </div>
+
+        <div style="display: none;">
+            <label for="passUtilisateur" class="">Mot de passe</label>
+            <input type="text" class="form-control" id="passUtilisateurUpdate" name="passUtilisateur" placeholder="">
+        </div>
+    </div>
+
+    <div class="input-block d-flex flex-column align-self-start">
+        <input type="button" id="envoyer" onclick="editUtilisateur();" class="align-self-end btn btn-primary border-0"
+            value="Envoyer" />
+    </div>
+
+</form>
+
+<script>
+    function updateUtilisateur() {
+        let UtilID = sessionStorage.getItem("edit");
+        //alert(EmpID);
+
+        fetch('https://face.activactions.net/api/Connexion/GetUn/' + UtilID)
+            .then(res => res.json())
+            .then(data => {
+                //console.log(data);
+                for (let item of data) {
+                    document.getElementById("logUtilisateurUpdate").value = item.Login;
+                    document.getElementById("passUtilisateurUpdate").value = item.Password;
+                    document.getElementById("roleUtilisateurUpdate").value = item.Role;
+                }
+            });
+
+            //alert('true');
+    }
+
+    updateUtilisateur();
+
+</script>
+
+
+<script>
+    document.getElementById('add').innerHTML = 'Mofifier utilisateurs';
+
+</script>

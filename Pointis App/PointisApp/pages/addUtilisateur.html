@@ -1,0 +1,30 @@
+<form action="" method="" class="col-12 d-flex flex-row justify-content-between flex-wrap bg-light m-2 p-2">
+    <div class="input-block d-flex flex-column">
+        <label for="logUtilisateur" class="">Login</label>
+        <input type="text" class="mt-2 bg-light border-0 border-bottom" id="logUtilisateur" name="logUtilisateur"
+            placeholder="">
+    </div>
+    <div class="input-block d-flex flex-column">
+        <label for="passUtilisateur" class="">Mot de passe</label>
+        <input type="text" class="mt-2 bg-light border-0 border-bottom" id="passUtilisateur" name="passUtilisateur"
+            placeholder="">
+    </div>
+    <div class="input-block d-flex flex-column">
+        <label for="roleUtilisateur" class="">Role</label>
+        <select name="" id="roleUtilisateur" class="form-control">
+            <option value="">-- Veuillez choisir le role de l'utilisateur --</option>
+            <option value="">Administrateur</option>
+            <option value="">Utilisateur</option>
+        </select>
+    </div>
+
+    <input type="button" id="envoyer" onclick="ajouterUtilisateur();" class="align-self-end btn btn-primary border-0"
+        value="Envoyer" />
+
+</form>
+
+
+<script>
+    document.getElementById('add').innerHTML = 'Ajouter utilisateurs';
+
+</script>

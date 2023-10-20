@@ -1,0 +1,727 @@
+<script>
+
+    let socID = sessionStorage.getItem('idSociete');
+
+    function ajouterSociete() {
+
+        var a = document.getElementById("Sexe");
+        var valeurselectionnee = a.options[a.selectedIndex].value;
+        var textselectionne = a.options[a.selectedIndex].text;
+
+        /*
+        var selectElmt = document.getElementById("Titre");
+        var valeurselectionnee = selectElmt.options[selectElmt.selectedIndex].value;
+        var text = selectElmt.options[selectElmt.selectedIndex].text;
+        */
+
+        //var a = document.getElementById("SocieteID");
+        //var valeurselectionnee = a.options[a.selectedIndex].value;
+        // var textselectionne = a.options[a.selectedIndex].text;
+        // var qr=document.getElementById(".qrious");
+
+        /*   var comboBox = document.getElementById("SocieteID");
+           var selectedOption = comboBox.options[comboBox.selectedIndex];
+           var selectedId = selectedOption.getAttribute("attr.data-value");*/
+
+        var combo = document.getElementById("equipe");
+        var selected = combo.options[combo.selectedIndex];
+        var selectedId = selected.getAttribute("attr.data-value");
+
+        //var form = document.querySelector('form');
+        //var data = new FormData(form);
+        /*var comboBox = document.getElementById("Sexe");
+        var cmb = document.getElementById("Sexe").value;
+        var selectedOption = comboBox.options[comboBox.selectedOption];
+       */
+
+        // let z = sessionStorage.getItem("u");
+        var t = document.getElementById("Nom").value;
+        var d = document.getElementById("Prenom").value;
+        var turn = document.getElementById("Email").value;
+        var p = document.getElementById("Telephone").value;
+        var title = document.getElementById("Titre").value;
+        //  var r = document.getElementById("SocieteID").value;
+        var l = document.getElementById("Matricule").value;
+        var resp = document.getElementById("Responsable").value;
+
+
+        var data = {
+
+            EquipeID: parseInt(selectedId),
+            Nom: t,
+            Prenom: d,
+            Email: turn,
+            Telephone: p,
+            Sexe: textselectionne,
+            Titre: title,
+            Matricule: l,
+            Responsable: resp,
+            SocieteID: parseInt(socID)
+        }
+
+        if (t != '' && selectedId != 0) {
+            fetch('https://face.activactions.net/api/Employes/Add/' + socID, {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            // alert("Enregistrement reussi !");
+
+
+
+
+            function sendMail() {
+
+                // const raisonSoConst = document.getElementById("user_name").value;
+                // const emailEntConst = document.getElementById("Email").value;
+                const preAdConst = document.getElementById("Prenom").value;
+                const nomAdConst = document.getElementById("Nom").value;
+                const emailAdConst = document.getElementById("Email").value;
+                const space = " ";
+                //const defaultMDPConst = password;
+                const lien = "https://";
+                //format text 
+                let ebody = `
+                        <p>Cher, </p> ${preAdConst} ${space} ${nomAdConst}
+                        <br />
+                        <p>Vous venez d'etre enregistré sur Pointis comme Employé</p>
+                        <br />
+                        <p>Veuillez cliquez sur ce <a href="${lien}">lien</a> pour télécharger l'application</p> 
+                        <br>
+                        <p>Cordialement.</p>
+                        <br/>
+                        <center>@Pointis</center>
+                        `
+
+                // Use token method
+                Email.send({
+                    SecureToken: "193b80ea-7547-40a3-bafa-b8eb082adeb5",
+                    To: emailAdConst,
+                    From: 'pointisapp@gmail.com',
+                    Subject: "Enregistrement de " + preAdConst + " sur POINTIS !",
+                    Body: ebody
+                }).then(
+
+                    message => alert("Enregistrement reussi !!")
+                    //message => location.replace('./succes.php')
+                    //message => alert(message)
+                );
+                //location.replace('./succes.php');
+            }
+
+            sendMail();
+
+
+            $.ajax({
+                url: 'pages/listeEmploye.html',
+                method: 'GET',
+                dataType: 'html',
+                success: function (data) {
+                    $('#show').html(data);
+                },
+                error: function () {
+                    $('#show').html('Erreur lors du chargement des données.');
+                }
+            });
+            //location.replace('index.html');
+
+        }
+
+    }
+
+
+    function ajouterHoraire() {
+
+        // let z = sessionStorage.getItem("u");
+        // console.log(z);
+        var t = document.getElementById("Titre-horaire").value;
+        var d = document.getElementById("debs").value;
+        var turn = document.getElementById("fins").value;
+
+        var data = {
+            Title: t,
+            HeureDebutService: d,
+            HeureFinService: turn,
+            SocieteID: socID
+        }
+
+        fetch('https://face.activactions.net/api/EquipeTravail/Post/' + socID, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        alert("Enregistrement reussi !");
+        //location.replace('index.html');
+
+        $.ajax({
+            url: 'pages/listeHoraire.html',
+            method: 'GET',
+            dataType: 'html',
+            success: function (data) {
+                $('#show').html(data);
+            },
+            error: function () {
+                $('#show').html('Erreur lors du chargement des données.');
+            }
+        });
+    }
+
+    function ajouterUtilisateur() {
+        var t = document.getElementById("logUtilisateur").value;
+        var d = document.getElementById("passUtilisateur").value;
+
+        var a = document.getElementById("roleUtilisateur");
+        var valeurselectionnee = a.options[a.selectedIndex].value;
+        var textselectionne = a.options[a.selectedIndex].text;
+
+        var data = {
+            Login: t,
+            Password: d,
+            Role: textselectionne
+        }
+
+        fetch('https://face.activactions.net/api/Connexion/Post/' + socID, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+
+        /*
+
+        function sendMailUtilisateur() {
+
+            // const raisonSoConst = document.getElementById("user_name").value;
+            // const emailEntConst = document.getElementById("Email").value;
+            const preAdConst = document.getElementById("Prenom").value;
+            const nomAdConst = document.getElementById("Nom").value;
+            const emailAdConst = document.getElementById("Email").value;
+            const space = " ";
+            //const defaultMDPConst = password;
+            const lien = "https://";
+            //format text 
+            let ebody = `
+          <p>Cher, </p> ${preAdConst} ${space} ${nomAdConst}
+          <br />
+          <p>Vous venez d'etre enregistré sur Pointis comme Employé</p>
+          <br />
+          <p>Veuillez cliquez sur ce <a href="${lien}">lien</a> pour télécharger l'application</p> 
+          <br>
+          <p>Cordialement.</p>
+          <br/>
+          <center>@Pointis</center>
+          `
+
+            // Use token method
+            Email.send({
+                SecureToken: "193b80ea-7547-40a3-bafa-b8eb082adeb5",
+                To: emailAdConst,
+                From: 'pointisapp@gmail.com',
+                Subject: "Enregistrement de " + preAdConst + " sur POINTIS !",
+                Body: ebody
+            }).then(
+
+                message => alert("Enregistrement reussi !!")
+                //message => location.replace('./succes.php')
+                //message => alert(message)
+            );
+            //location.replace('./succes.php');
+        }
+
+        sendMailUtilisateur();
+
+        // alert("Enregistrement reussi !");
+
+        */
+
+
+        $.ajax({
+            url: 'pages/listeUtilisateur.html',
+            method: 'GET',
+            dataType: 'html',
+            success: function (data) {
+                $('#show').html(data);
+            },
+            error: function () {
+                $('#show').html('Erreur lors du chargement des données.');
+            }
+        });
+        //location.replace('index.html');
+    }
+
+
+
+    function supprimer(_url, id, lien) {
+        sessionStorage.setItem("supp", id);
+        let choix = confirm("Voulez vous vraiment supprimer cet élement ?");
+        //var c=url;
+        //var d= id;
+        console.log(_url, id, lien);
+        //console.log(c,d);
+
+
+        if (choix) {
+            fetch(_url + "?id=" + id, {
+                method: 'DELETE'
+            });
+            alert("Cet élément a été supprimé ");
+            //location.replace('index.html');
+
+            $.ajax({
+                url: 'pages/' + lien,
+                method: 'GET',
+                dataType: 'html',
+                success: function (data) {
+                    $('#show').html(data);
+                },
+                error: function () {
+                    $('#show').html('Erreur lors du chargement des données.');
+                }
+            });
+        }
+        else {
+            alert("la suppression a été annulée");
+            // location.replace('./affichageenregi.html');
+        }
+    }
+
+    function modifier(id, lien) {
+        sessionStorage.setItem("edit", id);
+        var liencomplet = 'pages/' + lien;
+        $.ajax({
+            url: liencomplet,
+            method: 'GET',
+            dataType: 'html',
+            success: function (data) {
+                $('#showUdpade').html(data);
+            },
+            error: function () {
+                // $('#reponseAjax').html('Erreur lors du chargement des données.');
+            }
+        });
+    }
+
+    /*
+    function detail(id, lien) {
+        sessionStorage.setItem("detail", id);
+
+        location.replace('../admin/detailemp.html');
+    }
+    */
+
+    function badge(id, lien) {
+        sessionStorage.setItem("badge", id);
+
+        var liencomplet = 'pages/' + lien;
+        $.ajax({
+            url: liencomplet,
+            method: 'GET',
+            dataType: 'html',
+            success: function (data) {
+                $('#showBadge').html(data);
+            },
+            error: function () {
+                // $('#reponseAjax').html('Erreur lors du chargement des données.');
+            }
+        });
+    }
+
+    function badgeMail(id, lien) {
+        sessionStorage.setItem("badge-mail", id);
+
+        var liencomplet = 'pages/' + lien;
+        $.ajax({
+            url: liencomplet,
+            method: 'GET',
+            dataType: 'html',
+            success: function (data) {
+                $('#showBadgeMail').html(data);
+            },
+            error: function () {
+                // $('#reponseAjax').html('Erreur lors du chargement des données.');
+            }
+        });
+    }
+
+    function editEmployes() {
+        var EmployesID = sessionStorage.getItem("edit");
+
+        var a = document.getElementById("SexeUpdate");
+        var valeurselectionnee = a.options[a.selectedIndex].value;
+        var textselectionne = a.options[a.selectedIndex].text;
+
+        var combo = document.getElementById("equipeUpdate");
+        var selected = combo.options[combo.selectedIndex];
+        var selectedId = selected.getAttribute("attr.data-value");
+
+        // let z = sessionStorage.getItem("u");
+        var t = document.getElementById("NomUpdate").value;
+        var d = document.getElementById("PrenomUpdate").value;
+        var turn = document.getElementById("EmailUpdate").value;
+        var p = document.getElementById("TelephoneUpdate").value;
+        var title = document.getElementById("TitreUpdate").value;
+        //  var r = document.getElementById("SocieteID").value;
+        var l = document.getElementById("MatriculeUpdate").value;
+        var resp = document.getElementById("ResponsableUpdate").value;
+
+
+        var data = {
+
+            EquipeID: parseInt(selectedId),
+            Nom: t,
+            Prenom: d,
+            Email: turn,
+            Telephone: p,
+            Sexe: textselectionne,
+            Titre: title,
+            Matricule: l,
+            Responsable: resp,
+            SocieteID: parseInt(socID)
+        }
+
+        if (t != '' && selectedId != 0) {
+            fetch('https://face.activactions.net/api/Employes/Put/' + EmployesID, {
+                method: 'PUT',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            alert("Modification reussi !");
+
+            $.ajax({
+                url: 'pages/listeEmploye.html',
+                method: 'GET',
+                dataType: 'html',
+                success: function (data) {
+                    $('#show').html(data);
+                },
+                error: function () {
+                    $('#show').html('Erreur lors du chargement des données.');
+                }
+            });
+            //location.replace('index.html');
+        }
+
+    }
+
+    function editUtilisateur() {
+        var t = document.getElementById("logUtilisateurUpdate").value;
+        var d = document.getElementById("passUtilisateurUpdate").value;
+
+        var a = document.getElementById("roleUtilisateurUpdate");
+        var valeurselectionnee = a.options[a.selectedIndex].value;
+        var textselectionne = a.options[a.selectedIndex].text;
+
+        var idConnexion = sessionStorage.getItem("edit");
+        var idSociete = sessionStorage.getItem("edit");
+
+        var data = {
+            Login: t,
+            Password: d,
+            Role: textselectionne,
+            SocieteID: socID
+        }
+
+        fetch('https://face.activactions.net/api/Connexion/Put/' + idConnexion, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        alert("Modification reussi !");
+
+        $.ajax({
+            url: 'pages/listeUtilisateur.html',
+            method: 'GET',
+            dataType: 'html',
+            success: function (data) {
+                $('#show').html(data);
+            },
+            error: function () {
+                $('#show').html('Erreur lors du chargement des données.');
+            }
+        });
+        //location.replace('index.html');
+    }
+
+    function editHoraire() {
+        var EquipeID = sessionStorage.getItem("edit");
+
+        var titre = document.getElementById("Titre-horaireUpdate").value;
+        var debs = document.getElementById("debshoraireUpdate").value;
+        var fins = document.getElementById("finshoraireUpdate").value;
+
+        var data = {
+            Title: titre,
+            HeureDebutService: debs,
+            HeureFinService: fins,
+            SocieteID: socID
+        }
+
+
+        fetch('https://face.activactions.net/api/EquipeTravail/Put/' + EquipeID, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        alert("Modification reussi !");
+
+        $.ajax({
+            url: 'pages/listeHoraire.html',
+            method: 'GET',
+            dataType: 'html',
+            success: function (data) {
+                $('#show').html(data);
+            },
+            error: function () {
+                $('#show').html('Erreur lors du chargement des données.');
+            }
+        });
+        //location.replace('index.html');
+
+
+
+    }
+    /*
+
+
+    function supprimer(_url, id, lien) {
+        sessionStorage.setItem("supp", id);
+        let choix = confirm("Voulez vous vraiment supprimer cet élement ?");
+        //var c=url;
+        //var d= id;
+        console.log(_url, id, lien);
+        //console.log(c,d);
+
+
+        if (choix) {
+            fetch(_url + "?id=" + id, {
+                method: 'DELETE'
+            });
+            alert("Cet élément a été supprimé ");
+            location.replace('index.html');
+        }
+        else {
+            alert("la suppression a été annulée");
+            // location.replace('./affichageenregi.html');
+        }
+    }
+
+
+    function modifier(id, lien) {
+        sessionStorage.setItem("modif", id);
+        location.replace('index.html');
+        // location.replace('../admin/editemploye.html');
+    }
+
+
+    function detail(id, lien) {
+        sessionStorage.setItem("detail", id);
+
+        location.replace('../admin/detailemp.html');
+    }
+    function badge(id, lien) {
+        console.log(id);
+        sessionStorage.setItem("badge", id);
+        location.replace('./qrcode.html');
+    }
+    */
+
+
+
+
+
+
+
+
+</script>
+
+<div class="">
+
+    <div class="row m-3">
+        <div class="col d-flex flex-column">
+            <h2 class="border-dark border-bottom-1">Parametres administrateur</h2>
+        </div>
+    </div>
+    <div class="col-12 d-flex flex-row text-dark opacity-75">
+        <span class="pageParametre" id="pageParametre1">Parametre </span>
+
+        <span>/</span>
+        <span id="add"></span>
+    </div>
+    <div class="row mt-5">
+        <div class="col"></div>
+    </div>
+
+    <div class="row d-flex flex-row m-3" id="show">
+
+        <button class="col-2 d-flex flex-row btn btn-para text-uppercase text-light mt-2" id="showEmploye">
+            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor"
+                class="bi bi-person-vcard-fill text-light" viewBox="0 0 16 16">
+                <path
+                    d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm9 1.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0-.5.5ZM9 8a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4A.5.5 0 0 0 9 8Zm1 2.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 0-1h-3a.5.5 0 0 0-.5.5Zm-1 2C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 0 2 13h6.96c.026-.163.04-.33.04-.5ZM7 6a2 2 0 1 0-4 0 2 2 0 0 0 4 0Z" />
+            </svg>
+            <span>Liste employés</span>
+        </button>
+
+        <script>
+
+        </script>
+        <button class="col-2 d-flex flex-row btn btn-para text-uppercase text-light mt-2" id="showHoraire">
+            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor"
+                class="bi bi-clock-fill text-light" viewBox="0 0 16 16">
+                <path
+                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
+            </svg>
+            <span>Liste des horaires</span>
+        </button>
+
+        <script>
+        </script>
+        <button class="col-2 d-flex flex-row btn btn-para text-uppercase text-light mt-2" id="showUtilisateur">
+            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor"
+                class="bi bi-person-vcard-fill text-light" viewBox="0 0 16 16">
+                <path
+                    d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm9 1.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0-.5.5ZM9 8a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4A.5.5 0 0 0 9 8Zm1 2.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 0-1h-3a.5.5 0 0 0-.5.5Zm-1 2C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 0 2 13h6.96c.026-.163.04-.33.04-.5ZM7 6a2 2 0 1 0-4 0 2 2 0 0 0 4 0Z" />
+            </svg>
+            <span>Liste utilisateurs</span>
+        </button>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+<script>
+
+    $(document).ready(function () {
+        $('#addEmploye').click(function () {
+            $.ajax({
+                url: 'pages/addEmploye.html',
+                method: 'GET',
+                dataType: 'html',
+                success: function (data) {
+                    $('#showAddEmployes').html(data);
+                },
+                error: function () {
+                    $('#showAddEmployes').html('Erreur lors du chargement des données.');
+                }
+            });
+        });
+    });
+
+    $(document).ready(function () {
+        $('#addHoraire').click(function () {
+            $.ajax({
+                url: 'pages/addHoraire.html',
+                method: 'GET',
+                dataType: 'html',
+                success: function (data) {
+                    $('#showAddHoraire').html(data);
+                },
+                error: function () {
+                    $('#showAddHoraire').html('Erreur lors du chargement des données.');
+                }
+            });
+        });
+    });
+
+
+    $(document).ready(function () {
+        $('#addUtilisateur').click(function () {
+            $.ajax({
+                url: 'pages/addUtilisateur.html',
+                method: 'GET',
+                dataType: 'html',
+                success: function (data) {
+                    $('#showAddUtilisateur').html(data);
+                },
+                error: function () {
+                    $('#showAddUtilisateur').html('Erreur lors du chargement des données.');
+                }
+            });
+        });
+    });
+
+
+    $(document).ready(function () {
+        $('#showEmploye').click(function () {
+            $.ajax({
+                url: 'pages/listeEmploye.html',
+                method: 'GET',
+                dataType: 'html',
+                success: function (data) {
+                    $('#show').html(data);
+                },
+                error: function () {
+                    $('#show').html('Erreur lors du chargement des données.');
+                }
+            });
+        });
+    });
+
+    $(document).ready(function () {
+        $('#showUtilisateur').click(function () {
+            $.ajax({
+                url: 'pages/listeUtilisateur.html',
+                method: 'GET',
+                dataType: 'html',
+                success: function (data) {
+                    $('#show').html(data);
+                },
+                error: function () {
+                    $('#show').html('Erreur lors du chargement des données.');
+                }
+            });
+        });
+    });
+
+    $(document).ready(function () {
+        $('#showHoraire').click(function () {
+            $.ajax({
+                url: 'pages/listeHoraire.html',
+                method: 'GET',
+                dataType: 'html',
+                success: function (data) {
+                    $('#show').html(data);
+                },
+                error: function () {
+                    $('#show').html('Erreur lors du chargement des données.');
+                }
+            });
+        });
+    });
+
+
+    $(document).ready(function () {
+        $('#pageParametre1').click(function () {
+
+            $.ajax({
+                url: 'pages/parametre.html',
+                method: 'GET',
+                dataType: 'html',
+                success: function (data) {
+                    $('#content-main').html(data);
+                },
+                error: function () {
+                    // $('#reponseAjax').html('Erreur lors du chargement des données.');
+                }
+            });
+        });
+    });
+</script>

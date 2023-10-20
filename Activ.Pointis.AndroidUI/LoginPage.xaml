@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProjetScan.LoginPage"
+             Title="Connexion"
+             Shell.FlyoutItemIsVisible="False"
+             Shell.NavBarIsVisible="false"
+             xmlns:controls="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls">
+
+
+
+    <!--<controls:Image Source="Ressources/Images/maq.png"
+                        Aspect="AspectFill"
+                        VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand" />-->
+
+    
+
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="220"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+
+        <!--<Path Stroke="#fff" Data="m0.30001,0l449,0l0,128.48327c-122.5,64.30167 -332.5,65.89076 -449,7.2429c0,-45.25313 0,-90.473" Fill="#2ECC71"/>-->
+
+        <StackLayout Orientation="Horizontal" BackgroundColor="#8BC34A">
+            <Frame BackgroundColor="SkyBlue" HeightRequest="100" WidthRequest="100" CornerRadius="30" Padding="0" Margin="130,220,100,0">
+                <Image Source="Ressources/Images/avatar.png" Aspect="AspectFill" Margin="0"/>
+            </Frame>
+        </StackLayout>
+
+        <Grid Grid.RowSpan="5" Grid.Row="1" Margin="20,20,20,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <Label Grid.Row="1" Text="Bienvenue" HorizontalOptions="Center" FontSize="Title" FontAttributes="Bold" Padding="0" Margin="0"/>
+            <Label Grid.Row="2" Text="Veillez vous connecter" HorizontalOptions="Center" FontSize="Subtitle"/>
+            <StackLayout Grid.Row="3" Orientation="Vertical" HorizontalOptions="CenterAndExpand">
+                <Frame BackgroundColor="Transparent" BorderColor="#8BC34A" HorizontalOptions="CenterAndExpand" Padding="0" CornerRadius="30" WidthRequest="300">
+                    <StackLayout Orientation="Horizontal">
+                        <Frame BackgroundColor="SkyBlue" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                            <Image Source="Ressources/Images/usermane.jpeg" Aspect="AspectFill" Margin="0"/>
+                        </Frame>
+                        <Entry x:Name="User" Placeholder="Nom d'utilisateur" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                    </StackLayout>
+                </Frame>
+                <Frame BackgroundColor="Transparent" BorderColor="#8BC34A" HorizontalOptions="CenterAndExpand" Padding="0" CornerRadius="30" Margin="0,15,0,0" WidthRequest="300">
+                    <StackLayout Orientation="Horizontal">
+                        <Frame BackgroundColor="SkyBlue" HeightRequest="40" WidthRequest="40" CornerRadius="30" Padding="0" Margin="5">
+                            <Image Source="Ressources/Images/password.jpeg" Aspect="AspectFill" Margin="0"/>
+                        </Frame>
+                        <Entry x:Name="Password" Placeholder="Mot de passe " TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" IsPassword="True"/>
+                    </StackLayout>
+                </Frame>
+
+                <Button Text=" Se Connecter" FontAttributes="Bold" TextColor="White" BackgroundColor="#8BC34A" Margin="0,30,0,0" CornerRadius="30" WidthRequest="200" Clicked="ConnexionClick"/>
+            </StackLayout>
+            
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

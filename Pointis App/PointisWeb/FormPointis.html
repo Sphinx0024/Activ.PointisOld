@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>POINTIS</title>
+  <!-- Favicon icon -->
+  <link rel="icon" type="image/png" sizes="16x16" href="#">
+  <link href="css/FormPointis.css" rel="stylesheet">
+
+</head>
+
+<body class="corp h-100  ">
+  <!-- <div>
+        <img src="images/media/img-gps.png">
+    </div> -->
+  <!-- <div class=" p-4 border-green-600 "> -->
+  <!-- <div class="flex-none relative ml-20">
+        <img src="images/media/img-gps.png" class="absolute inset-0 "/>
+      </div> -->
+  
+    <nav class="">
+      <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div class="relative flex h-16 items-center justify-between">
+          <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+            <!-- Mobile menu button-->
+            
+          </div>
+          <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+            <!-- <div class="flex flex-shrink-0 items-center">
+              <img class="block h-8 w-auto lg:hidden" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
+              <img class="hidden h-8 w-auto lg:block" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
+            </div> -->
+            <div class="hidden sm:ml-6 sm:block">
+              <div class="flex space-x-4">
+                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                <!-- <a href="#" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Dashboard</a> -->
+                <img src="images/_pointIS.png" class="w-16 ml-3" >
+              </div>
+            </div>
+          </div>
+          <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            <button type="button" class="rounded-full border-gray-300 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+              <!-- <span class="sr-only">View notifications</span>
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+              </svg> -->
+            
+            </button>
+    
+            <!-- Profile dropdown -->
+            <div class="relative ml-3">
+              <div>
+                <!-- <button type="button" class="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                  <span class="sr-only">Open user menu</span>
+                  <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                </button> -->
+                <!-- <span>Se connecter</span> -->
+              </div>
+    
+              <!--
+                Dropdown menu, show/hide based on menu state.
+    
+                Entering: "transition ease-out duration-100"
+                  From: "transform opacity-0 scale-95"
+                  To: "transform opacity-100 scale-100"
+                Leaving: "transition ease-in duration-75"
+                  From: "transform opacity-100 scale-100"
+                  To: "transform opacity-0 scale-95"
+              -->
+             
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Mobile menu, show/hide based on menu state. -->
+      <div class="sm:hidden" id="mobile-menu">
+        <div class="space-y-1 px-2 pb-3 pt-2">
+          <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+          <a href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Dashboard</a>
+          <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Team</a>
+          <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Projects</a>
+          <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Calendar</a>
+        </div>
+      </div>
+    </nav>
+    
+  <div
+    class=" rounded-2xl formbold-main-wrapper bg-slate-100 mr-10  ml-60 mt-0 mb-10 pr-4  shadow-lg shadow-back-500/50 fixed">
+    <!-- Author: FormBold Team -->
+    <!-- Learn More: https://formbold.com -->
+    <!-- <div class="formbold-form-wrapper"> -->
+    <div class="img">
+      <img src="images/img-gps.png" class="object-cover rounded-l-2xl " />
+    </div>
+    <form class="">
+
+      <div class="formbold-steps ml-2 ">
+
+        <ul>
+          <li class="formbold-step-menu1 active">
+            <span>1</span>
+            Société
+          </li>
+          <li class="formbold-step-menu2">
+            <span>2</span>
+            Administrateur
+          </li>
+          <li class="formbold-step-menu3">
+            <span>3</span>
+            Resumé
+          </li>
+        </ul>
+      </div>
+
+      <div class="formbold-form-step-1 active ml-2">
+        <div class="formbold-input-flex">
+          <div>
+            <label for="firstname" class="formbold-form-label"> Nom de l'entreprise </label>
+            <input type="text" name="nom_entrep" placeholder="Nom de l'entreprise" id="nom_entrep"
+              class="formbold-form-input " />
+          </div>
+          <div>
+            <label for="lastname" class="formbold-form-label"> RCCM </label>
+            <input type="text" name="rccm" placeholder="RCCM" id="rccm" class="formbold-form-input" />
+          </div>
+        </div>
+
+        <div class="formbold-input-flex">
+          <div>
+            <label for="dob" class="formbold-form-label"> Localisation </label>
+            <input type="text" name="loc" placeholder="Localisation" id="loc" class="formbold-form-input" />
+          </div>
+          <div>
+            <label for="email" class="formbold-form-label"> Email Address </label>
+            <input type="email" name="email" placeholder="Email" id="email" class="formbold-form-input" />
+          </div>
+        </div>
+
+        <div>
+          <label for="address" class="formbold-form-label"> Telephone </label>
+          <input type="text" name="address" id="tel" placeholder="Telephone" class="formbold-form-input" />
+        </div>
+      </div>
+
+      <div class="formbold-form-step-2 ml-2">
+        <div class="formbold-input-flex">
+          <div>
+            <label for="firstname" class="formbold-form-label">Nom </label>
+            <input type="text" name="firstname" placeholder="Nom " id="nom" class="formbold-form-input" />
+          </div>
+          <div>
+            <label for="lastname" class="formbold-form-label"> Prenom</label>
+            <input type="text" name="prenom" placeholder="Prenom" id="prenom" class="formbold-form-input" />
+          </div>
+        </div>
+        <div>
+          <div class="formbold-input-flex">
+            <div>
+              <label for="firstname" class="formbold-form-label"> Email personnel </label>
+              <input type="text" name="firstname" placeholder="Email personnel " id="email_perso"
+                class="formbold-form-input" />
+            </div>
+            <div>
+              <label for="lastname" class="formbold-form-label"> Matricule </label>
+              <input type="text" name="lastname" placeholder="Matricule" id="mat" class="formbold-form-input" />
+            </div>
+          </div>
+          <div class="formbold-input-flex">
+            <div>
+              <label for="firstname" class="formbold-form-label"> Fonction </label>
+              <input type="text" name="firstname" placeholder="Fonction" id="fonc" class="formbold-form-input" />
+            </div>
+            <div>
+              <label for="lastname" class="formbold-form-label"> Telephone </label>
+              <input type="text" name="lastname" placeholder="Telephone" id="tel_perso" class="formbold-form-input" />
+            </div>
+            <div class="custom-select">
+              <label for="lastname" class="formbold-form-label"> Sexe </label>
+              <select id="sexe">
+                <option value="M">Masculin</option>
+                <option value="F">Feminin</option>
+
+              </select>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="formbold-form-step-3 ml-2">
+        <!-- <div class=""> -->
+        <p class="font-bold ">Societe </p>
+        <br/>
+        <div class="grid grid-rows-2 gap-2 ">
+          <!-- <h1>Informations sur l'entreprise</h1> -->
+
+
+          <div class="grid grid-cols-2">
+            <div >
+
+              <div>
+                <label class="font-medium">Nom:</label>
+                <span id="nom_eAf" class="span"></span>
+              </div>
+              <div class="">
+                <label class="font-medium">RCCM :</label>
+                <span id="rccm_Af"></span>
+              </div>
+              <div class="">
+                <label class="font-medium">Localisation :</label>
+                <span id="loc_Af"></span>
+              </div>
+            </div>
+            <div>
+              <div class="">
+                <br/>
+                <label class="font-medium">Email :</label>
+                <span id="email_Af"></span>
+              </div>
+              <div class="">
+                <label class="font-medium">Telephone :</label>
+                <span id="tel_eAf"></span>
+              </div>
+            </div>
+          </div>
+          <!-- <h1>Informations sur l admin/h1>  -->
+      
+          <!-- <div class="h-10 font-bold">Administrateur</div> -->
+          <div class=" grid grid-cols-2 ">
+            <!-- <span class="font-bold ">Administrateur </span>  -->
+            
+            <div>
+              
+              <div class="">
+                <div class="h-10 font-bold">Administrateur</div>
+                <label class="font-medium">Email :</label>
+                <span id="email_pAf"></span>
+              </div>
+              <div class="">
+                <label class="font-medium">Nom :</label>
+                <span id="nom_Af" class="span"></span>
+              </div>
+              <div class="">
+                <label class="font-medium">Prenom :</label>
+                <span id="prenom_Af"></span>
+              </div>
+            </div>
+            <div>
+              <div class="">
+                <br/>
+                <label class="font-medium">Fonction :</label>
+                <span id="fonc_Af"></span>
+              </div>
+              <div class="">
+                <label class="font-medium">Telephone :</label>
+                <span id="tel_Af"></span>
+              </div>
+              <div class="">
+                <label class="font-medium">Matricule:</label>
+                <span id="mat_Af" class="span"></span>
+              </div>
+              <div class="">
+                <label class="font-medium">Sexe :</label>
+                <span id="sex_Af"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- <label id="nom_eAf" class=""></label>
+                                        <label id="rccm_Af" class="formbold-form-label"></label>
+                                        <label id="loc_Af" class="formbold-form-label"></label>
+                                        <label id="email_Af" class="formbold-form-label"></label>
+                                        <label id="tel_eAf" class="formbold-form-label"></label>
+                                        <label id="email_pAf" class="formbold-form-label"></label>
+                                        <label id="nom_Af" class="formbold-form-label"></label>
+                                        <label id="prenom_Af" class="formbold-form-label"></label>
+                                        <label id="fonc_Af" class="formbold-form-label"></label>
+                                        <label id="tel_Af" class="formbold-form-label"></label>
+                                        <label id="mat_Af" class="formbold-form-label"></label>
+                                        <label id="sex_Af" class="formbold-form-label"></label> -->
+
+
+
+        <!-- <div> -->
+        <!-- <button class="formbold-confirm-btn active">
+                                          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <circle cx="11" cy="11" r="10.5" fill="white" stroke="#DDE3EC"/>
+                                          <g clip-path="url(#clip0_1667_1314)">
+                                          <path d="M9.83343 12.8509L15.1954 7.48828L16.0208 8.31311L9.83343 14.5005L6.12109 10.7882L6.94593 9.96336L9.83343 12.8509Z" fill="#536387"/>
+                                          </g>
+                                          <defs>
+                                          <clipPath id="clip0_1667_1314">
+                                          <rect width="14" height="14" fill="white" transform="translate(4 4)"/>
+                                          </clipPath>
+                                          </defs>
+                                          </svg>
+                                          Yes! I want it.
+                                        </button>
+                          
+                                        <button class="formbold-confirm-btn">
+                                          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <circle cx="11" cy="11" r="10.5" fill="white" stroke="#DDE3EC"/>
+                                          <g clip-path="url(#clip0_1667_1314)">
+                                          <path d="M9.83343 12.8509L15.1954 7.48828L16.0208 8.31311L9.83343 14.5005L6.12109 10.7882L6.94593 9.96336L9.83343 12.8509Z" fill="#536387"/>
+                                          </g>
+                                          <defs>
+                                          <clipPath id="clip0_1667_1314">
+                                          <rect width="14" height="14" fill="white" transform="translate(4 4)"/>
+                                          </clipPath>
+                                          </defs>
+                                          </svg>
+                                          No! I don’t want it.
+                                        </button> -->
+
+        <!-- </div> -->
+        <!-- </div> -->
+      </div>
+      <div class="formbold-form-btn-wrapper">
+        <button class="formbold-back-btn">
+          Retour
+        </button>
+
+        <button class="formbold-btn">
+          Suivant
+        </button>
+      </div>
+    </form>
+  </div>
+  </div>
+  </div>
+  <script>
+
+
+
+    const stepMenuOne = document.querySelector('.formbold-step-menu1')
+    const stepMenuTwo = document.querySelector('.formbold-step-menu2')
+    const stepMenuThree = document.querySelector('.formbold-step-menu3')
+
+    const stepOne = document.querySelector('.formbold-form-step-1')
+    const stepTwo = document.querySelector('.formbold-form-step-2')
+    const stepThree = document.querySelector('.formbold-form-step-3')
+
+    const formSubmitBtn = document.querySelector('.formbold-btn')
+    const formBackBtn = document.querySelector('.formbold-back-btn')
+
+    // var inputs = document.querySelectorAll('input[name="nom_e"], input[name="rccm"], input[name="email"], input[name="tel"], input[name="loc"]');
+    // var ids = Array.from(inputs).map(input => input.id);
+    // ids.required=true
+    // var formulaire =  document.querySelector('form')
+
+
+
+
+    function validerEtape1() {
+
+      var champ1 = document.getElementById('nom_entrep');
+      var champ2 = document.getElementById('rccm');
+      var champ3 = document.getElementById('loc');
+      var champ4 = document.getElementById('email');
+      var champ5 = document.getElementById('tel');
+
+      if (champ1.value === '' || champ2.value === '' || champ3.value === '' || champ4.value === '' || champ5.value === '') {
+        alert('Veuillez remplir tous les champs avant de passer à l\'étape suivante.');
+        return false;
+      }
+
+      return true;
+    }
+
+    function validerEtape2() {
+
+      var champ1 = document.getElementById('nom');
+      var champ2 = document.getElementById('prenom');
+      var champ3 = document.getElementById('email_perso');
+      var champ4 = document.getElementById('tel_perso');
+    //  var champ5 = document.getElementById('mat');
+    //  var champ6 = document.getElementById('fonc');
+
+      if (champ1.value === '' || champ2.value === '' || champ3.value === '' || champ4.value === '') {
+        alert('Veuillez remplir tous les champs avant de passer à l\'étape suivante.');
+        return false;
+      }
+
+      return true;
+    }
+
+    // 
+    // && validerEtape2()
+
+    formSubmitBtn.addEventListener("click", function (event) {
+
+
+      event.preventDefault()
+      if (stepMenuOne.className == 'formbold-step-menu1 active' && validerEtape1()) {
+        event.preventDefault()
+
+        stepMenuOne.classList.remove('active')
+        stepMenuTwo.classList.add('active')
+
+        stepOne.classList.remove('active')
+        stepTwo.classList.add('active')
+
+        formBackBtn.classList.add('active')
+        formBackBtn.addEventListener("click", function (event) {
+          event.preventDefault()
+
+          stepMenuOne.classList.add('active')
+          stepMenuTwo.classList.remove('active')
+
+          stepOne.classList.add('active')
+          stepTwo.classList.remove('active')
+
+          formBackBtn.classList.remove('active')
+
+
+        })
+
+
+      } else if (stepMenuTwo.className == 'formbold-step-menu2 active' && validerEtape2()) {
+        event.preventDefault()
+
+        stepMenuTwo.classList.remove('active')
+        stepMenuThree.classList.add('active')
+
+        stepTwo.classList.remove('active')
+        stepThree.classList.add('active')
+        formSubmitBtn.innerHTML = "Confimer"
+
+        formBackBtn.classList.add('active')
+        formBackBtn.addEventListener("click", function (event) {
+          event.preventDefault()
+
+          stepMenuThree.classList.remove('active')
+          stepMenuOne.classList.remove('active')
+          stepMenuTwo.classList.add('active')
+
+          stepThree.classList.remove('active')
+          stepOne.classList.remove('active')
+          stepTwo.classList.add('active')
+          formSubmitBtn.innerHTML = "Suivant"
+          // stepMenuTwo.classList.add('active')
+          formBackBtn.classList.add('active')
+          formBackBtn.addEventListener("click", function (event) {
+            event.preventDefault()
+
+            stepMenuOne.classList.add('active')
+            stepMenuTwo.classList.remove('active')
+
+            stepOne.classList.add('active')
+            stepTwo.classList.remove('active')
+
+            formBackBtn.classList.remove('active')
+            formSubmitBtn.innerHTML = "Suivant"
+
+          })
+        })
+
+
+        // formBackBtn.classList.remove('active')
+
+        //   formBackBtn.classList.remove('active')
+        //   formSubmitBtn.textContent = 'Submit'
+      } else if (stepMenuThree.className == 'formbold-step-menu3 active' ) {
+        if (formulaire.checkValidity) {
+
+          // document.querySelector('form').submit()
+          // event.preventDefault()
+
+        }
+      }
+
+      //recuperation des donnees
+      var ne = document.getElementById('nom_entrep').value
+      var r = document.getElementById('rccm').value
+      var l = document.getElementById('loc').value
+      var e = document.getElementById('email').value
+      var t = document.getElementById('tel').value
+      var n = document.getElementById('nom').value
+      var p = document.getElementById('prenom').value
+      var ep = document.getElementById('email_perso').value
+      var tp = document.getElementById('tel_perso').value
+      var m = document.getElementById('mat').value
+      var f = document.getElementById('fonc').value
+      var s = document.getElementById('sexe').value
+
+
+      var data = {
+        nom_entrep: ne,
+        rccm: r,
+        loc: l,
+        email: e,
+        tel: t,
+        nom: n,
+        prenom: p,
+        email_perso: ep,
+        tel_perso: tp,
+        mat: m,
+        fonc: f,
+        sex: s
+      }
+      console.log(data);
+
+
+      document.getElementById('nom_eAf').innerHTML = data.nom_entrep
+      document.getElementById('rccm_Af').innerHTML = data.rccm
+      document.getElementById('loc_Af').innerHTML = data.loc
+      document.getElementById('email_Af').innerHTML = data.email
+      document.getElementById('tel_eAf').innerHTML = data.tel
+      document.getElementById('email_pAf').innerHTML = data.email_perso
+      document.getElementById('nom_Af').innerHTML = data.nom
+      document.getElementById('prenom_Af').innerHTML = data.prenom
+      document.getElementById('fonc_Af').innerHTML = data.fonc
+      document.getElementById('tel_Af').innerHTML = data.tel_perso
+      document.getElementById('mat_Af').innerHTML = data.mat
+      document.getElementById('sex_Af').innerHTML = data.sex
+    })
+
+
+
+  </script>
+</body>

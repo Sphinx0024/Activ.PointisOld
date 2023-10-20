@@ -1,0 +1,48 @@
+<form action="" method="" class="col-12 d-flex flex-column">
+    <div class="d-flex flex-row justify-content-between flex-wrap bg-light m-2 p-2">
+        <div class="input-block d-flex flex-column me-2">
+            <label for="Titre-horaire" class="">Titre</label>
+            <input type="text" class="form-control" id="Titre-horaireUpdate" name="Titre" placeholder="">
+        </div>
+        <div class="input-block d-flex flex-column me-2">
+            <label for="debs" class="">Debut de service</label>
+            <input type="text" class="form-control" id="debshoraireUpdate" name="debs" placeholder="Ex: 08h00">
+        </div>
+        <div class="input-block d-flex flex-column me-2">
+            <label for="fins" class="">Fin de service</label>
+            <input type="text" class="form-control" id="finshoraireUpdate" name="fins" placeholder="Ex: 18h00">
+        </div>
+    </div>
+    <div class="input-block d-flex flex-column align-self-start">
+        <input type="button" id="envoyer" onclick="editHoraire();" class="align-self-end btn btn-primary border-0"
+            value="Envoyer" />
+    </div>
+
+</form>
+
+<script>
+    function updateHoraire() {
+        let EmpID = sessionStorage.getItem("edit");
+
+        fetch('https://face.activactions.net/api/EquipeTravail/GetUn/' + EmpID)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                for (let item of data) {
+                    document.getElementById("Titre-horaireUpdate").value = item.Title;
+                    document.getElementById("finshoraireUpdate").value = item.HeureFinService;
+                    document.getElementById("debshoraireUpdate").value = item.HeureDebutService;
+                }
+            });
+
+    }
+
+    updateHoraire();
+
+</script>
+
+
+<script>
+    document.getElementById('add').innerHTML = 'Modifier horaire';
+
+</script>

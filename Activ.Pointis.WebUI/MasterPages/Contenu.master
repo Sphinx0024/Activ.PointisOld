@@ -1,0 +1,15 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/MasterPages/Principal.Master" AutoEventWireup="true" CodeBehind="Contenu.master.cs" Inherits="Activ.Pointis.WebUI.MasterPages.Contenu" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+     
+    <asp:ContentPlaceHolder ID="HeadCss" runat="server"></asp:ContentPlaceHolder>
+
+    <asp:ContentPlaceHolder ID="HeadJS"  runat="server"></asp:ContentPlaceHolder>
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+     <asp:ContentPlaceHolder ID="Body"  runat="server"></asp:ContentPlaceHolder>
+
+      <asp:ContentPlaceHolder ID="BodyJS"  runat="server"></asp:ContentPlaceHolder>
+
+</asp:Content>

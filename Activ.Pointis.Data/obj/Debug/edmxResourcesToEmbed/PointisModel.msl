@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PointisModelStoreContainer" CdmEntityContainer="PointisEntities">
+    <EntitySetMapping Name="Connexion">
+      <EntityTypeMapping TypeName="PointisModel.Connexion">
+        <MappingFragment StoreEntitySet="Connexion">
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="EmployeID" ColumnName="EmployeID" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="ConnexionID" ColumnName="ConnexionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DetailsConnexion">
+      <EntityTypeMapping TypeName="PointisModel.DetailsConnexion">
+        <MappingFragment StoreEntitySet="DetailsConnexion">
+          <ScalarProperty Name="ApplicationID" ColumnName="ApplicationID" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="numero_telephone" ColumnName="numero_telephone" />
+          <ScalarProperty Name="date_connexion" ColumnName="date_connexion" />
+          <ScalarProperty Name="telephone_imei" ColumnName="telephone_imei" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employes">
+      <EntityTypeMapping TypeName="PointisModel.Employes">
+        <MappingFragment StoreEntitySet="Employes">
+          <ScalarProperty Name="Matricule" ColumnName="Matricule" />
+          <ScalarProperty Name="Titre" ColumnName="Titre" />
+          <ScalarProperty Name="SocieteID" ColumnName="SocieteID" />
+          <ScalarProperty Name="Sexe" ColumnName="Sexe" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="EmployeID" ColumnName="EmployeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Notifications">
+      <EntityTypeMapping TypeName="PointisModel.Notifications">
+        <MappingFragment StoreEntitySet="Notifications">
+          <ScalarProperty Name="NotificationStatus" ColumnName="NotificationStatus" />
+          <ScalarProperty Name="NotifcationNature" ColumnName="NotifcationNature" />
+          <ScalarProperty Name="MAILSubject" ColumnName="MAILSubject" />
+          <ScalarProperty Name="MAILTo" ColumnName="MAILTo" />
+          <ScalarProperty Name="MAILFrom" ColumnName="MAILFrom" />
+          <ScalarProperty Name="SMSSender" ColumnName="SMSSender" />
+          <ScalarProperty Name="SMSNumber" ColumnName="SMSNumber" />
+          <ScalarProperty Name="NotifcationBody" ColumnName="NotifcationBody" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pointage">
+      <EntityTypeMapping TypeName="PointisModel.Pointage">
+        <MappingFragment StoreEntitySet="Pointage">
+          <ScalarProperty Name="Application_id_sortie" ColumnName="Application_id_sortie" />
+          <ScalarProperty Name="Application_id_entree" ColumnName="Application_id_entree" />
+          <ScalarProperty Name="Imei_verificateur_sortie" ColumnName="Imei_verificateur_sortie" />
+          <ScalarProperty Name="Imei_verificateur_entree" ColumnName="Imei_verificateur_entree" />
+          <ScalarProperty Name="Imei_employe_sortie" ColumnName="Imei_employe_sortie" />
+          <ScalarProperty Name="Imei_employe_entree" ColumnName="Imei_employe_entree" />
+          <ScalarProperty Name="EmployesID" ColumnName="EmployesID" />
+          <ScalarProperty Name="HeureSortie" ColumnName="HeureSortie" />
+          <ScalarProperty Name="HeureEntree" ColumnName="HeureEntree" />
+          <ScalarProperty Name="Jour" ColumnName="Jour" />
+          <ScalarProperty Name="PointageID" ColumnName="PointageID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Societe">
+      <EntityTypeMapping TypeName="PointisModel.Societe">
+        <MappingFragment StoreEntitySet="Societe">
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="RCCM" ColumnName="RCCM" />
+          <ScalarProperty Name="RaisonSociale" ColumnName="RaisonSociale" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="V_Pointage">
+      <EntityTypeMapping TypeName="PointisModel.V_Pointage">
+        <MappingFragment StoreEntitySet="V_Pointage">
+          <ScalarProperty Name="EmployeMatricule" ColumnName="EmployeMatricule" />
+          <ScalarProperty Name="EmployeTitre" ColumnName="EmployeTitre" />
+          <ScalarProperty Name="PointageDureeMinute" ColumnName="PointageDureeMinute" />
+          <ScalarProperty Name="PointageDureeHeure" ColumnName="PointageDureeHeure" />
+          <ScalarProperty Name="PointageDureeSeconde" ColumnName="PointageDureeSeconde" />
+          <ScalarProperty Name="PointageHeureSortie" ColumnName="PointageHeureSortie" />
+          <ScalarProperty Name="PointageHeureEntree" ColumnName="PointageHeureEntree" />
+          <ScalarProperty Name="PointageJour" ColumnName="PointageJour" />
+          <ScalarProperty Name="PointageID" ColumnName="PointageID" />
+          <ScalarProperty Name="SocieteTelephone" ColumnName="SocieteTelephone" />
+          <ScalarProperty Name="SocieteEmail" ColumnName="SocieteEmail" />
+          <ScalarProperty Name="SocieteRCCM" ColumnName="SocieteRCCM" />
+          <ScalarProperty Name="SocieteRaisonSociale" ColumnName="SocieteRaisonSociale" />
+          <ScalarProperty Name="SocieteID" ColumnName="SocieteID" />
+          <ScalarProperty Name="EmployeSexe" ColumnName="EmployeSexe" />
+          <ScalarProperty Name="EmployeTelephone" ColumnName="EmployeTelephone" />
+          <ScalarProperty Name="EmployeEmail" ColumnName="EmployeEmail" />
+          <ScalarProperty Name="EmployePrenom" ColumnName="EmployePrenom" />
+          <ScalarProperty Name="EmployeNom" ColumnName="EmployeNom" />
+          <ScalarProperty Name="EmployeID" ColumnName="EmployeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,24 @@
+<form action="" method="" class="col-12 d-flex flex-row justify-content-between flex-wrap bg-light m-2 p-2">
+    <div class="input-block d-flex flex-column">
+        <label for="Titre-horaire" class="">Titre</label>
+        <input type="text" class="mt-2 bg-light border-0 border-bottom" id="Titre-horaire" name="Titre"
+            placeholder="le titre ici">
+    </div>
+    <div class="input-block d-flex flex-column">
+        <label for="debs" class="">Debut de service</label>
+        <input type="text" class="mt-2 bg-light border-0 border-bottom" id="debs" name="debs" placeholder="Ex: 08h00">
+    </div>
+    <div class="input-block d-flex flex-column">
+        <label for="fins" class="">Fin de service</label>
+        <input type="text" class="mt-2 bg-light border-0 border-bottom" id="fins" name="fins" placeholder="Ex: 18h00">
+    </div>
+    <input type="button" id="envoyer" onclick="ajouterHoraire();" class="align-self-end btn btn-primary border-0"
+        value="Envoyer" />
+
+</form>
+
+
+<script>
+    document.getElementById('add').innerHTML = 'Ajouter horaire';
+
+</script>

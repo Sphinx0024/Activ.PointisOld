@@ -1,0 +1,91 @@
+<div class="row  d-flex flex-row justify-content-center bg-light rounded shadow py-5 px-4 m-auto w-50"
+    id="qrCode-corps">
+    <div class="col-4 d-flex flex-column">
+        <div class="d-flex flex-column">
+            <i class="fa fa-address-book bg-success text-light ps-1 pt-1 pb-1" aria-hidden="true"></i>
+            <h2 class="mb-0" id="nom"></h2>
+            <h4 class="mb-0" id="prenom"></h4>
+        </div>
+
+        <div class="d-flex flex-column">
+            <i class="fa fa-mobile  bg-success text-light ps-1 pt-1 pb-" aria-hidden="true"></i>
+            <h6 class="mb-0" id="tel"></h6>
+        </div>
+    </div>
+    <div class="col-2">
+        <img src="" alt="" width="100" class="img-fluid img-thumbnail shadow-sm" id="qrCodeImg" alt="votre qrCode">
+        <!-- <span class="small text-uppercase text-muted" id="prenom"></span> -->
+    </div>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+    crossorigin="anonymous"></script>
+
+
+<script>
+    //import code
+    function qrGenerate() {
+        var nom = document.getElementById('nom').value;
+        var socID = sessionStorage.getItem('idSociete');
+        var badge = sessionStorage.getItem("badge");
+        var badgeMail = sessionStorage.getItem("badge-mail");
+
+        var id = badge;
+
+        var no = '';
+        var em = '';
+        var tel = '';
+        var pre = '';
+        var _qrCode = '';
+        var url = 'word';
+
+        fetch('https://face.activactions.net/api/Employes/Get/' + socID)
+            .then(res => res.json())
+            .then(data => {
+                for (let item of data) {
+                    var employeid = item.EmployeID;
+                    var employemail = item.Email;
+                    if (employeid == badge || employemail == badgeMail) {
+                        no = item.Nom;
+                        pre = item.Prenom;
+                        em = item.Email;
+                        tel = item.Telephone;
+
+                        url = 'id=' + id + ';nom=' + no + ';prenom=' + pre + ';email=' + em + ';tel=' + tel;
+                        _qrCode = 'https://chart.googleapis.com/chart?cht=qr&chs=250x250&chld=L|1&chl=' + url;
+                        document.getElementById('qrCodeImg').setAttribute('src', _qrCode);
+                        document.getElementById('nom').innerHTML = no;
+                        document.getElementById('prenom').innerHTML = pre;
+                        document.getElementById('tel').innerHTML = tel;
+
+                        document.getElementById('add').innerHTML = ' Qr Code / ' + no + ' ' + pre;
+
+                    }
+                }
+
+            });
+
+
+        // Selon le choix d'API, commentez l'une des deux lignes suivantes et décommentez l'autre
+
+        // _qrCode = 'https://chart.googleapis.com/chart?cht=qr&chs=250x250&chld=L|1&chl=id=' + id + '&nom=' + no + '&prenom=' + pre + '&email=' + em + '&tel=' + tel;
+        // _qrCode = 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=' + url;
+
+
+        // document.getElementById('qrCodeImg').setAttribute('src', _qrCode);
+        // document.getElementById('qrcode').style.visibility = 'visible';
+
+    }
+
+    qrGenerate();
+
+
+
+
+
+</script>
+
+<!-- <script src="./public/js/bootstrap.min.js"></script> -->

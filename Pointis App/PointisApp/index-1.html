@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Pointis</title>
+    <!-- Favicon icon -->
+    <!-- <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png"> -->
+
+    <!-- favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+
+    <!-- Pignose Calender -->
+    <link href="./plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
+    <!-- Chartist -->
+    <link rel="stylesheet" href="./plugins/chartist/css/chartist.min.css">
+    <link rel="stylesheet" href="./plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
+    <!-- Custom Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+
+    <!-- chart Js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+
+    <script>
+        // Ou est stocke Id sessionStorage de societé chez employé
+        // let sessionId = sessionStorage.getItem("emp"),
+        var pointage = document.getElementById('pointage-value'),
+            selectPointage = document.getElementById('option-affichage'),
+            selectPointage2 = document.querySelector('.option-affichage'),
+            sessionId = sessionStorage.getItem('idSociete'),
+
+            RetardDay = 'https://face.activactions.net/api/Pointage/Late/' + sessionId,
+            retardWeek = 'https://face.activactions.net/api/Pointage/LateWeek/' + sessionId,
+            retardMonth = 'https://face.activactions.net/api/Pointage/LateMonth/' + sessionId,
+            retardQuarter = 'https://face.activactions.net/api/Pointage/LateQuarter/' + sessionId,
+            retardYear = 'https://face.activactions.net/api/Pointage/LateYear/' + sessionId,
+
+            utilisateurs = 'https://face.activactions.net/api/Connexion/Get/' + sessionId,
+            employes = 'https://face.activactions.net/api/Employes/Get/' + sessionId,
+
+            url20Jour = 'https://face.activactions.net/api/Pointage/DayTwenty/' + sessionId,
+            pointageDay = "https://face.activactions.net/api/Pointage/DayTwenty/" + sessionId,
+            pointageWeek = "https://face.activactions.net/api/Pointage/Week/" + sessionId,
+            pointageMonth = "https://face.activactions.net/api/Pointage/Mounth/" + sessionId,
+            pointageQuarter = "https://face.activactions.net/api/Pointage/Quarter/" + sessionId,
+            pointageYear = "https://face.activactions.net/api/Pointage/Year/" + sessionId,
+            pointageAll = "https://face.activactions.net/api/Pointage/Get/" + sessionId,
+
+            entreeDay = 'https://face.activactions.net/api/Pointage/In/' + sessionId,
+            entreeWeek = 'https://face.activactions.net/api/Pointage/InWeek/' + sessionId,
+            entreeMonth = 'https://face.activactions.net/api/Pointage/InMonth/' + sessionId,
+            entreeQuarter = 'https://face.activactions.net/api/Pointage/InQuarter/' + sessionId,
+            entreeYear = 'https://face.activactions.net/api/Pointage/InYear/' + sessionId,
+
+            absenceDay = 'https://face.activactions.net/api/Pointage/Missing/' + sessionId,
+            absenceWeek = 'https://face.activactions.net/api/Pointage/MissingWeek/' + sessionId,
+            absenceMonth = 'https://face.activactions.net/api/Pointage/MissingMonth/' + sessionId;
+        absenceQuarter = 'https://face.activactions.net/api/Pointage/MissingQuarter/' + sessionId;
+        absenceYear = 'https://face.activactions.net/api/Pointage/MissingYear/' + sessionId;
+
+        // Retard ?
+
+        function formatComplet(arg) {
+            let format = new Date(arg),
+                ret;
+            ret = format.toLocaleDateString('fr-fr', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
+            return ret
+        }
+
+        function formatHeure(arg) {
+            if (arg === undefined) {
+                let infos = "Pas encore pointé";
+                return infos;
+            }
+            else {
+                let format = new Date(arg),
+                    ret;
+                ret = format.getHours() + "h:" + format.getMinutes() + "mn:" + format.getSeconds() + "s";
+                return ret
+            }
+        }
+
+        function diffBetweenDates(date1, date2) {
+            if (date1 === undefined || date2 === undefined) {
+                var retour = "Pas encore défini";
+                return retour;
+            }
+            else {
+                // Convertir les dates en objets Date
+                var datetime1 = new Date(date1);
+                var datetime2 = new Date(date2);
+                // Calculer la différence en millisecondes
+                var diffInMilliseconds = Math.abs(datetime2 - datetime1);
+                //console.log(diffInMilliseconds);
+
+                // Calculer les différences en heures, minutes et secondes
+                var diffInSeconds = Math.floor(diffInMilliseconds / 1000);
+                var hours = Math.floor(diffInSeconds / 3600);
+                var minutes = Math.floor((diffInSeconds % 3600) / 60);
+                var seconds = diffInSeconds % 60;
+
+                var retour = hours + " h " + minutes + " mn " + seconds + " s";
+
+                return retour;
+            }
+        }
+
+
+    </script>
+
+
+
+    <style>
+        a {
+            text-decoration: none;
+        }
+
+        .btn {
+            background-color: #8dc63f;
+        }
+
+        .btn-para {
+            width: 250px;
+        }
+
+        #show .btn-para:hover {
+            background-color: #8dc63f;
+        }
+
+        .pageParametre:hover {
+            cursor: pointer;
+        }
+
+        #show button {
+            margin: 5px;
+        }
+
+        #qrCode-corps {
+            border: 6px solid #8dc63f;
+        }
+
+
+        #deconnexion {
+            position: absolute;
+            bottom: 20px;
+
+        }
+
+        #offcanvasRight,
+        #offcanvasRightTwo,
+        #offcanvasRightThree,
+        #offcanvasRightFour,
+        #offcanvasRightFive,
+        #offcanvasRightSix,
+        #offcanvasRightUpdate,
+        #offcanvasRightBadge {
+            width: 50% ! important;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header bg-light">
+            <div class="brand-logo">
+                <a href="index.html">
+                    <span class="brand-title text-light">
+                        <img src="images/import/_pointIS.png" alt="" width="80px">
+                    </span>
+                </a>
+            </div>
+            <img src="images/import/_pointIS.png" alt="" width="50px">
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">
+            <div class="header-content clearfix">
+
+                <div class="nav-control">
+                    <div class="hamburger">
+                        <span class="toggle-icon"><i class="icon-menu"></i></span>
+                    </div>
+                </div>
+
+                <div class="header-right">
+
+                    <ul class="clearfix">
+                        <li class="icons">
+                            <span id="nameAd"></span>
+                            (<em id="societeAd">ACTIV</em>)
+                        </li>
+
+                        <li class="icons dropdown">
+                            <div class="user-img c-pointer position-relative" data-toggle="dropdown">
+                                <span class="activity active"></span>
+                                <img src="images/user/1.png" height="40" width="40" alt="">
+                            </div>
+                            <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
+                                <div class="dropdown-content-body">
+                                    <ul>
+
+                                        <li><a href="deconnect.html"><i class="icon-key"></i>
+                                                <span>Deconnexion</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        <div class="nk-sidebar">
+            <div class="nk-nav-scroll" style="background-color: #203f9a;">
+                <ul class="metismenu text-light" id="menu" style="background-color: #203f9a;">
+
+                    <li>
+                        <a class="" href="index.html" aria-expanded="false" style="color: white;">
+                            <span class="nav-text">Mon Espace Personnel</span>
+                        </a>
+                    </li><br />
+                    <li>
+                        <a class="" href="javascript:void()" id="pageBoard" aria-expanded="false" style="color: white;">
+                            <i class="fa fa-th-large text-light" aria-hidden="true"></i>
+                            <span class="nav-text">Tableau de bord</span>
+                        </a>
+                    </li><br />
+                    <!--<li>
+                        <a class="" href="javascript:void()" id="pageSecteur" aria-expanded="false"
+                            style="color: white;">
+                            <i class="fa fa-pie-chart text-light" aria-hidden="true"></i>
+                            <span class="nav-text">Secteur d'activités</span>
+                        </a>
+                    </li><br />-->
+                    <li>
+                        <a class="" href="javascript:void()" id="pagePointage" aria-expanded="false"
+                            style="color: white;">
+                            <i class="fa fa-map text-light" aria-hidden="true"></i>
+                            <span class="nav-text">Listes de pointage</span>
+                        </a>
+                    </li><br />
+                    <li>
+                        <a class="" href="javascript:void()" id="pageAbsence" aria-expanded="false"
+                            style="color: white;">
+                            <i class="fa fa-map text-light" aria-hidden="true"></i>
+                            <span class="nav-text">Listes des absences</span>
+                        </a>
+                    </li><br />
+                    <li>
+                        <a class="" href="javascript:void()" id="pageParametre" aria-expanded="false"
+                            style="color: white;">
+                            <i class="fa fa-cog text-light" aria-hidden="true"></i>
+                            <span class="nav-text">Parametre</span>
+                        </a>
+                    </li><br />
+
+                    <li id="deconnexion">
+                        <a class="" href="deconnect.html" aria-expanded="false" style="color: white;">
+                            <!-- <i class="icon-notebook menu-icon"></i> -->
+                            <i class="fa fa-sign-out text-light" aria-hidden="true"></i>
+                            <span class="nav-text">Deconnexion</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+
+        <div class="content-body" id="content-main">
+
+            <div class="row m-3">
+                <div class="col-6 d-flex flex-column">
+                    <h2 class="border-dark border-bottom-1">Accueil</h2>
+                    <div class="col-12" style="background-color: rgba(245, 245, 245, 0.384);">
+                        <div id="carouselExampleControls" class="carousel slide p-5 text-center " data-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active d-flex flex-row justify-content-around">
+                                        <img src="" alt="" width="100"
+                                            class="img-fluid img-thumbnail shadow-sm bg-success" id="qrCodeImg"
+                                            alt="votre qrCode">
+
+                                        <p>Mon espace de suivie<br /> Utilisateur <br /> POINTIS !!</p>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
+                                data-slide="prev">
+                                <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleControls" role="button"
+                                data-slide="next">
+                                <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-6">
+                    <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+
+                    <script>
+                        var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+                        var yValues = [55, 49, 44, 24, 15];
+                        var barColors = ["red", "green", "blue", "orange", "brown"];
+
+                        var colorRetard = '#0000ff';
+                        var colorAbsence = '#ff0000';
+
+                        new Chart("myChart", {
+                            type: "bar",
+
+                            data: {
+                                datasets: [{
+                                    type: 'bar',
+                                    label: 'Retard',
+                                    backgroundColor: colorRetard,
+                                    data: [15, 25, 20, 30, 40]
+                                }, {
+                                    type: 'bar',
+                                    label: 'Absence',
+                                    backgroundColor: colorAbsence,
+                                    data: [50, 45, 50, 50, 25],
+                                }],
+                                labels: ['Lun', 'Mar', 'Jeu', 'Ven']
+                            },
+
+                            options: {
+                                legend: { display: true },
+                                title: {
+                                    display: true,
+                                    text: "Cette semaine"
+                                }
+                            }
+                        });
+
+
+                    </script>
+                </div>
+
+            </div>
+            <div class="row m-3">
+                <div class="col">
+                    <h3 class="text-success">Les dernières transactions</h3>
+                </div>
+            </div>
+            <!--
+            -->
+            <div class="row m-3">
+                <div class="col-12 bg-light border border-1 rounded-3">
+                    <table class="table">
+                        <thead class="" style="border-bottom: 2px solid black;">
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">EMPLOYE(E)S</th>
+                                <!--<th scope="col">FONCTIONS</th>-->
+                                <th scope="col">ENTREE</th>
+                                <th scope="col">SORTIE</th>
+                                <th scope="col">DUREE</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corps">
+                            <script type="text/javascript">
+
+                                let infos = '';
+                                fetch(url20Jour, {
+                                    method: 'GET',
+                                    headers: {
+                                        'content-type': 'application/json'
+                                    },
+                                })
+                                    .then(res => res.json())
+                                    .then(data => {
+                                        console.log(data);
+                                        for (let item of data) {
+                                            infos += `<tr><td>${formatComplet(item.PointageJour)}</td><td>${item.EmployeNom} ${item.EmployePrenom}</td><td>${formatHeure(item.PointageHeureEntree)}</td><td>${formatHeure(item.PointageHeureSortie)}</td><td>${diffBetweenDates(item.PointageHeureEntree, item.PointageHeureSortie)}</td></tr>`;
+                                        }
+                                        document.getElementById('corps').innerHTML = infos;
+                                    });
+                            </script>
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <!-- 
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a>
+                    2018</p>
+            </div>
+        </div> 
+        -->
+        <!--**********************************
+            Footer end
+        ***********************************-->
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+
+
+    <script>
+        var nom = document.getElementById('nameAd'),
+            nomSoc = document.getElementById('societeAd');
+
+        nom.innerHTML = sessionStorage.getItem("nameAd") + ' ' + sessionStorage.getItem("prenomAd");
+        nomSoc.innerHTML = sessionStorage.getItem("nameSoc");
+
+    </script>
+    <script src="js/qrCode.js"></script>
+
+
+
+
+
+
+    <script src="plugins/common/common.min.js"></script>
+    <script src="js/custom.min.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/gleek.js"></script>
+    <script src="js/styleSwitcher.js"></script>
+
+    <!-- Chartjs -->
+    <script src="./plugins/chart.js/Chart.bundle.min.js"></script>
+    <!-- Circle progress -->
+    <script src="./plugins/circle-progress/circle-progress.min.js"></script>
+    <!-- Datamap -->
+    <script src="./plugins/d3v3/index.js"></script>
+    <script src="./plugins/topojson/topojson.min.js"></script>
+    <script src="./plugins/datamaps/datamaps.world.min.js"></script>
+    <!-- Morrisjs -->
+    <script src="./plugins/raphael/raphael.min.js"></script>
+    <script src="./plugins/morris/morris.min.js"></script>
+    <!-- Pignose Calender -->
+    <script src="./plugins/moment/moment.min.js"></script>
+    <script src="./plugins/pg-calendar/js/pignose.calendar.min.js"></script>
+    <!-- ChartistJS -->
+    <script src="./plugins/chartist/js/chartist.min.js"></script>
+    <script src="./plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+
+    <!-- Chart Js -->
+    <script src="js/chartJs/scriptJs.js"></script>
+
+    <!-- JQuery -->
+    <script src="js/appelPages.js"></script>
+
+
+    <script src="./js/dashboard/dashboard-1.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<form action="" method="" class="col-12 d-flex flex-row flex-wrap flex-wrap bg-light m-2 p-2">
+    <div class="input-block d-flex flex-column">
+        <input type="text" class="bg-light border-0 border-bottom" id="Nom" name="Nom" placeholder="Nom">
+        <input type="text" class="mt-2 bg-light border-0 border-bottom" id="Email" name="Email" placeholder="Email">
+    </div>
+    <div class="input-block d-flex flex-column">
+        <input type="text" class="bg-light border-0 border-bottom" id="Prenom" name="Prenom" placeholder="Prenoms">
+        <input type="text" class="mt-2 bg-light border-0 border-bottom" id="Titre" name="Titre" placeholder="Titre">
+    </div>
+    <div class="input-block d-flex flex-column">
+        <input type="text" class="bg-light border-0 border-bottom" id="Telephone" name="Telephone"
+            placeholder="Telephone">
+        <input type="text" class="mt-2 bg-light border-0 border-bottom" id="Matricule" name="Matricule"
+            placeholder="Matricule">
+    </div>
+    <div class="input-block d-flex flex-column">
+        <label for="equipe" class="">Selectionner horaire</label>
+
+        <select class="form-control" id="equipe" name="equipe" placeholder="">
+            <script type="text/javascript">
+                fetch('https://face.activactions.net/api/EquipeTravail/Get/' + socID)
+                    .then(res => res.json())
+                    .then(data => {
+                        let donnees = '';
+
+                        for (let item of data) {
+                            donnees += `<option id="horaire" attr.data-value=${item.ID}>${item.HeureDebutService}-${item.HeureFinService}</option>`
+                        }
+                        document.getElementById('equipe').innerHTML = donnees;
+                    });
+
+            </script>
+
+        </select>
+    </div>
+    <div class="input-block d-flex flex-column">
+        <label for="Responsable" class="">Responsable</label>
+
+        <select class="form-control" id="Responsable" name="Responsable" placeholder="">
+            <script type="text/javascript">
+                // var sessionIdSoc = sessionStorage.getItem('idSociete');
+                fetch('https://face.activactions.net/api/Employes/Get/' + socID)
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        let donneesEmployes = '';
+
+                        for (let item of data) {
+                            donneesEmployes += `<option id="" attr.data-value="${item.EmployeID}">${item.Nom} - ${item.Prenom} - ${item.Telephone} </option>`
+                        }
+                        document.getElementById('Responsable').innerHTML = donneesEmployes;
+                    });
+            </script>
+        </select>
+    </div>
+    <div class="input-block d-flex flex-column">
+        <label for="Sexe" class="">Sexe</label>
+        <select class="form-control" id="Sexe" name="Sexe" placeholder="">
+            <option value="">-- Choisissez un genre --</option>
+            <option value="">Masculin</option>
+            <option value="">Feminin</option>
+        </select>
+    </div>
+    <input type="button" id="envoyer" onclick="ajouterSociete();" class="align-self-end btn btn-primary border-0"
+        value="Envoyer" />
+
+</form>
+
+<script>
+    document.getElementById('add').innerHTML = 'Ajouter employés';
+</script>

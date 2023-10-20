@@ -1,0 +1,112 @@
+<div class="row align-items-end">
+    <button class="btn col-2 d-flex flex-row btn btn-para text-uppercase text-light mt-2" type="button"
+        data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightTwo" aria-controls="offcanvasRight" id="addHoraire">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+            class="bi bi-clock-fill text-light" viewBox="0 0 16 16">
+            <path
+                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
+        </svg>
+        <span>Ajouter horaire</span>
+    </button>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightTwo" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Ajouter une horaire</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <!-- <div class="offcanvas-body" id="showAddHoraire"> -->
+            <form action="" method="" class="col-12 d-flex flex-column" >
+                <div class="d-flex flex-row justify-content-between flex-wrap bg-light m-2 p-2">
+                    <div class="input-block d-flex flex-column">
+                        <label for="Titre-horaire" class="">Titre</label>
+                        <input type="text" class="form-control" id="Titre-horaire" name="Titre"
+                            placeholder="le titre ici">
+                    </div>
+                    <div class="input-block d-flex flex-column">
+                        <label for="debs" class="">Debut de service</label>
+                        <input type="text" class="form-control" id="debs" name="debs" placeholder="Ex: 08h00">
+                    </div>
+                    <div class="input-block d-flex flex-column">
+                        <label for="fins" class="">Fin de service</label>
+                        <input type="text" class="form-control" id="fins" name="fins" placeholder="Ex: 18h00">
+                    </div>
+                </div>
+
+                <div class="input-block d-flex flex-column align-self-start">
+                    <input type="button" id="envoyer" onclick="ajouterHoraire();"
+                        class="btn btn-primary border-0 form-control" value="Envoyer" />
+                </div>
+            </form>
+
+
+            <script>
+                document.getElementById('add').innerHTML = 'Ajouter horaire';
+
+            </script>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="table-responsive">
+    <table class="table">
+        <!-- <thead style="border-color: transparent;"> -->
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Debut</th>
+                <th>Fin</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="corps">
+            <script type="text/javascript">
+                fetch('https://face.activactions.net/api/EquipeTravail/Get/' + socID)
+                    .then(res => res.json())
+                    .then(data => {
+                        let infosTravailDelete = '';
+
+                        console.log(data);
+                        for (let item of data) {
+                            infosTravailDelete += `
+                            <tr>
+                                <td>${item.Title}</td>
+                                <td>${item.HeureDebutService}</td>
+                                <td>${item.HeureFinService}</td>
+                                <td >
+                                    <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightUpdate" aria-controls="offcanvasRight" class="btn" Onclick="modifier(${item.ID},'updateHoraire.html')"style="padding: 10px 10px ;margin-left:2px;background-color:#F3F3F9;width:5px; background: url(image/crayon.png); background-repeat: no-repeat; background-size: 20px; background-position: center;"></button>
+                                    <button class="btn" Onclick ="supprimer('https://face.activactions.net/api/EquipeTravail/Delete',${item.ID},'listeHoraire.html')" style="padding: 10px 10px ;margin-left:2px;border-color:darkgray;width:5px; background: url(image/supprimer.png); background-repeat: no-repeat; background-size: 20px; background-position: center;"></button>
+                                </td>
+                            </tr>`;
+                        }
+                        document.getElementById('corps').innerHTML = infosTravailDelete;
+                        //place.innerHTML = infos;
+                    });
+
+            </script>
+
+
+        </tbody>
+        <tfoot>
+
+        </tfoot>
+    </table>
+
+</div>
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightUpdate" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Modification</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body" id="showUdpade">
+
+
+    </div>
+</div>
+
+
+<script>
+    document.getElementById('add').innerHTML = 'Liste horaire';
+
+</script>

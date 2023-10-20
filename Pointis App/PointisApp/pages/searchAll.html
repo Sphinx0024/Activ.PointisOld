@@ -1,0 +1,146 @@
+<div class="row m-3">
+    <div class="col bg-light border border-1 border-dark rounded-3 m-0 p-0">
+        <table class="table w-100">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">DATE</th>
+                    <th scope="col">EMPLOYES</th>
+                    <th scope="col">FONCTIONS</th>
+                    <th scope="col">ENTREES</th>
+                    <th scope="col">SORTIES</th>
+                </tr>
+            </thead>
+            <tbody id="corpsPoint">
+
+                <script type="text/javascript">
+                    var sessionSoc = sessionStorage.getItem('idSociete');
+                    // var nom = document.getElementById('name-search');
+                    var start = document.getElementById('start-search').value;
+                    var end = document.getElementById('end-search').value;
+                    var combo = document.getElementById("name-search");
+                    var selected = combo.options[combo.selectedIndex];
+                    var selectedId = selected.getAttribute("attr.data-value");
+
+                    var search = 'https://face.activactions.net/api/Pointage/SearchPoint/' + sessionSoc + '/' + start + '/' + end;
+                    var searchStart = 'https://face.activactions.net/api/Pointage/SearchPointStart/' + sessionSoc + '/' + start;
+                    var searchEnd = 'https://face.activactions.net/api/Pointage/SearchPointEnd/' + sessionSoc + '/' + end;
+
+                    var searchEmp = 'https://face.activactions.net/api/Pointage/SearchPoint/' + selectedId + '/' + start + '/' + end;
+                    var searchStartEmp = 'https://face.activactions.net/api/Pointage/SearchPointStart/' + selectedId + '/' + start;
+                    var searchEndEmp = 'https://face.activactions.net/api/Pointage/SearchPointEnd/' + selectedId + '/' + end;
+
+                    var searchGlobalProfil = 'https://face.activactions.net/api/Pointage/GetUn/' + selectedId;
+
+
+                    if (nom != "" && start != "" && end != "") {
+                        fetch(searchEmp)
+                            .then(res => res.json())
+                            .then(data => {
+                                let infosSearch = '';
+
+                                for (let item of data) {
+                                    infosSearch += `<tr><td>${formatComplet(item.PointageJour)}</td><td>${item.EmployeNom} ${item.EmployePrenom}</td><td>${item.EmployeTitre}</td><td>${formatHeure(item.PointageHeureEntree)}</td><td>${formatHeure(item.PointageHeureSortie)}</td></tr>`;
+                                }
+                                document.getElementById('corpsPoint').innerHTML = infosSearch;
+                            });
+                    }
+
+                    else if (nom != "" && start != "" && end == "") {
+                        //console.log(urlJour);
+                        fetch(searchStartEmp)
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log(data);
+                                let infosSearch = '';
+
+                                for (let item of data) {
+                                    // infos += `<tr><td>${item.PointageJour}</td><td>${item.PointageHeureEntree}</td><td>${item.PointageHeureSortie} </td><td>${item.EmployeNom} ${item.EmployePrenom}</td><td>${item.EmployeTelephone}</td></tr>`;
+                                    infosSearch += `<tr><td>${formatComplet(item.PointageJour)}</td><td>${item.EmployeNom} ${item.EmployePrenom}</td><td>${item.EmployeTitre}</td><td>${formatHeure(item.PointageHeureEntree)}</td><td>${formatHeure(item.PointageHeureSortie)}</td></tr>`;
+                                }
+                                document.getElementById('corpsPoint').innerHTML = infosSearch;
+                            });
+                    }
+
+                    else if (nom != "" && start == "" && end != "") {
+                        //console.log(urlJour);
+                        fetch(searchEndEmp)
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log(data);
+                                let infosSearch = '';
+
+                                for (let item of data) {
+                                    // infos += `<tr><td>${item.PointageJour}</td><td>${item.PointageHeureEntree}</td><td>${item.PointageHeureSortie} </td><td>${item.EmployeNom} ${item.EmployePrenom}</td><td>${item.EmployeTelephone}</td></tr>`;
+                                    infosSearch += `<tr><td>${formatComplet(item.PointageJour)}</td><td>${item.EmployeNom} ${item.EmployePrenom}</td><td>${item.EmployeTitre}</td><td>${formatHeure(item.PointageHeureEntree)}</td><td>${formatHeure(item.PointageHeureSortie)}</td></tr>`;
+                                }
+                                document.getElementById('corpsPoint').innerHTML = infosSearch;
+                            });
+                    }
+
+                    else if (start != "" && end != "") {
+                        //console.log(urlJour);
+                        fetch(search)
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log(data);
+                                let infosSearch = '';
+
+                                for (let item of data) {
+                                    // infos += `<tr><td>${item.PointageJour}</td><td>${item.PointageHeureEntree}</td><td>${item.PointageHeureSortie} </td><td>${item.EmployeNom} ${item.EmployePrenom}</td><td>${item.EmployeTelephone}</td></tr>`;
+                                    infosSearch += `<tr><td>${formatComplet(item.PointageJour)}</td><td>${item.EmployeNom} ${item.EmployePrenom}</td><td>${item.EmployeTitre}</td><td>${formatHeure(item.PointageHeureEntree)}</td><td>${formatHeure(item.PointageHeureSortie)}</td></tr>`;
+                                }
+                                document.getElementById('corpsPoint').innerHTML = infosSearch;
+                            });
+                    }
+                    else if (start != "" && end == "") {
+                        //console.log(urlJour);
+                        fetch(searchStart)
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log(data);
+                                let infosSearch = '';
+
+                                for (let item of data) {
+                                    // infos += `<tr><td>${item.PointageJour}</td><td>${item.PointageHeureEntree}</td><td>${item.PointageHeureSortie} </td><td>${item.EmployeNom} ${item.EmployePrenom}</td><td>${item.EmployeTelephone}</td></tr>`;
+                                    infosSearch += `<tr><td>${formatComplet(item.PointageJour)}</td><td>${item.EmployeNom} ${item.EmployePrenom}</td><td>${item.EmployeTitre}</td><td>${formatHeure(item.PointageHeureEntree)}</td><td>${formatHeure(item.PointageHeureSortie)}</td></tr>`;
+                                }
+                                document.getElementById('corpsPoint').innerHTML = infosSearch;
+                            });
+                    }
+
+                    else if (nom != "" && end == "" && start == '') {
+                        //console.log(urlJour);
+                        fetch(searchGlobalProfil)
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log(data);
+                                let infosSearch = '';
+
+                                for (let item of data) {
+                                    // infos += `<tr><td>${item.PointageJour}</td><td>${item.PointageHeureEntree}</td><td>${item.PointageHeureSortie} </td><td>${item.EmployeNom} ${item.EmployePrenom}</td><td>${item.EmployeTelephone}</td></tr>`;
+                                    infosSearch += `<tr><td>${formatComplet(item.PointageJour)}</td><td>${item.EmployeNom} ${item.EmployePrenom}</td><td>${item.EmployeTitre}</td><td>${formatHeure(item.PointageHeureEntree)}</td><td>${formatHeure(item.PointageHeureSortie)}</td></tr>`;
+                                }
+                                document.getElementById('corpsPoint').innerHTML = infosSearch;
+                            });
+                    }
+
+                    else {
+                        fetch(searchEnd)
+                            .then(res => res.json())
+                            .then(data => {
+                                let infosSearch = '';
+
+                                console.log(data);
+                                for (let item of data) {
+                                    // infos += `<tr><td>${item.PointageJour}</td><td>${item.PointageHeureEntree}</td><td>${item.PointageHeureSortie} </td><td>${item.EmployeNom} ${item.EmployePrenom}</td><td>${item.EmployeTelephone}</td></tr>`;
+                                    infosSearch += `<tr><td>${formatComplet(item.PointageJour)}</td><td>${item.EmployeNom} ${item.EmployePrenom}</td><td>${item.EmployeTitre}</td><td>${formatHeure(item.PointageHeureEntree)}</td><td>${formatHeure(item.PointageHeureSortie)}</td></tr>`;
+                                }
+                                document.getElementById('corpsPoint').innerHTML = infosSearch;
+                            });
+                    }
+                </script>
+            </tbody>
+        </table>
+    </div>
+
+</div>

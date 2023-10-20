@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage BackgroundColor="White"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Activ.Pointis.Android.PersonnelUI.MainPage"
+             Title="Accueil">
+    <VerticalStackLayout>
+        <Label 
+            Text="Votre Qrcode"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" 
+            Margin="50"/>
+
+        <Frame BorderColor="LightSlateGray"
+                   BackgroundColor="#f3f3f3"
+                   Padding="10" Margin="25,0,25,0">
+            <Image
+                x:Name="QrCodeImage"
+                HeightRequest="300"
+                WidthRequest="300"/>
+        </Frame>
+
+        <Image 
+            Source="Ressources/Images/pointis.png"
+            Margin="60,100,60,10" />
+
+    </VerticalStackLayout>
+
+</ContentPage>

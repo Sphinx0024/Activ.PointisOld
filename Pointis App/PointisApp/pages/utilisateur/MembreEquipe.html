@@ -1,0 +1,370 @@
+<script>
+    var membre = document.getElementById("nomMenbre");
+    membre.innerHTML = sessionStorage.getItem("nomEmpEquip") + " " + sessionStorage.getItem("prenomEmpEquip");
+</script>
+
+
+<div class="row m-3">
+    <div class="col-6 d-flex flex-column">
+        <h2 class="border-dark border-bottom-1">Détail de <span id="nomMenbre"></span></h2>
+        <div class="" style="background-color: rgba(245, 245, 245, 0.384);">
+            <div id="carouselExampleControls" class="carousel slide p-5 text-center " data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active d-flex flex-row justify-content-around">
+                        <!-- <img class="d-block w-25" src="images/import/Code-QR.png" alt="First slide"> -->
+                        <img src="" alt="" width="100" class="img-fluid img-thumbnail shadow-sm bg-success"
+                            id="qrCodeImg" alt="votre qrCode">
+
+                        <p>Membre de mon équipe<br /> POINTIS !!</p>
+                    </div>
+
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-6">
+        <canvas class="shadow-lg" id="myChart" style="width:100%;max-width:600px"></canvas>
+    </div>
+
+</div>
+<!-- 
+<style>
+    .none {
+        display: none;
+    }
+
+    .accordion-body li:hover {
+        cursor: pointer;
+        background-color: whitesmoke;
+    }
+</style> -->
+
+
+<script>
+    // Ou est stocke Id sessionStorage de societé chez employé
+    // let sessionId = sessionStorage.getItem("emp"),
+    var pointage = document.getElementById('pointage-value'),
+        selectPointage = document.getElementById('option-affichage'),
+        selectPointage2 = document.querySelector('.option-affichage'),
+        sessionId = sessionStorage.getItem('idSociete'),
+        sessionEmp = sessionStorage.getItem("idEquipeUser");
+    // sessionEmp = sessionStorage.getItem('idemploy'),employeID();
+
+    entree = 'https://face.activactions.net/api/Pointage/Day/' + sessionId,
+        sorties = 'https://face.activactions.net/api/Pointage/Sortie/' + sessionId,
+        absence = 'https://face.activactions.net/api/Pointage/AbsenceJour/' + sessionId,
+
+        RetardDay = 'https://face.activactions.net/api/Pointage/Late/' + sessionId,
+        retardWeek = 'https://face.activactions.net/api/Pointage/LateWeek/' + sessionId,
+        retardMonth = 'https://face.activactions.net/api/Pointage/LateMounth/' + sessionId,
+
+        utilisateurs = 'https://face.activactions.net/api/Connexion/Get/' + sessionId,
+        employes = 'https://face.activactions.net/api/Pointage/GetUn/' + sessionEmp,
+
+        url20Jour = 'https://face.activactions.net/api/Pointage/DayTwenty/' + sessionId,
+
+        urlJour = 'https://face.activactions.net/api/Pointage/Jour/' + sessionEmp,
+        urlSemaine = 'https://face.activactions.net/api/Pointage/Semaine/' + sessionEmp,
+        urlMois = 'https://face.activactions.net/api/Pointage/Mois/' + sessionEmp,
+
+
+        pointageDay = "https://face.activactions.net/api/Pointage/DayTwenty/" + sessionId,
+        pointageWeek = "https://face.activactions.net/api/Pointage/Week/" + sessionId,
+        pointageMonth = "https://face.activactions.net/api/Pointage/Mounth/" + sessionId,
+
+        sortiesDay = 'https://face.activactions.net/api/Pointage/Sortie/' + sessionId,
+        sortiesWeek = 'https://face.activactions.net/api/Pointage/SortieSemaine/' + sessionId,
+        sortiesMonth = 'https://face.activactions.net/api/Pointage/SortieMois/' + sessionId,
+
+        entreeDay = 'https://face.activactions.net/api/Pointage/Entree/Day/' + sessionId,
+        entreeWeek = 'https://face.activactions.net/api/Pointage/Entree/week/' + sessionId,
+        entreeMonth = 'https://face.activactions.net/api/Pointage/Entree/Mounth/' + sessionId,
+
+        absenceDay = 'https://face.activactions.net/api/Pointage/AbsenceJour/' + sessionId,
+        absenceWeek = 'https://face.activactions.net/api/Pointage/AbsenceSemaine/' + sessionId,
+        absenceMonth = 'https://face.activactions.net/api/Pointage/AbsenceMois/' + sessionId;
+
+    // Retard ?
+
+    function formatComplet(arg) {
+        let format = new Date(arg),
+            ret;
+        ret = format.toLocaleDateString('fr-fr', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
+        return ret
+    }
+
+    function formatHeure(arg) {
+        if (arg === undefined) {
+            let infos = "Pas encore pointé";
+            return infos;
+        }
+        else {
+            let format = new Date(arg),
+                ret;
+            ret = format.getHours() + "h:" + format.getMinutes() + "mn:" + format.getSeconds() + "s";
+            return ret
+        }
+    }
+
+    function appelPagePointage(lien, periode) {
+
+        var jour = 'pointageJour';
+        var semaine = 'pointageSemaine';
+        var mois = 'pointageMois';
+
+        //alert("test");
+        var lienComplet = 'pages/utilisateur/' + lien + '.html';
+        $.ajax({
+
+            url: lienComplet,
+            method: 'GET',
+            dataType: 'html',
+            success: function (data) {
+                $('#show').html(data);
+            },
+            error: function () {
+                $('#show').html('Erreur lors du chargement des données.');
+            }
+        });
+        $("#vu").html(periode);
+
+        if (lien == jour) {
+            $("#PointageJour").css("background-color", "#8dc63f");
+            $("#PointageSemaine").css("background-color", "whitesmoke");
+            $("#PointageMois").css("background-color", "whitesmoke");
+
+        } else if (lien == semaine) {
+            $("#PointageSemaine").css("background-color", "#8dc63f");
+            $("#PointageJour").css("background-color", "whitesmoke");
+            $("#PointageMois").css("background-color", "whitesmoke");
+
+        } else if (lien == mois) {
+            $("#PointageMois").css("background-color", "#8dc63f");
+            $("#PointageSemaine").css("background-color", "whitesmoke");
+            $("#PointageJour").css("background-color", "whitesmoke");
+        } else {
+
+        }
+        // });
+    }
+
+</script>
+
+
+
+
+<div class="m-3">
+    <div class="row m-3 mb-5">
+
+
+        <div class="col-5">
+            <h2>Liste des pointages</h2>
+        </div>
+        <form class="col-7 d-flex flex-row justify-content-center align-items-center" id="formSearch">
+            <!--<label for="">Rechercher par</label>
+            <input type="text" placeholder="Nom" id="name-search">-->
+            <label for=""> Du </label>
+            <input type="date" class="form-control" placeholder="Date de debut" id="start-search">
+            <label for=""> Au </label>
+            <input type="date" class="form-control" placeholder="Date de fin" id="end-search">
+            <input type="button" class="form-control " onclick="appelPagePointage('search','Recherche')"
+                value="Rechercher" style="background-color: #8dc63f; color: white;">
+        </form>
+
+
+    </div>
+    <div class="row m-3">
+        <!--         
+        <button class="col-2 btn btn-search" onclick="appelPagePointage('PointageJour','Vue du jour')" id="PointageJour">
+              Jour
+        </button>
+
+        <button class="col-2 btn btn-search" onclick="appelPagePointage('pointageSemaine','Vue de la semaine')" id="PointageSemaine">
+            Semaine
+        </button>
+        <button class="col-2 btn btn-search" onclick="appelPagePointage('pointageMois','Vue du mois')" id="PointageMois">
+            Mois
+        </button> 
+        -->
+
+        <button class="col-2 d-flex flex-row border-0 p-3 btn-para text-uppercase text-dark mt-2"
+            onclick="appelPagePointage('PointageJour','Vue du jour')" id="PointageJour">
+            <span>Jour</span>
+        </button>
+        <button class="col-2 d-flex flex-row border-0 p-3 btn-para text-uppercase text-dark mt-2"
+            onclick="appelPagePointage('pointageSemaine','Vue de la semaine')" id="PointageSemaine">
+            <span>Semaine</span>
+        </button>
+        <button class="col-2 d-flex flex-row border-0 p-3 btn-para text-uppercase text-dark mt-2"
+            onclick="appelPagePointage('pointageMois','Vue du mois')" id="PointageMois">
+            <span>Mois</span>
+        </button>
+
+
+    </div>
+
+
+    <div class="" id="show">
+
+
+        <div class="row m-3">
+            <div class="col bg-light border border-1 border-dark rounded-3 m-0 p-0">
+                <table class="table w-100">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">DATE</th>
+                            <th scope="col">ENTREES</th>
+                            <th scope="col">SORTIES</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpsPoint">
+
+                        <script type="text/javascript">
+                            console.log(employes);
+                            fetch(employes)
+                                .then(res => res.json())
+                                .then(data => {
+                                    let infosPoint = '';
+
+                                    console.log(data);
+                                    for (let item of data) {
+                                        // infos += `<tr><td>${item.PointageJour}</td><td>${item.PointageHeureEntree}</td><td>${item.PointageHeureSortie} </td><td>${item.EmployeNom} ${item.EmployePrenom}</td><td>${item.EmployeTelephone}</td></tr>`;
+                                        infosPoint += `<tr><td>${formatComplet(item.PointageJour)}</td><td>${formatHeure(item.PointageHeureEntree)}</td><td>${formatHeure(item.PointageHeureSortie)}</td></tr>`;
+                                    }
+                                    document.getElementById('corpsPoint').innerHTML = infosPoint;
+                                });
+                        </script>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    // function search() {
+    //     var nom = document.getElementById('name-search').value,
+    //         start = document.getElementById('start-search').value,
+    //         end = document.getElementById('end-search').value;
+
+    //     fetch("https://face.activactions.net/api/Employes/GetUn/" + sessionEmp, {
+    //         method: 'GET',
+    //         headers: {
+    //             'content-type': 'application/json'
+    //         },
+    //         // body: JSON.stringify(data)
+    //     })
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             for (let item in data) {
+    //                 if (condition) {
+
+    //                 }
+
+    //             }
+    //         });
+
+
+    // }
+</script>
+
+
+<script>
+    var jour = document.getElementById('flush-headingOne'),
+        mois = document.getElementById('mois'),
+        semaine = document.getElementById('semaine'),
+        semaineBlock = document.getElementById('corpsSemaines'),
+        moisBlock = document.getElementById('corpsMois'),
+        jourBlock = document.getElementById('corps');
+
+
+    function showPointage(clic, lienRedirect, show, innerVu, inner) {
+
+        $(document).ready(function () {
+            $(clic).click(function () {
+                $.ajax({
+                    url: lienRedirect,
+                    method: 'GET',
+                    dataType: 'html',
+                    success: function (data) {
+                        $(show).html(data);
+                    },
+                    error: function () {
+                        $(show).html('Erreur lors du chargement des données.');
+                    }
+                });
+                $(innerVu).html(inner);
+            });
+        });
+
+    }
+
+    $(document).ready(function () {
+        $('#semaine').click(function () {
+            $.ajax({
+                url: 'pages/pointageSemaine.html',
+                method: 'GET',
+                dataType: 'html',
+                success: function (data) {
+                    $('#show').html(data);
+                },
+                error: function () {
+                    $('#content-main').html('Erreur lors du chargement des données.');
+                }
+            });
+            $("#vu").html("Vu de la semaine");
+        });
+    });
+
+
+    $(document).ready(function () {
+        $('#mois').click(function () {
+            $.ajax({
+                url: 'pages/pointageMois.html',
+                method: 'GET',
+                dataType: 'html',
+                success: function (data) {
+                    $('#show').html(data);
+                },
+                error: function () {
+                    $('#content-main').html('Erreur lors du chargement des données.');
+                }
+            });
+            $("#vu").html("Vu du mois");
+        });
+    });
+
+
+    $(document).ready(function () {
+        $('#jour').click(function () {
+            $.ajax({
+                url: 'pages/pointageJour.html',
+                method: 'GET',
+                dataType: 'html',
+                success: function (data) {
+                    $('#show').html(data);
+                },
+                error: function () {
+                    $('#content-main').html('Erreur lors du chargement des données.');
+                }
+            });
+            $("#vu").html("Vu du jour");
+        });
+    });
+
+
+
+
+</script>

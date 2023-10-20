@@ -1,0 +1,444 @@
+<style>
+    .sign-elt {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+    }
+
+    .sign-left {
+        left: 0;
+    }
+
+    .sign-right {
+        right: 0;
+        width: 50%;
+        margin: 0;
+        height: 100%;
+        overflow: auto;
+        padding: 0 10%;
+    }
+
+    .sign-elt {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .myForm {
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .via {
+        border-radius: 5px;
+        border: 1px yellowgreen solid;
+    }
+
+    #myForm #rappel {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        margin: 5px 0;
+    }
+
+    span {
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    .notice {
+        display: block;
+        word-wrap: break-word;
+        text-align: center;
+        color: red;
+        border: 0;
+        border-radius: 4px/4px;
+        padding: 5px 0;
+        background-color: rgba(0, 0, 0, 0.09);
+        width: 200px;
+        margin: auto;
+        margin-top: 10px;
+        margin-bottom: 15px;
+    }
+
+    /* correction */
+    .correct {
+        border-color: rgba(13, 245, 13, 0.884);
+        /* width: 100%; */
+        border: 0;
+    }
+
+    .correct:focus {
+        border-color: rgba(13, 245, 13, 0.884);
+        box-shadow: 2px 2px 8px rgba(68, 191, 68, 0.5);
+        /* width: 100%; */
+    }
+
+    .incorrect {
+        border-color: rgba(255, 0, 0, 0.89);
+        /* width: 100%; */
+    }
+
+    .incorrect:focus {
+        border-color: rgba(255, 0, 0, 0.89);
+        /* width: 100%; */
+        box-shadow: 2px 2px 8px rgba(191, 68, 68, 0.5);
+    }
+
+    #myForm input {
+        font-size: medium;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        outline: none;
+        padding: 10px;
+        background-color: white;
+        border: 1px rgba(0, 0, 0, 0.1) solid;
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    input:focus {
+        width: 100%;
+        border-color: rgba(82, 168, 236, 0.75);
+        border: 1px rgba(0, 0, 0, 0.8);
+        box-shadow: 0 0 8px rgba(82, 168, 236, 0.5);
+    }
+
+    select {
+        display: flex;
+        flex-direction: column;
+        outline: none;
+        border-radius: 5px;
+        background-color: white;
+        width: 100%;
+    }
+
+    select:focus {
+        border-color: rgba(82, 168, 236, 0.75);
+        box-shadow: 0 0 8px rgba(82, 168, 236, 0.5);
+        border-radius: 5px;
+        width: 100%;
+    }
+
+    body {
+        background-color: #C6D0D9;
+
+    }
+
+    .auth-wrapper {
+        display: flex;
+        flex-direction: column;
+        margin: 15%;
+        padding: 5px;
+    }
+
+    #myForm {
+        width: 50%;
+        margin: auto;
+    }
+
+    /* End of correct */
+</style>
+
+<script>
+
+
+    function validation() {
+
+        var expressionReguliere = /^(([^<>()[]\.,;:s@]+(.[^<>()[]\.,;:s@]+)*)|(.+))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/;
+        var phoneRegex = /^\d{10}$/;
+        if (expressionReguliere.test(document.getElementById("log").value)) {
+            fetch('https://face.activactions.net/api/Societe/Get')
+                .then(res => res.json())
+                .then(data => {
+                    for (let item of data) {
+                        var id = item.ID;
+                        //console.log(i);
+                        fetch('https://face.activactions.net/api/Connexion/Get/' + id)
+                            .then(res => res.json())
+                            .then(data => {
+                                let log = document.getElementById("log").value;
+                                let pwd = document.getElementById("pass").value;
+                                for (let item of data) {
+                                    let login = item.Login;
+                                    let passe = item.Password;
+                                    // console.log(t);
+                                    if (login == log && passe == pwd) {
+                                        let idSociete = item.SocieteID;
+                                        //sessionStorage.setItem("q", i);
+
+                                        /*sessionStorage.setItem("socID", idS);
+                                        // sessionStorage.setItem('admin', 1);
+                                        sessionStorage.setItem('role', rol);
+                                        sessionStorage.setItem('log', log);
+
+                                        var code = sessionStorage.getItem("role")*/
+
+                                        fetch('https://face.activactions.net/api/Employes/Get/' + idSociete)
+                                            .then(res => res.json())
+                                            .then(data => {
+
+                                                /*console.log(data);
+                                                console.log(i);*/
+
+
+                                                for (let item of data) {
+                                                    let emailAd = item.Email;
+                                                    if (log == emailAd) {
+
+                                                        let nameAd = item.Nom;
+                                                        let prenomAd = item.Prenom;
+                                                        let idEmploye = item.EmployeID;
+                                                        let idSociete = item.SocieteID;
+
+                                                        sessionStorage.setItem('emailAd', emailAd);
+                                                        sessionStorage.setItem('nameAd', nameAd);
+                                                        sessionStorage.setItem('prenomAd', prenomAd);
+                                                        sessionStorage.setItem('idEmployeUser', idEmploye);
+                                                        sessionStorage.setItem('idSociete', idSociete);
+
+                                                        fetch('https://face.activactions.net/api/Societe/Get/' + idSociete)
+                                                            .then(res => res.json())
+                                                            .then(data => {
+                                                                for (let item of data) {
+                                                                    let nameSociete = item.RaisonSociale;
+                                                                    sessionStorage.setItem('nameSoc', nameSociete);
+                                                                    location.replace('./Accueil.html');
+
+                                                                    //var idsoc = item.ID;
+                                                                    //if (i == idsoc) {
+                                                                    /*var nameSociete = item.RaisonSociale;
+                                                                    sessionStorage.setItem('nameSoc', nameSociete);
+                                                                    location.replace('./Accueil.html');
+                                                                //}*/
+                                                                }
+                                                                console.log(data);
+
+                                                            });
+
+                                                    }
+                                                }
+                                            });
+
+                                    }
+
+                                    /*else {
+                                        alert("Votre Login ou votre mot de passe est incorrect");
+                                    }*/
+                                }
+                            });
+                    }
+                });
+
+        }
+        else
+            if (phoneRegex.test(document.getElementById("log").value)) {
+                //console.log("Telephone");
+                fetch('https://face.activactions.net/api/Societe/Get')
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        for (let item of data) {
+                            let id = item.ID;
+                            //console.log(id);
+                            //sessionStorage.setItem("r",g);
+                            // console.log(g);
+                            fetch('https://face.activactions.net/api/Employes/Get/' + id)
+                                .then(res => res.json())
+                                .then(data => {
+                                    //console.log(data);
+                                    for (let item of data) {
+                                        let login = document.getElementById("log").value;
+                                        let pwd = document.getElementById("pass").value;
+                                        let tel = item.Telephone;
+                                        let passe = item.Password;
+                                        //var responsableItem = item.Responsable;
+
+                                        if (login == tel && pwd == passe) {
+                                            var email = item.Email;
+                                            var nom = item.Nom;
+                                            var prenom = item.Prenom;
+                                            var responsable = item.Responsable;
+                                            var idEmploye = item.EmployeID;
+                                            var idSociete = item.SocieteID;
+
+                                            sessionStorage.setItem('nameAd', nom);
+                                            sessionStorage.setItem('prenomAd', prenom);
+                                            sessionStorage.setItem('monresponsable', responsable);
+
+                                            fetch('https://face.activactions.net/api/Connexion/Get/' + idSociete)
+                                                .then(res => res.json())
+                                                .then(data => {
+                                                    for (let item of data) {
+                                                        var log = item.Login;
+                                                        if (email == log) {
+                                                            fetch('https://face.activactions.net/api/Societe/Get/' + idSociete)
+                                                                .then(res => res.json())
+                                                                .then(data => {
+                                                                    for (let item of data) {
+                                                                        let nameSociete = item.RaisonSociale;
+                                                                        sessionStorage.setItem('nameSoc', nameSociete);
+                                                                        sessionStorage.setItem("idSociete", idSociete);
+                                                                        sessionStorage.setItem("idEmployeUser", idEmploye);
+                                                                        location.replace('./Accueil.html');
+                                                                    }
+
+                                                                });
+
+                                                        }
+                                                        else {
+                                                            fetch('https://face.activactions.net/api/Societe/Get/' + idSociete)
+                                                                .then(res => res.json())
+                                                                .then(data => {
+                                                                    for (let item of data) {
+                                                                        let nameSociete = item.RaisonSociale;
+                                                                        sessionStorage.setItem('nameSoc', nameSociete);
+                                                                        sessionStorage.setItem("idSociete", idSociete);
+                                                                        sessionStorage.setItem("idEmployeNOUser", idEmploye);
+                                                                        location.replace('./Accueil.html');
+                                                                    }
+
+                                                                });
+
+                                                        }
+                                                    }
+                                                })
+
+
+
+                                            //sessionStorage.setItem("socID", g);
+                                            //sessionStorage.setItem("u", g);
+                                            //console.log(g);
+                                            //sessionStorage.setItem("emp", employe);
+                                            //sessionStorage.setItem("idEmploye", employe);
+                                            //console.log(employe);
+                                            //sessionStorage.setItem("i", email);
+
+
+                                            //sessionStorage.setItem('idEmploye', idEmploye);
+
+                                            /*sessionStorage.setItem("iamResponsable", responsable);
+                                            sessionStorage.setItem('monResponsable', responsableItem);*/
+
+                                            // location.replace('./index.html');
+
+
+
+                                        }
+
+                                        /*else {
+                                            alert("Votre Login ou votre mot de passe est incorrect");
+                                        }*/
+                                    }
+
+                                });
+                        }
+
+                    });
+
+
+            }
+            else {
+                alert("Le login n'est pas correct");
+                //console.log("erreur");
+            }
+    }
+
+
+    /*  function connexion() {
+  
+  
+          fetch('https://face.activactions.net/api/Connexion/Get')
+                  .then(res => res.json())
+                  .then(data => {
+                      var t = document.getElementById("log").value;
+                      var d = document.getElementById("pass").value;
+                  for(let item of data){
+                          var log = item.Login;
+                          var Password = item.Password;
+                          var r= item.Role;
+                      if(t == log && d == Password){
+                      
+                           var idsociete = item.SocieteID;
+                          console.log(idsociete);
+                           sessionStorage.setItem("u",idsociete);
+                           if((r=="admin") || (r=="Admin")){
+                               console.log("ok");
+                              location.replace('./index2.html');
+                          }
+                           elseif((r=="utilisateur")||(r=="Utilisateur"))
+                          {
+                                  console.log("ok");
+                                  location.replace('./index2.html');
+                          }  
+                       
+                      }
+                      else{
+                          fetch('https://face.activactions.net/api/Employes/Get')
+                          .then(res => res.json())
+                          .then(data => {
+                              for(let item of data){
+                                   var employe=item.EmployeID;
+                                   var tel=item.Telephone;
+                                   console.log(t);
+                                   sessionStorage.setItem("j",employe);
+                                   sessionStorage.setItem("y",tel)
+                               }
+                          })
+  
+                      }
+                  }
+                  });
+                  
+  }*/
+</script>
+
+
+
+
+<!-- [ auth-signin ] start -->
+<div class="auth-wrapper">
+    <div class="auth-content text-center">
+        <form action="" method="post" class="text-start border border-1
+                    border-secondary rounded-2 text-dark bg-light p-5" id="myForm">
+
+            <input type="hidden" name="client">
+            <!-- [ auth-signin ] start    <label class="label" for="cecond_name">Nom</label> <input class="input-zone" type="text" name="nom" id="nom">
+            <span class="notice">Nom unique de 2 à 16 caractères avec 1ère lettre en majuscule<br /><del>Caractère accentué</del></span>
+            <label class="label" for="prenoms">Prénoms</label><input class="input-zone" type="text" name="prenoms" id="prenoms">
+            -->
+            <span class="notice"> <del></del></span>
+            <label class="label" for="email">Email</label> <input class="input-zone" type="text" name="email" id="log">
+            <span class="notice"></span>
+            <label class="label" for="pass">Mot de passe</label> <input class="input-zone" type="password" name="pass"
+                id="pass">
+            <span class="notice"></span>
+            <!--   <label class="label" for="confirmePass"></label> <input class="input-zone" type="password" name="confirmePass" id="confirmePass"><br />
+            <span class="notice"></span>
+  [ auth-signin ] start      <label class="label" for="tel">Tel</label><input class="input-zone" type="telconnexion" name="tel" id="tel">
+            <span class="notice">Format invalide</span>-->
+            <br>
+            <input class="submit text-dark p-2" id="submit" type="button" value="Connexion" onclick="validation()"
+                style="background:#C6D0D9;color:black;">
+        </form>
+
+    </div>
+</div>
+<!-- [ auth-signin ] end -->
+
+<!-- Required Js -->
+<script src="../assets/js/vendor-all.min.js"></script>
+<script src="../assets/js/plugins/bootstrap.min.js"></script>
+
+<script src="../assets/js/pcoded.min.js"></script>
+

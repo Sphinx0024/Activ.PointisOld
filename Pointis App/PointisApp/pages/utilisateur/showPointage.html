@@ -1,0 +1,181 @@
+<div class="row m-3">
+    <div class="col">
+        <div>
+            <select id="mySelect" class="form-control" onchange="appelPointage()">
+                <option>Vue</option>
+                <option value="Jour">Jour</option>
+                <option value="Semaine">Semaine</option>
+                <option value="Mois">Mois</option>
+                <option value="Trimestre">Trimestre</option>
+                <option value="Annuelle">Annuelle</option>
+            </select>
+        </div>
+
+    </div>
+</div>
+
+<div class="row m-3">
+    <div class="col-6 d-flex flex-column">
+        <div class="d-flex flex-row p-2 border border-1 border-dark rounded-3" style="background-color: whitesmoke;">
+            <img src="images/import/clock.png" alt="" width="50px">
+            <div class="d-flex flex-column">
+                <span id="retard">
+                    <script>
+                        fetch(retardEquipeMois)
+                            // fetch('https://face.activactions.net/api/Pointage/SortieSemaine') // Pour la semaine
+                            .then(res => res.json())
+                            .then(data => {
+                                var retardInner = data;
+
+                                if (retardInner > 0) {
+                                    document.getElementById('retard').innerHTML = convertirEnHeureMinuteSeconde(retardInner);
+                                } else {
+                                    document.getElementById('retard').innerHTML = '00';
+                                }
+                            });
+                    </script>
+                </span>
+                <span>Retard</span>
+            </div>
+        </div><br /><br />
+
+        <div class="d-flex flex-row p-2 border border-1 border-dark rounded-3" style="background-color: whitesmoke;">
+
+            <img src="images/import/absence.png" alt="" width="50px">
+            <div class="d-flex flex-column">
+                <span id="absence">
+                    <script>
+                        fetch(absenceEquipMois)
+                            .then(res => res.json())
+                            .then(data => {
+                                var absences = data;
+                                var absenceInf = '0' + absence;
+
+                                if (absences > 0) {
+                                    if (absences < 10) {
+                                        document.getElementById('absence').innerHTML = absenceInf;
+                                    }
+                                    else {
+                                        document.getElementById('absence').innerHTML = absences;
+                                    }
+                                } else {
+                                    document.getElementById('absence').innerHTML = '00';
+                                }
+                            });
+                    </script>
+                </span>
+                <span>Absence</span>
+            </div>
+        </div><br /><br />
+
+        <div class="d-flex flex-row p-2 border border-1 border-dark rounded-3" style="background-color: whitesmoke;">
+            <img src="images/import/attendance.png" alt="" width="50px">
+            <div class="d-flex flex-column">
+                <span>
+                    <span id="presence">
+                        <script>
+                            fetch(PointageEquipeMois)
+                                .then(res => res.json())
+                                .then(data => {
+                                    presences = data.length;
+                                    presenceInf = '0' + presences;
+
+                                    if (presences > 0) {
+                                        if (presences < 10) {
+                                            document.getElementById('presence').innerHTML = presenceInf;
+                                        }
+                                        else {
+                                            document.getElementById('presence').innerHTML = presences;
+                                        }
+                                    } else {
+                                        document.getElementById('presence').innerHTML = '00';
+                                    }
+                                });
+                        </script>
+                    </span>
+                </span>
+                <span>Pointage</span>
+            </div>
+        </div><br />
+
+    </div>
+
+    <div class="col-6">
+        <!-- <canvas class="shadow-lg" id="myChart" style="width:100%;max-width:600px"></canvas> -->
+        <canvas id="myChart2" style="width:100%;max-width:600px"></canvas>
+
+        <script>
+
+            var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+            var yValues = [55, 49, 44, 24, 15];
+            var barColors = ["red", "green", "blue", "orange", "brown"];
+
+            var colorRetard = '#0000ff';
+            var colorAbsence = '#ff0000';
+
+            new Chart("myChart2", {
+                type: "bar",
+
+                data: {
+                    datasets: [{
+                        type: 'bar',
+                        label: 'Retard',
+                        backgroundColor: colorRetard,
+                        data: [15, 25, 20, 30, 40]
+                    }, {
+                        type: 'bar',
+                        label: 'Absence',
+                        backgroundColor: colorAbsence,
+                        data: [50, 45, 50, 50, 25],
+                    }],
+                    labels: ['Lun', 'Mar', 'Jeu', 'Ven']
+                },
+
+                options: {
+                    legend: { display: true },
+                    title: {
+                        display: true,
+                        text: "Cette semaine"
+                    }
+                }
+            });
+
+
+        </script>
+    </div>
+
+</div>
+
+<div class="row m-3">
+    <div class="col bg-light border border-1 border-dark rounded-3 m-0 p-0">
+        <table class="table w-100">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">DATE</th>
+                    <th scope="col">NOM</th>
+                    <th scope="col">PRENOMS</th>
+                    <th scope="col">TELEPHONE</th>
+                    <th scope="col">ENTREES</th>
+                    <th scope="col">SORTIES</th>
+                    <th scope="col">DUREE</th>
+                </tr>
+            </thead>
+            <tbody id="corpequipeMois">
+                <script>
+
+                    fetch(PointageEquipeMois)
+                        .then(res => res.json())
+                        .then(data => {
+                            let infosEquipeMois = '';
+                            console.log(data.length);
+                            for (let item of data) {
+                                infosEquipeMois += `<tr><td>${formatComplet(item.PointageJour)}</td><td>${item.EmployeNom}</td><td>${item.EmployePrenom}</td><td>${item.EmployeTelephone}</td><td>${formatHeure(item.PointageHeureEntree)}</td><td>${formatHeure(item.PointageHeureSortie)}</td><td></td></tr>`;
+
+                            }
+                            document.getElementById('corpequipeMois').innerHTML = infosEquipeMois;
+                        });
+                </script>
+            </tbody>
+        </table>
+    </div>
+</div>

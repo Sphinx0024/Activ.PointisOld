@@ -1,0 +1,127 @@
+<div class="row m-3">
+    <div class="col-6 d-flex flex-column">
+
+        <div class="d-flex flex-row p-2 border border-1 border-dark rounded-3" style="background-color: whitesmoke;">
+
+            <img src="images/import/absence.png" alt="" width="50px">
+            <div class="d-flex flex-column">
+                <span id="absence">
+                    <script>
+                        fetch(absenceEquipSemaine)
+                            .then(res => res.json())
+                            .then(data => {
+                                    var absence = data;
+                                    var absenceInf = '0' + absence;
+    
+                                    if (absence > 0) {
+                                        if (absence < 10) {
+                                            document.getElementById('absence').innerHTML = absenceInf;
+                                        }
+                                        else {
+                                            document.getElementById('absence').innerHTML = absence;
+                                        }
+                                    } else {
+                                        document.getElementById('absence').innerHTML = '00';
+                                    }
+                            });
+                    </script>
+                </span>
+                <span>Absence</span>
+            </div>
+        </div><br /><br />
+
+        <div class="d-flex flex-row p-2 border border-1 border-dark rounded-3" style="background-color: whitesmoke;">
+            <img src="images/import/clock.png" alt="" width="50px">
+            <div class="d-flex flex-column">
+                <span id="retard">
+                    <script>
+                        fetch(retardEquipeSem)
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log(retardEquipeSem);
+                                var retardInner = data;
+
+                                if (retardInner > 0) {
+                                    document.getElementById('retard').innerHTML = convertirEnHeureMinuteSeconde(retardInner);
+                                } else {
+                                    document.getElementById('retard').innerHTML = '00';
+                                }
+                            });
+                    </script>
+                </span>
+                <span>Retard</span>
+            </div>
+        </div><br /><br />
+
+        <div class="d-flex flex-row p-2 border border-1 border-dark rounded-3" style="background-color: whitesmoke;">
+            <img src="images/import/attendance.png" alt="" width="50px">
+            <div class="d-flex flex-column">
+                <span>
+                    <span id="presence">
+                        <script>
+                            fetch(PointageEquipeSem)
+                                .then(res => res.json())
+                                .then(data => {
+                                    presences = data.length;
+                                    presenceInf = '0' + presences;
+
+                                    if (presences > 0) {
+                                        if (presences < 10) {
+                                            document.getElementById('presence').innerHTML = presenceInf;
+                                        }
+                                        else {
+                                            document.getElementById('presence').innerHTML = presences;
+                                        }
+                                    } else {
+                                        document.getElementById('presence').innerHTML = '00';
+                                    }
+                                });
+                        </script>
+                    </span>
+                </span>
+                <span>Pointage</span>
+            </div>
+        </div><br />
+
+    </div>
+    <div class="col-6">
+        <canvas class="shadow-lg" id="myChartEquipe" style="width:100%;max-width:600px"></canvas>
+    </div>
+
+</div>
+
+<div class="row m-3">
+    <div class="col bg-light border border-1 border-dark rounded-3 m-0 p-0">
+        <table class="table w-100">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">DATE</th>
+                    <th scope="col">NOM</th>
+                    <th scope="col">PRENOMS</th>
+                    <th scope="col">TELEPHONE</th>
+                    <th scope="col">ENTREES</th>
+                    <th scope="col">SORTIES</th>
+                    <th scope="col">DUREE</th>
+                </tr>
+            </thead>
+            <tbody id="corpequipeSem">
+                <script>
+                    
+                    fetch(PointageEquipeSem)
+                        .then(res => res.json())
+                        .then(data => {
+                            let infosEquipeSem = '';
+                            console.log(data.length);
+                            for (let item of data) {
+                                infosEquipeSem += `<tr><td>${formatComplet(item.PointageJour)}</td><td>${item.EmployeNom}</td><td>${item.EmployePrenom}</td><td>${item.EmployeTelephone}</td><td>${formatHeure(item.PointageHeureEntree)}</td><td>${formatHeure(item.PointageHeureSortie)}</td><td>${diffBetweenDates(item.PointageHeureEntree,item.PointageHeureSortie)}</td></tr>`;
+                            }
+                            document.getElementById('corpequipeSem').innerHTML = infosEquipeSem;
+                        });
+                </script>
+
+            </tbody>
+
+        </table>
+    </div>
+
+</div>

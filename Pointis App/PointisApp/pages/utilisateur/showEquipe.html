@@ -1,0 +1,32 @@
+<div class="row m-3 mt-5">
+    <div class="col bg-light border border-1 border-dark rounded-3 m-0 p-0">
+        <table class="table w-100">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">NOM</th>
+                    <th scope="col">PRENOMS</th>
+                    <th scope="col">TELEPHONE</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody id="corpequipe">
+                <script>
+                    
+                    fetch(employes)
+                        .then(res => res.json())
+                        .then(data => {
+                            console.log(data);
+                            let infosEmp = '';
+                            for (let item of data) {
+                                infosEmp += `<tr><td>${item.Nom}</td><td>${item.Prenom}</td><td>${item.Telephone}</td><td onclick="voir('${item.EmployeID}')"><button class="btn btn-light">Détail</button></td></tr>`;
+
+                            }
+                            document.getElementById('corpequipe').innerHTML = infosEmp;
+                        });
+                </script>
+
+            </tbody>
+
+        </table>
+    </div>
+</div>

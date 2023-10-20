@@ -1,0 +1,88 @@
+<div class="row m-3 d-flex justify-content-between">
+
+    <div class="col-12 col-lg-3 d-flex flex-row p-2 border border-1 border-dark rounded-3"
+        style="background-color: whitesmoke;">
+        <img src="image/7.png" alt="" width="50px">
+        <div class="d-flex flex-column">
+            <span id="absence">
+                <script>
+                    fetch(absenceQuarter)
+                        .then(res => res.json())
+                        .then(data => {
+                            console.log(data);
+                            var absences = data;
+                            var absenceInf = '0' + absences;
+
+                            if (absences > 0) {
+                                if (absences < 10) {
+                                    document.getElementById('absence').innerHTML = absenceInf;
+                                }
+                                else {
+                                    document.getElementById('absence').innerHTML = absences;
+                                }
+                            } else {
+                                document.getElementById('absence').innerHTML = '00';
+                            }
+                        });
+                </script>
+            </span>
+            <span>Total des Absences</span>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-3 d-flex flex-row p-2 border border-1 border-dark rounded-3"
+        style="background-color: whitesmoke;">
+        <img src="image/6.png" alt="" width="50px">
+        <div class="d-flex flex-column">
+            <span id="retard">
+                <script>
+                    fetch(retardQuarter)
+                        .then(res => res.json())
+                        .then(data => {
+                            console.log(data);
+                            var retards = data;
+
+                            if (retards > 0) {
+                                document.getElementById('retard').innerHTML = convertirEnHeureMinuteSeconde(retards);
+                            } else {
+                                document.getElementById('retard').innerHTML = '00';
+                            }
+                        });
+                </script>
+            </span>
+            <span>Total des Retards</span>
+        </div>
+    </div>
+    
+    <div class="col-12 col-lg-3 d-flex flex-row p-2 border border-1 border-dark rounded-3"
+        style="background-color: whitesmoke;">
+        <img src="images/import/attendance.png" alt="" width="50px">
+        <div class="d-flex flex-column">
+            <span id="presence">
+                <script>
+                    fetch(entreeQuarter)
+                        .then(res => res.json())
+                        .then(data => {
+                            console.log(data);
+                            console.log(entreeMonth);
+                            var presence = data;
+                            var presenceInf = '0' + presence;
+
+                            if (presence > 0) {
+                                if (presence < 10) {
+                                    document.getElementById('presence').innerHTML = presenceInf;
+                                }
+                                else {
+                                    document.getElementById('presence').innerHTML = presence;
+                                }
+                            } else {
+                                document.getElementById('presence').innerHTML = '00';
+                            }
+                        });
+                </script>
+            </span>
+            <span>Total des Presences</span>
+        </div>
+    </div>
+    
+</div>

@@ -1,0 +1,444 @@
+<!-- chart Js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<!-- JQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"
+    integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+
+<div class="m-3">
+    <div class="row m-3">
+        <div class="col-9">
+            <h2>Equipe</h2>
+        </div>
+        <form
+            class="col-3 col-lg-auto mb-3 d-flex flex-row bg-dark justify-content-center align-items-center border rounded-5">
+            <label for="search">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </label>
+            <input type="search" class="form-control form-control-dark bg-dark text-light border-0"
+                placeholder="Rechercher" aria-label="Search" id="search">
+        </form>
+
+    </div>
+    <!--     
+    <div class="row m-3">
+        <div class="col">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header text-center" id="flush-headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne"
+                            id="vue">
+                            Vue Globale
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                        data-bs-parent="#accordionFlushExample">
+                        <ul class="accordion-body">
+                            <li><a onclick="appelPagePointage('equipeJour','Vue du Jour')">Jour</a> </li>
+                            <li><a onclick="appelPagePointage('equipeSemaine','Vue de la Semaine')">Semaine</a> </li>
+                            <li><a onclick="appelPagePointage('equipeMois','Vue de du Mois')">Mois</a> </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div> -->
+
+    <div class="row m-3 border-bottom border-dark p-2">
+        <button class="col-2 d-flex flex-row  border-0 p-3 btn-para btn-pointage text-uppercase text-dark mt-2" id="showPointage">
+            <span>Liste des pointages</span>
+        </button>
+        <button class="col-2 d-flex flex-row border-0 p-3 btn-para text-uppercase text-dark mt-2" id="showAbsence">
+            <span>Liste des absences</span>
+        </button>
+        <button class="col-2 d-flex flex-row border-0 p-3 btn-para text-uppercase text-dark mt-2" id="showEquipe">
+            <span>Mon équipe</span>
+        </button>
+    </div>
+
+
+</div>
+
+<script>
+
+    function formatComplet(arg) {
+        let format = new Date(arg),
+            ret;
+        ret = format.toLocaleDateString('fr-fr', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
+        return ret
+    }
+
+    function formatHeure(arg) {
+        if (arg === undefined) {
+            let infos = "Pas encore pointé";
+            return infos;
+        }
+        else {
+            let format = new Date(arg),
+                ret;
+            ret = format.getHours() + "h:" + format.getMinutes() + "mn:" + format.getSeconds() + "s";
+            return ret
+        }
+    }
+
+    function appelPagePointage(lien, periode) {
+
+        //alert("test");
+        var lienComplet = 'pages/utilisateur/' + lien + '.html';
+        $.ajax({
+
+            url: lienComplet,
+            method: 'GET',
+            dataType: 'html',
+            success: function (data) {
+                $('#equipeshow').html(data);
+            },
+            error: function () {
+                $('#equipeshow').html('Erreur lors du chargement des données.');
+            }
+        });
+        $("#vue").html(periode);
+        // });
+    }
+
+    function diffBetweenDates(date1, date2) {
+        if (date1 === undefined || date2 === undefined) {
+            var retour = "Pas encore défini";
+            return retour;
+        }
+        else {
+            // Convertir les dates en objets Date
+            var datetime1 = new Date(date1);
+            var datetime2 = new Date(date2);
+            // Calculer la différence en millisecondes
+            var diffInMilliseconds = Math.abs(datetime2 - datetime1);
+            //console.log(diffInMilliseconds);
+
+            // Calculer les différences en heures, minutes et secondes
+            var diffInSeconds = Math.floor(diffInMilliseconds / 1000);
+            var hours = Math.floor(diffInSeconds / 3600);
+            var minutes = Math.floor((diffInSeconds % 3600) / 60);
+            var seconds = diffInSeconds % 60;
+
+            var retour = hours + " h " + minutes + " mn " + seconds + " s";
+
+            return retour;
+        }
+    }
+
+    function appelPageMembreEquipe(lien) {
+
+        //alert("test");
+        var lienComplet = 'pages/utilisateur/' + lien + '.html';
+        $.ajax({
+
+            url: lienComplet,
+            method: 'GET',
+            dataType: 'html',
+            success: function (data) {
+                $('#content-main').html(data);
+            },
+            error: function () {
+                $('#content-main').html('Erreur lors du chargement des données.');
+            }
+        });
+    }
+
+    function voir(id) {
+        sessionStorage.setItem("idEquipeUser", id);
+        fetch('https://face.activactions.net/api/Employes/GetUn/' + id)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                for (let item of data) {
+                    var nom = item.Nom;
+                    var prenom = item.Prenom;
+                    console.log(nom);
+                    console.log(prenom);
+                    sessionStorage.setItem("nomEmpEquip", nom);
+                    sessionStorage.setItem("prenomEmpEquip", prenom);
+                }
+                appelPageMembreEquipe('MembreEquipe');
+            });
+
+    }
+
+    function convertirEnHeureMinuteSeconde(minutes) {
+        // Calcul des heures, minutes et secondes
+        var heures = Math.floor(minutes / 60);
+        var resteMinutes = minutes % 60;
+        var secondes = Math.floor(resteMinutes * 60);
+
+        // Formatage des valeurs en chaînes de caractères
+        var heureString = heures.toString().padStart(2, '0');
+        var minuteString = resteMinutes.toString().padStart(2, '0');
+        var min = Math.floor(minuteString);
+        var secondeString = secondes.toString().padStart(2, '0');
+        var sec = secondeString.substr(0, 2)
+
+        // Renvoyer le résultat sous la forme d'une chaîne de caractères
+        return heureString + 'h:' + min + 'mn:' + sec + 's';
+    }
+
+</script>
+
+
+<div class="equipeshow" id="equipeshow">
+
+    <div id="">
+
+        <div class="row m-3">
+
+            <div class="col-6 d-flex flex-column">
+                <div class="d-flex flex-row p-2 border border-1 border-dark rounded-3"
+                    style="background-color: whitesmoke;">
+
+                    <img src="images/import/absence.png" alt="" width="50px">
+                    <div class="d-flex flex-column">
+                        <span id="absence">
+                            <script>
+                                fetch(absenceEquipJour)
+                                    .then(res => res.json())
+                                    .then(data => {
+                                        //console.log(absenceEquipJour);
+                                        var absences = data;
+                                        var absenceInf = '0' + absences;
+
+                                        if (absences > 0) {
+                                            if (absences < 10) {
+                                                document.getElementById('absence').innerHTML = absenceInf;
+                                            }
+                                            else {
+                                                document.getElementById('absence').innerHTML = absences;
+                                            }
+                                        } else {
+                                            document.getElementById('absence').innerHTML = '00';
+                                        }
+                                    });
+                            </script>
+                        </span>
+                        <span>Total des Absences</span>
+                    </div>
+                </div><br /><br />
+
+                <div class="d-flex flex-row p-2 border border-1 border-dark rounded-3"
+                    style="background-color: whitesmoke;">
+                    <img src="images/import/clock.png" alt="" width="50px">
+                    <div class="d-flex flex-column">
+                        <span id="retard">
+                            <script>
+                                fetch(retardEquipeJour)
+                                    .then(res => res.json())
+                                    .then(data => {
+                                        var retardInner = data;
+
+                                        if (retardInner > 0) {
+                                            document.getElementById('retard').innerHTML = convertirEnHeureMinuteSeconde(retardInner);
+                                        } else {
+                                            document.getElementById('retard').innerHTML = '00';
+                                        }
+                                    });
+                            </script>
+                        </span>
+                        <span>Total des Retards</span>
+                    </div>
+                </div><br /><br />
+
+                <div class="d-flex flex-row p-2 border border-1 border-dark rounded-3"
+                    style="background-color: whitesmoke;">
+                    <img src="images/import/attendance.png" alt="" width="50px">
+                    <div class="d-flex flex-column">
+                        <span>
+                            <span id="presence">
+                                <script>
+                                    fetch(PointageEquipeJour)
+                                        .then(res => res.json())
+                                        .then(data => {
+                                            console.log(PointageEquipeJour);
+                                            var presences = data.length;
+                                            var presenceInf = '0' + presences;
+
+                                            if (presences > 0) {
+                                                if (presences < 10) {
+                                                    document.getElementById('presence').innerHTML = presenceInf;
+                                                }
+                                                else {
+                                                    document.getElementById('presence').innerHTML = presences;
+                                                }
+                                            } else {
+                                                document.getElementById('presence').innerHTML = '00';
+                                            }
+                                        });
+                                </script>
+                            </span>
+                        </span>
+                        <span>Total des Pointages</span>
+                    </div>
+                </div><br />
+
+            </div>
+
+            <div class="col-6">
+                <!-- <canvas class="shadow-lg" id="myChart" style="width:100%;max-width:600px"></canvas> -->
+                <canvas id="myChart3" style="width:100%;max-width:600px"></canvas>
+
+                <script>
+
+                    var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+                    var yValues = [55, 49, 44, 24, 15];
+                    var barColors = ["red", "green", "blue", "orange", "brown"];
+
+                    var colorRetard = '#0000ff';
+                    var colorAbsence = '#ff0000';
+
+                    new Chart("myChart3", {
+                        type: "bar",
+
+                        data: {
+                            datasets: [{
+                                type: 'bar',
+                                label: 'Retard',
+                                backgroundColor: colorRetard,
+                                data: [15, 25, 20, 30, 40]
+                            }, {
+                                type: 'bar',
+                                label: 'Absence',
+                                backgroundColor: colorAbsence,
+                                data: [50, 45, 50, 50, 25],
+                            }],
+                            labels: ['Lun', 'Mar', 'Jeu', 'Ven']
+                        },
+                        // options: options,
+
+                        options: {
+                            legend: { display: true },
+                            title: {
+                                display: true,
+                                text: "Cette semaine"
+                            }
+                        }
+                    });
+
+
+                </script>
+            </div>
+
+        </div>
+
+       
+        <div class="row m-3">
+            <div class="col bg-light border border-1 border-dark rounded-3 m-0 p-0">
+                <table class="table w-100">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">DATE</th>
+                            <th scope="col">NOM</th>
+                            <th scope="col">PRENOMS</th>
+                            <th scope="col">TELEPHONE</th>
+                            <th scope="col">ENTREES</th>
+                            <th scope="col">SORTIES</th>
+                            <th scope="col">DUREE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpequipeall">
+                        <script>
+
+                            fetch(PointageEquipe)
+                                .then(res => res.json())
+                                .then(data => {
+                                    let infosEquipe = '';
+                                    console.log(data);
+                                    for (let item of data) {
+                                        // infosEquipe += `<tr><td>${formatComplet(item.PointageJour)}</td><td>${item.EmployeNom}</td><td>${item.EmployePrenom}</td><td>${item.EmployeTelephone}</td><td>${formatHeure(item.PointageHeureEntree)}</td><td>${formatHeure(item.PointageHeureSortie)}</td><td>${diffBetweenDates(item.PointageHeureEntree,item.PointageHeureSortie)}</td><td onclick="voir('${item.EmployeID}')"><button class ="btn btn-light">Détail</button></td></tr>`;
+                                        infosEquipe += `<tr><td>${formatComplet(item.PointageJour)}</td><td>${item.EmployeNom}</td><td>${item.EmployePrenom}</td><td>${item.EmployeTelephone}</td><td>${formatHeure(item.PointageHeureEntree)}</td><td>${formatHeure(item.PointageHeureSortie)}</td><td>${diffBetweenDates(item.PointageHeureEntree,item.PointageHeureSortie)}</td></tr>`;
+
+                                    }
+                                    document.getElementById('corpequipeall').innerHTML = infosEquipe;
+                                });
+                        </script>
+
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#showPointage').click(function () {
+
+            $("#showPointage").css("background-color", "#8dc63f");
+            $("#showEquipe").css("background-color", "whitesmoke");
+            $("#showAbsence").css("background-color", "whitesmoke");
+
+            $.ajax({
+                url: 'pages/utilisateur/showPointage.html',
+                method: 'GET',
+                dataType: 'html',
+                success: function (data) {
+                    $('#equipeshow').html(data);
+                },
+                error: function () {
+                    $('#equipeshow').html('Erreur lors du chargement des données.');
+                }
+            });
+
+
+
+        });
+    });
+
+    $(document).ready(function () {
+        $('#showAbsence').click(function () {
+            $("#showAbsence").css("background-color", "#8dc63f");
+            $("#showPointage").css("background-color", "whitesmoke");
+            $("#showEquipe").css("background-color", "#whitesmoke");
+
+            $.ajax({
+                url: 'pages/utilisateur/showAbsence.html',
+                method: 'GET',
+                dataType: 'html',
+                success: function (data) {
+                    $('#equipeshow').html(data);
+                },
+                error: function () {
+                    $('#equipeshow').html('Erreur lors du chargement des données.');
+                }
+            });
+
+        });
+    });
+
+
+
+    $(document).ready(function () {
+        $('#showEquipe').click(function () {
+            $("#showEquipe").css("background-color", "#8dc63f");
+            $("#showPointage").css("background-color", "whitesmoke");
+            $("#showAbsence").css("background-color", "whitesmoke");
+
+            $.ajax({
+                url: 'pages/utilisateur/showEquipe.html',
+                method: 'GET',
+                dataType: 'html',
+                success: function (data) {
+                    $('#equipeshow').html(data);
+                },
+                error: function () {
+                    $('#equipeshow').html('Erreur lors du chargement des données.');
+                }
+            });
+
+        });
+    });
+</script>

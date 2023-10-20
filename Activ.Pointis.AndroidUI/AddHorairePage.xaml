@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProjetScan.AddHorairePage"
+             Title="Ajouter une Horaire">
+
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.RowSpan="2" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="2" Text="Ajouter un employé" HorizontalOptions="Center" FontSize="Subtitle" FontAttributes="Bold" Padding="0" Margin="5"/>
+            <StackLayout Grid.Row="3" Orientation="Vertical" HorizontalOptions="CenterAndExpand">
+                <Frame BackgroundColor="Transparent" BorderColor="#8BC34A" HorizontalOptions="CenterAndExpand" Padding="0" Margin="20,1,15,20" WidthRequest="300">
+                    <StackLayout Orientation="Horizontal">
+                        <Entry x:Name="titre" Placeholder="Titre de l'horaire" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                    </StackLayout>
+                </Frame>
+                <Frame BackgroundColor="Transparent" BorderColor="#8BC34A" HorizontalOptions="CenterAndExpand" Padding="0" Margin="20,1,15,20" WidthRequest="300">
+                    <StackLayout Orientation="Horizontal">
+                        <Entry x:Name="heure_debut" Placeholder="Heure d'entrer" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                    </StackLayout>
+                </Frame>
+                <Frame BackgroundColor="Transparent" BorderColor="#8BC34A" HorizontalOptions="CenterAndExpand" Padding="0" Margin="20,1,15,20" WidthRequest="300">
+                    <StackLayout Orientation="Horizontal">
+                        <Entry x:Name="heure_fin" Placeholder="Heure de sortie" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                    </StackLayout>
+                </Frame>
+                <Button Text=" Ajouter" FontAttributes="Bold" TextColor="White" BackgroundColor="#8BC34A" Margin="0,5,0,0"  WidthRequest="200" Clicked="AjouterClick"/>
+                <!--<Button Text=" Ajouter" FontAttributes="Bold" TextColor="White" BackgroundColor="Blue" Margin="0,20,0,0"  WidthRequest="200" Command="{Binding AjouterCommand}"/>-->
+            </StackLayout>
+
+        </Grid>
+    </Grid>
+
+</ContentPage>
