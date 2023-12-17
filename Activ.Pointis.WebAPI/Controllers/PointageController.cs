@@ -10,7 +10,7 @@ using System.Web.Http.Cors;
 
 namespace Activ.Pointis.WebAPI.Controllers
 {
-    //[EnableCors(origins: "*", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     //[Authorize]
     [RoutePrefix("api/Pointage")]
     public class PointageController : ApiController
@@ -25,10 +25,33 @@ namespace Activ.Pointis.WebAPI.Controllers
 
         // GET: api/Pointage/5
         [HttpGet]
+        [ActionName("GetUn")]
         public IEnumerable<V_Pointage> GetUn(long id)
         {
             return PointageModel.AfficherUnSeul(id);
         }
+
+        [HttpGet]
+        [ActionName("GetAbsenceJour")]
+        public IEnumerable<Employes> GetAbsenceJour(long id)
+        {
+            return PointageModel.GetAbsenceJour(id);
+        }
+
+        //[HttpGet]
+        //[ActionName("GetAbsenceJour")]
+        //public void GetAbsenceJour(long id)
+        //{
+        //    PointageModel.GetAbsenceJour(id);
+        //}
+
+
+        //[HttpGet]
+        //[ActionName("GetAbsenceJourResponsable")]
+        //public IEnumerable<ResponsableModel> GetAbsenceJourResponsable(long id)
+        //{
+        //    return PointageModel.GetAbsenceJourResponsable(id);
+        //}
 
         // GET: api/Employes/5
         [HttpGet]

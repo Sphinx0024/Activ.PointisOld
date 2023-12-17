@@ -21,6 +21,6 @@ namespace Activ.Pointis.Data
         public string Role { get; set; }
         public string Verification { get; set; }
     
-        public Societe Societe { get; set; }
+        public virtual Societe Societe { get; set; }
     }
 }

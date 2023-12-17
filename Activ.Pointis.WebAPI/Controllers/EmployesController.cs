@@ -10,11 +10,17 @@ using System.Web.Http.Cors;
 
 namespace Activ.Pointis.WebAPI.Controllers
 {
-    //[EnableCors(origins: "*", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     //[Authorize]
     [RoutePrefix("api/Employes")]
     public class EmployesController : ApiController
     {
+        /*[HttpGet]
+        public bool Get()
+        {
+            return true;
+        }*/
+
         // GET: api/Employes
         [HttpGet]
         public List<Employes> Get(long id)
@@ -24,6 +30,7 @@ namespace Activ.Pointis.WebAPI.Controllers
 
         // GET: api/Employes/5
         [HttpGet]
+        [ActionName("GetUn")]
         public List<Employes> GetUn(long id)
         {
             return EmployesModel.AfficherUnSeul(id);

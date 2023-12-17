@@ -45,6 +45,20 @@ namespace Activ.Pointis.WebAPI.Models
             }
         }
 
+        public static List<Employes> AfficherParDetailResponsable(long idSoc, string nom, string prenom, string tel)
+        {
+            using (PointisEntities _db = new PointisEntities())
+            {
+                //string famille = prenom + " " + nom;
+
+                List<Employes> donnees = (from p in _db.Employes
+                                          //where p.SocieteID == idSoc && p.Responsable == famille
+                                          where p.SocieteID == idSoc && p.Nom == nom && p.Prenom == prenom && p.Telephone == tel
+                                          select p).ToList();
+                return donnees;
+            }
+        }
+
 
 
         // public static long Ajouter(Employes employes)

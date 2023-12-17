@@ -7,6 +7,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Routing;
+using Activ.Pointis.WebAPI.App_Start;
+using System.Web.Http;
+using System.Web.Routing;
 
 namespace Activ.Pointis.WebAPI
 {
@@ -15,7 +18,8 @@ namespace Activ.Pointis.WebAPI
         protected void Application_Start()
         {
             //OwinStartup();
-            GlobalConfiguration.Configure(WebApiConfig.Register);
+            GlobalConfiguration.Configure(WebApiConfig.Register); 
+            
         }
 
         /*private void OwinStartup()

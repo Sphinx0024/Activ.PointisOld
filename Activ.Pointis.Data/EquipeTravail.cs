@@ -17,7 +17,7 @@ namespace Activ.Pointis.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public EquipeTravail()
         {
-            this.Employes = new List<Employes>();
+            this.Employes = new HashSet<Employes>();
         }
     
         public long ID { get; set; }
@@ -27,7 +27,7 @@ namespace Activ.Pointis.Data
         public Nullable<long> SocieteID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public ICollection<Employes> Employes { get; set; }
-        public Societe Societe { get; set; }
+        public virtual ICollection<Employes> Employes { get; set; }
+        public virtual Societe Societe { get; set; }
     }
 }

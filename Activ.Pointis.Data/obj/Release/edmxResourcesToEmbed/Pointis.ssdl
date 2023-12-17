@@ -80,6 +80,19 @@
     <Property Name="latitude_entree" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="latitude_sortie" Type="varchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="SiteTravail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SocieteID" Type="bigint" Nullable="false" />
+    <Property Name="Commune" Type="varchar" MaxLength="50" />
+    <Property Name="Ville" Type="varchar" MaxLength="50" />
+    <Property Name="CoordonnerGPS" Type="varchar" MaxLength="50" />
+    <Property Name="Quartier" Type="varchar" MaxLength="50" />
+    <Property Name="Pays" Type="varchar" MaxLength="50" />
+    <Property Name="Libelle" Type="varchar" MaxLength="50" />
+  </EntityType>
   <EntityType Name="Societe">
     <Key>
       <PropertyRef Name="ID" />
@@ -242,6 +255,18 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_SiteTravail_Societe">
+    <End Role="Societe" Type="Self.Societe" Multiplicity="1" />
+    <End Role="SiteTravail" Type="Self.SiteTravail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Societe">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SiteTravail">
+        <PropertyRef Name="SocieteID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="PointisModelStoreContainer">
     <EntitySet Name="Connexion" EntityType="Self.Connexion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DetailsConnexion" EntityType="Self.DetailsConnexion" Schema="dbo" store:Type="Tables" />
@@ -249,6 +274,7 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
     <EntitySet Name="EquipeTravail" EntityType="Self.EquipeTravail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Notifications" EntityType="Self.Notifications" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Pointage" EntityType="Self.Pointage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SiteTravail" EntityType="Self.SiteTravail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Societe" EntityType="Self.Societe" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="V_Employes" EntityType="Self.V_Employes" store:Type="Views" store:Schema="dbo">
@@ -321,6 +347,10 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
     <AssociationSet Name="FK_Pointage_Employes" Association="Self.FK_Pointage_Employes">
       <End Role="Employes" EntitySet="Employes" />
       <End Role="Pointage" EntitySet="Pointage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SiteTravail_Societe" Association="Self.FK_SiteTravail_Societe">
+      <End Role="Societe" EntitySet="Societe" />
+      <End Role="SiteTravail" EntitySet="SiteTravail" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

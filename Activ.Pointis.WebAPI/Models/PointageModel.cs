@@ -1,4 +1,5 @@
 ﻿using Activ.Pointis.Data;
+using Activ.Pointis.WebAPI.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,6 +11,9 @@ using System.Numerics;
 using System.Runtime.Remoting.Contexts;
 using System.Web;
 using System.Web.Http;
+using System.Text;
+using System.Web.Configuration;
+using System.Web.Services.Description;
 
 namespace Activ.Pointis.WebAPI.Models
 {
@@ -132,6 +136,22 @@ namespace Activ.Pointis.WebAPI.Models
                 List<V_Pointage> donnees = _db.V_Pointage.Where(d => d.PointageJour == now && d.EmployeID == id && d.PointageHeureEntree == null && d.PointageHeureSortie == null).OrderByDescending(d => d.PointageID).ToList();
 
                 return donnees.Count;
+            }
+        }
+
+        public static List<V_Pointage> IncompletPointageEmp(long id)
+        {
+            using (PointisEntities _db = new PointisEntities())
+            {
+                DateTime now = DateTime.Today;
+                DateTime yesterday = now.AddDays(-1);
+                //DateTime yesterdayDate = yesterday.Date;
+                DateTimeOffset yesterdayDate = new DateTimeOffset(now.AddDays(-1).Date, TimeSpan.Zero);
+
+
+                List<V_Pointage> donnees = _db.V_Pointage.Where(d => d.PointageJour == yesterdayDate && d.EmployeID == id && d.PointageHeureEntree != null && d.PointageHeureSortie == null).OrderByDescending(d => d.PointageID).ToList();
+
+                return donnees;
             }
         }
 
@@ -830,15 +850,248 @@ namespace Activ.Pointis.WebAPI.Models
 
         }
 
+        public static List<V_Pointage> LastPointage(long id)
+        {
+            using (PointisEntities _db = new PointisEntities())
+            {
+                DateTime now = DateTime.Now;
+                DateTime Jour = now.Date.AddDays(-1);
+                List<V_Pointage> donnees = (from p in _db.V_Pointage
+                                            where p.EmployeID == id && p.PointageJour == Jour && p.PointageHeureSortie == null
+                                            orderby p.PointageID descending
+                                            select p).Take(1).ToList();
+                return donnees;
+            }
+
+        }
+
         public static void Ajouter(Pointage pointage)
         {
             using (PointisEntities _db = new PointisEntities())
             {
+                long id = pointage.EmployesID;
+                List<Employes> donnees = EmployesModel.AfficherUnSeul(id);
+
+                List<V_Pointage> IncompPoint = LastPointage(id);
+
+                    
+                    foreach(Employes emp in donnees) 
+                    {
+                        string mail = emp.Email;
+                        string nom = emp.Prenom + " " + emp.Nom;
+                        string respo = emp.Responsable;
+                        long idEquip = emp.EquipeID;
+
+                        if (IncompPoint.Count > 0)
+                        {
+                            if (respo != null)
+                            {
+                                //string nomresp = respo.Substring(0, respo.IndexOf(' '));
+                                string[] detailresp = respo.Split('-');
+                                string nomresp = detailresp[0].Trim();
+                                string prenomresp = detailresp[1].Trim();
+                                string telresp = detailresp[2].Trim();
+                                long socID = emp.SocieteID;
+
+                                List<Employes> donneesResp = EmployesModel.AfficherParDetailResponsable(socID, nomresp, prenomresp, telresp);
+                                foreach (Employes p in donneesResp)
+                                {
+                                    string mailres = p.Email;
+                                    string msg = string.Format(Logics.ConstanteNotification.msg_fraude_emp, nom);
+                                    Mailling.EnvoyerMailAvecCopie(Mapping.MailConfig, msg, Logics.ConstanteNotification.obj_fraude, new List<string>() { mail, mailres }, null);
+                                }
+
+                                //string url = string.Format("{0}", Mapping.url_user);
+                            }
+                            else
+                            {
+                                string msg = string.Format(Logics.ConstanteNotification.msg_fraude_emp, nom);
+                                Mailling.EnvoyerMailAvecCopie(Mapping.MailConfig, msg, Logics.ConstanteNotification.obj_fraude, new List<string>() { mail }, null);
+                            }
+                        }
+
+                        List<EquipeTravail> equip = EquipeTravailModel.AfficherUnSeul(idEquip);
+
+                        foreach(EquipeTravail q in equip)
+                        {
+                            string[] decoupheure  = q.HeureDebutService.Split('h');
+                            string heuredebutstring = decoupheure[0] + ":" + decoupheure[1];
+                            var heuredebut = DateTime.Parse(heuredebutstring);
+                            heuredebut = heuredebut.AddHours(1);
+                            var heure = pointage.HeureEntree;
+                            if (heure.TimeOfDay.CompareTo(heuredebut.TimeOfDay) > 0)
+                            {
+                                if (respo != null)
+                                {
+                                    //string nomresp = respo.Substring(0, respo.IndexOf(' '));
+                                    string[] detailresp = respo.Split('-');
+                                    string nomresp = detailresp[0].Trim();
+                                    string prenomresp = detailresp[1].Trim();
+                                    string telresp = detailresp[2].Trim();
+                                    long socID = emp.SocieteID;
+
+                                    List<Employes> donneesResp = EmployesModel.AfficherParDetailResponsable(socID, nomresp, prenomresp, telresp);
+                                    foreach (Employes p in donneesResp)
+                                    {
+                                        string mailres = p.Email;
+                                        string msg = string.Format(Logics.ConstanteNotification.msg_retard_emp, nom, heure.TimeOfDay, heure.Date);
+                                        Mailling.EnvoyerMailAvecCopie(Mapping.MailConfig, msg, Logics.ConstanteNotification.obj_retard, new List<string>() { mail, mailres }, null);
+                                    }
+
+                                    //string url = string.Format("{0}", Mapping.url_user);
+                                }
+                                else
+                                {
+                                    string msg = string.Format(Logics.ConstanteNotification.msg_retard_emp, nom, heure.TimeOfDay, heure.Date);
+                                    Mailling.EnvoyerMailAvecCopie(Mapping.MailConfig, msg, Logics.ConstanteNotification.obj_retard, new List<string>() { mail }, null);
+                                }
+                            }
+
+                        }
+
+                    }
+
                 _db.Pointage.Add(pointage);
                 _db.SaveChanges();
             }
 
         }
+
+
+        //public static void GetAbsenceJour(long id)
+        //{
+
+        //    using (PointisEntities _db = new PointisEntities())
+        //    {
+
+        //        DateTime now = DateTime.Now;
+        //        DateTime Jour = now.Date;
+
+        //        var donnees = (from e in _db.Employes
+        //                       where !_db.Pointage.Any(p => p.EmployesID == e.EmployeID && p.Jour == Jour) && e.SocieteID == id
+        //                       select e).ToList();
+
+
+        //        foreach (Employes employes in donnees)
+        //        {
+        //            string mail = employes.Email;
+        //            string nom = employes.Prenom + " " + employes.Nom;
+        //            string respo = employes.Responsable;
+
+        //            string msg = string.Format(Logics.ConstanteNotification.msg_absence, nom);
+        //            Mailling.EnvoyerMailAvecCopie(Mapping.MailConfig, msg, Logics.ConstanteNotification.obj_absence, new List<string>() { mail }, null);
+        //            //}
+
+        //        }
+
+        //        GetAbsenceJourResponsable(id);
+
+        //        //return donnees;
+        //    }
+        //}
+
+
+
+        public static List<Employes> GetAbsenceJour(long id)
+        {
+
+            using (PointisEntities _db = new PointisEntities())
+            {
+
+                DateTime now = DateTime.Now;
+                DateTime Jour = now.Date;
+
+                var donnees = (from e in _db.Employes
+                               where !_db.Pointage.Any(p => p.EmployesID == e.EmployeID && p.Jour == Jour) && e.SocieteID == id
+                               select e).ToList();
+
+                //var donnees = (from e in _db.Employes
+                //               where !_db.Pointage.Any(p => p.EmployesID == e.EmployeID && p.Jour == Jour) && e.SocieteID == id
+                //               select e).GroupBy(p => p.Responsable).ToList();
+
+
+                foreach (Employes employes in donnees)
+                {
+                    string mail = employes.Email;
+                    string nom = employes.Prenom + " " + employes.Nom;
+                    string respo = employes.Responsable;
+                    //if (respo != null)
+                    //{
+                    //    string[] detailresp = respo.Split('-');
+                    //    string nomresp = detailresp[0].Trim();
+                    //    string prenomresp = detailresp[1].Trim();
+                    //    string telresp = detailresp[2].Trim();
+                    //    long socID = employes.SocieteID;
+
+                    //    List<Employes> donneesResp = EmployesModel.AfficherParDetailResponsable(socID, nomresp, prenomresp, telresp);
+                    //    foreach (Employes p in donneesResp)
+                    //    {
+                    //        string mailres = p.Email;
+                    //        string msg = string.Format(Logics.ConstanteNotification.msg_absence, nom);
+                    //        Mailling.EnvoyerMailAvecCopie(Mapping.MailConfig, msg, Logics.ConstanteNotification.obj_absence, new List<string>() { mail, mailres }, null);
+                    //    }
+                    //}
+                    //else
+                    //{
+                    string msg = string.Format(Logics.ConstanteNotification.msg_absence, nom);
+                    Mailling.EnvoyerMailAvecCopie(Mapping.MailConfig, msg, Logics.ConstanteNotification.obj_absence, new List<string>() { mail }, null);
+                    //}
+
+                }
+
+                GetAbsenceJourResponsable(id);
+
+                return donnees;
+            }
+        }
+
+        public static List<RespModel> GetAbsenceJourResponsable(long id)
+        {
+
+            using (PointisEntities _db = new PointisEntities())
+            {
+
+                DateTime now = DateTime.Now;
+                DateTime Jour = now.Date;
+
+                var donnees = (from e in _db.Employes
+                               where !_db.Pointage.Any(p => p.EmployesID == e.EmployeID && p.Jour == Jour) && e.SocieteID == id
+                               group e by e.Responsable into g
+                               select new RespModel
+                               {
+                                   Responsable = g.Key,
+                                   Employes = g.ToList()
+                               }).ToList();
+
+                foreach (var responsable in donnees)
+                {
+                    string[] detailresp = responsable.Responsable.Split('-');
+                    string nomresp = detailresp[0].Trim();
+                    string prenomresp = detailresp[1].Trim();
+                    string telresp = detailresp[2].Trim();
+                    string mailres = "";
+                    int compter = 0;
+
+                    string msg = string.Format(Logics.ConstanteNotification.msg_absence_responsable, nomresp);
+                    foreach (var employe in responsable.Employes)
+                    {
+                        long socID = employe.SocieteID;
+
+                        List<Employes> donneesResp = EmployesModel.AfficherParDetailResponsable(socID, nomresp, prenomresp, telresp);
+                        foreach (Employes p in donneesResp)
+                        {
+                            mailres = p.Email;
+                            compter++;
+                            msg += string.Format("{0}- {1} {2} {3}<br/>", compter, employe.Matricule, employe.Prenom, employe.Nom);
+                        }
+                    }
+                    Mailling.EnvoyerMailAvecCopie(Mapping.MailConfig, msg, Logics.ConstanteNotification.obj_absence, new List<string>() { mailres }, null);
+                }
+
+                return donnees;
+            }
+        }
+
 
         public static void Modifier(long id, Pointage pointage)
         {

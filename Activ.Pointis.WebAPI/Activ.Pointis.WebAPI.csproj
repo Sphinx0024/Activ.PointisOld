@@ -164,6 +164,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DocTemplates\MailTempBody.html" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -174,10 +175,15 @@
     <Compile Include="Controllers\EmployesController.cs" />
     <Compile Include="Controllers\EquipeTravailController.cs" />
     <Compile Include="Controllers\PointageController.cs" />
+    <Compile Include="Controllers\ResponsableController.cs" />
+    <Compile Include="Controllers\ServiceController.cs" />
+    <Compile Include="Controllers\SiteTravailController.cs" />
     <Compile Include="Controllers\SocieteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Logics\ConstanteNotification.cs" />
+    <Compile Include="Logics\L_Notifications.cs" />
     <Compile Include="Mail\MailConfig.cs" />
     <Compile Include="Mail\Mailling.cs" />
     <Compile Include="Models\Absence.cs" />
@@ -190,10 +196,23 @@
     <Compile Include="Models\Password.cs" />
     <Compile Include="Models\PointageModel.cs" />
     <Compile Include="Models\Report.cs" />
+    <Compile Include="Models\RespModel.cs" />
+    <Compile Include="Models\ResponsableModel.cs" />
     <Compile Include="Models\Retard.cs" />
+    <Compile Include="Models\SiteTravailModel.cs" />
     <Compile Include="Models\SocieteModel.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\EventLogger.cs" />
+    <Compile Include="Utilities\Helper.cs" />
+    <Compile Include="Utilities\mail\MailConfig.cs" />
+    <Compile Include="Utilities\mail\Mailling.cs" />
+    <Compile Include="Utilities\Mapping.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -212,6 +231,12 @@
       <Project>{6d69c1ab-1d97-479d-96b9-83576b4f9ecc}</Project>
       <Name>Activ.Pointis.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

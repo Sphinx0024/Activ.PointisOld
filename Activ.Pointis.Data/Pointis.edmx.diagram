@@ -20,6 +20,11 @@
         <AssociationConnector Association="PointisModel.FK_Employes_Societe" ManuallyRouted="false" />
         <AssociationConnector Association="PointisModel.FK_Pointage_Employes" ManuallyRouted="false" />
         <AssociationConnector Association="PointisModel.FK_EquipeTravail_Societe" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PointisModel.SiteTravail" Width="1.5" PointX="12.375" PointY="0.75" />
+        <AssociationConnector Association="PointisModel.FK_SiteTravail_Societe" />
+        <EntityTypeShape EntityType="PointisModel.Responsable" Width="1.5" PointX="7.5" PointY="12.625" />
+        <AssociationConnector Association="PointisModel.FK_Responsable_Employes" />
+        <AssociationConnector Association="PointisModel.FK_Responsable_Employes1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

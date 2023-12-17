@@ -35,5 +35,7 @@ namespace Activ.Pointis.Data
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<V_Employes> V_Employes { get; set; }
         public virtual DbSet<V_Pointage> V_Pointage { get; set; }
+        public virtual DbSet<SiteTravail> SiteTravail { get; set; }
+        public virtual DbSet<Responsable> Responsable { get; set; }
     }
 }

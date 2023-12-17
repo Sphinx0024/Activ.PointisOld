@@ -165,5 +165,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="SiteTravail">
+      <EntityTypeMapping TypeName="PointisModel.SiteTravail">
+        <MappingFragment StoreEntitySet="SiteTravail">
+          <ScalarProperty Name="Libelle" ColumnName="Libelle" />
+          <ScalarProperty Name="Pays" ColumnName="Pays" />
+          <ScalarProperty Name="Quartier" ColumnName="Quartier" />
+          <ScalarProperty Name="CoordonnerGPS" ColumnName="CoordonnerGPS" />
+          <ScalarProperty Name="Ville" ColumnName="Ville" />
+          <ScalarProperty Name="Commune" ColumnName="Commune" />
+          <ScalarProperty Name="SocieteID" ColumnName="SocieteID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

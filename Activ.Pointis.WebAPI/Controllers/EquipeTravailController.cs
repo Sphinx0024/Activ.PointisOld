@@ -6,13 +6,16 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace Activ.Pointis.WebAPI.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/EquipeTravail")]
     public class EquipeTravailController : ApiController
     {
         [HttpGet]
+        [ActionName("Get")]
         // GET: api/Societe
         public IEnumerable<EquipeTravail> Get(long id)
         {
@@ -20,6 +23,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         }
 
         [HttpGet]
+        [ActionName("GetUn")]
         // GET: api/Societe/5
         public List<EquipeTravail> GetUn(int id)
         {

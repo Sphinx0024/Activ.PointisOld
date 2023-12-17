@@ -85,6 +85,12 @@
       <DependentUpon>Pointis.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Responsable.cs">
+      <DependentUpon>Pointis.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SiteTravail.cs">
+      <DependentUpon>Pointis.tt</DependentUpon>
+    </Compile>
     <Compile Include="Societe.cs">
       <DependentUpon>Pointis.tt</DependentUpon>
     </Compile>

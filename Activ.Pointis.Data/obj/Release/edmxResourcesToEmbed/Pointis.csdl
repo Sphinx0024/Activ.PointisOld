@@ -100,6 +100,7 @@
     <NavigationProperty Name="Connexion" Relationship="Self.FK_Connexion_Societe" FromRole="Societe" ToRole="Connexion" />
     <NavigationProperty Name="Employes" Relationship="Self.FK_Employes_Societe" FromRole="Societe" ToRole="Employes" />
     <NavigationProperty Name="EquipeTravail" Relationship="Self.FK_EquipeTravail_Societe" FromRole="Societe" ToRole="EquipeTravail" />
+    <NavigationProperty Name="SiteTravail" Relationship="PointisModel.FK_SiteTravail_Societe" FromRole="Societe" ToRole="SiteTravail" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -279,5 +280,36 @@
       <End Role="Societe" EntitySet="Societe" />
       <End Role="EquipeTravail" EntitySet="EquipeTravail" />
     </AssociationSet>
+    <EntitySet Name="SiteTravail" EntityType="PointisModel.SiteTravail" />
+    <AssociationSet Name="FK_SiteTravail_Societe" Association="PointisModel.FK_SiteTravail_Societe">
+      <End Role="Societe" EntitySet="Societe" />
+      <End Role="SiteTravail" EntitySet="SiteTravail" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="SiteTravail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SocieteID" Type="Int64" Nullable="false" />
+    <Property Name="Commune" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Ville" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CoordonnerGPS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Quartier" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Pays" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Libelle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Societe" Relationship="PointisModel.FK_SiteTravail_Societe" FromRole="SiteTravail" ToRole="Societe" />
+  </EntityType>
+  <Association Name="FK_SiteTravail_Societe">
+    <End Type="PointisModel.Societe" Role="Societe" Multiplicity="1" />
+    <End Type="PointisModel.SiteTravail" Role="SiteTravail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Societe">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SiteTravail">
+        <PropertyRef Name="SocieteID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

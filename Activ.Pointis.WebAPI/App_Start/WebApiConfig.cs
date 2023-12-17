@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.ExceptionHandling;
 
 namespace Activ.Pointis.WebAPI
 {
@@ -11,6 +12,10 @@ namespace Activ.Pointis.WebAPI
     {
         public static void Register(HttpConfiguration config)
         {
+          
+            // Itinéraires de l'API Web
+            config.MapHttpAttributeRoutes();
+
             var cors = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors(cors);
 
@@ -18,9 +23,17 @@ namespace Activ.Pointis.WebAPI
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             config.Formatters.JsonFormatter.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
 
+            config.Routes.MapHttpRoute(
+            name: "DefaultApi_2",
+            routeTemplate: "api/{controller}/{action}",
+            defaults: new {  }
+        );
 
-            // Itinéraires de l'API Web
-            config.MapHttpAttributeRoutes();
+            config.Routes.MapHttpRoute(
+              name: "DefaultApi_1",
+              routeTemplate: "api/{controller}/{action}/{id}",
+              defaults: new { id = RouteParameter.Optional }
+          );
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

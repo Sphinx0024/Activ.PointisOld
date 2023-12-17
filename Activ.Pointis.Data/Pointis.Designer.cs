@@ -1,4 +1,4 @@
-﻿// La génération de code T4 est activée pour le modèle 'D:\source\repos\ProjetPointis-26-04-23\ProjetPointis\Activ.Pointis.Data\Pointis.edmx'. 
+﻿// La génération de code T4 est activée pour le modèle 'D:\source\repos\VS\Activ.PointisOld\Activ.Pointis.Data\Pointis.edmx'. 
 // Pour activer la génération de code héritée, définissez la valeur de la propriété
 // du concepteur 'Stratégie de génération de code' sur 'ObjectContext hérité'. Cette propriété est disponible dans la fenêtre Propriétés lorsque le modèle
 //  est ouvert dans le concepteur.

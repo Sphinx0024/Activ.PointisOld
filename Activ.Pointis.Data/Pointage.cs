@@ -26,6 +26,6 @@ namespace Activ.Pointis.Data
         public string latitude_entree { get; set; }
         public string latitude_sortie { get; set; }
     
-        public Employes Employes { get; set; }
+        public virtual Employes Employes { get; set; }
     }
 }

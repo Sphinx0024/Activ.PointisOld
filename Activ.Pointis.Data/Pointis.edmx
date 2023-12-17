@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PointisModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PointisModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Connexion">
           <Key>
             <PropertyRef Name="ConnexionID" />
@@ -84,6 +84,27 @@
           <Property Name="longitude_sortie" Type="varchar" MaxLength="50" />
           <Property Name="latitude_entree" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="latitude_sortie" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Responsable">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="EmployesID" Type="bigint" Nullable="false" />
+          <Property Name="ResponsableID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SiteTravail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SocieteID" Type="bigint" Nullable="false" />
+          <Property Name="Commune" Type="varchar" MaxLength="50" />
+          <Property Name="Ville" Type="varchar" MaxLength="50" />
+          <Property Name="CoordonnerGPS" Type="varchar" MaxLength="50" />
+          <Property Name="Quartier" Type="varchar" MaxLength="50" />
+          <Property Name="Pays" Type="varchar" MaxLength="50" />
+          <Property Name="Libelle" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Societe">
           <Key>
@@ -247,6 +268,42 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Responsable_Employes">
+          <End Role="Employes" Type="Self.Employes" Multiplicity="1" />
+          <End Role="Responsable" Type="Self.Responsable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employes">
+              <PropertyRef Name="EmployeID" />
+            </Principal>
+            <Dependent Role="Responsable">
+              <PropertyRef Name="ResponsableID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Responsable_Employes1">
+          <End Role="Employes" Type="Self.Employes" Multiplicity="1" />
+          <End Role="Responsable" Type="Self.Responsable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employes">
+              <PropertyRef Name="EmployeID" />
+            </Principal>
+            <Dependent Role="Responsable">
+              <PropertyRef Name="EmployesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SiteTravail_Societe">
+          <End Role="Societe" Type="Self.Societe" Multiplicity="1" />
+          <End Role="SiteTravail" Type="Self.SiteTravail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Societe">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SiteTravail">
+              <PropertyRef Name="SocieteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="PointisModelStoreContainer">
           <EntitySet Name="Connexion" EntityType="Self.Connexion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetailsConnexion" EntityType="Self.DetailsConnexion" Schema="dbo" store:Type="Tables" />
@@ -254,6 +311,8 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
           <EntitySet Name="EquipeTravail" EntityType="Self.EquipeTravail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Notifications" EntityType="Self.Notifications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pointage" EntityType="Self.Pointage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Responsable" EntityType="Self.Responsable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SiteTravail" EntityType="Self.SiteTravail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Societe" EntityType="Self.Societe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="V_Employes" EntityType="Self.V_Employes" store:Type="Views" store:Schema="dbo">
@@ -327,9 +386,20 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
             <End Role="Employes" EntitySet="Employes" />
             <End Role="Pointage" EntitySet="Pointage" />
           </AssociationSet>
+          <AssociationSet Name="FK_Responsable_Employes" Association="Self.FK_Responsable_Employes">
+            <End Role="Employes" EntitySet="Employes" />
+            <End Role="Responsable" EntitySet="Responsable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Responsable_Employes1" Association="Self.FK_Responsable_Employes1">
+            <End Role="Employes" EntitySet="Employes" />
+            <End Role="Responsable" EntitySet="Responsable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SiteTravail_Societe" Association="Self.FK_SiteTravail_Societe">
+            <End Role="Societe" EntitySet="Societe" />
+            <End Role="SiteTravail" EntitySet="SiteTravail" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PointisModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -376,6 +446,8 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
           <NavigationProperty Name="EquipeTravail" Relationship="Self.FK_Employes_EquipeTravail" FromRole="Employes" ToRole="EquipeTravail" />
           <NavigationProperty Name="Societe" Relationship="Self.FK_Employes_Societe" FromRole="Employes" ToRole="Societe" />
           <NavigationProperty Name="Pointage" Relationship="Self.FK_Pointage_Employes" FromRole="Employes" ToRole="Pointage" />
+          <NavigationProperty Name="Responsable1" Relationship="PointisModel.FK_Responsable_Employes" FromRole="Employes" ToRole="Responsable" />
+          <NavigationProperty Name="Responsable2" Relationship="PointisModel.FK_Responsable_Employes1" FromRole="Employes" ToRole="Responsable" />
         </EntityType>
         <EntityType Name="EquipeTravail">
           <Key>
@@ -433,6 +505,7 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
           <NavigationProperty Name="Connexion" Relationship="Self.FK_Connexion_Societe" FromRole="Societe" ToRole="Connexion" />
           <NavigationProperty Name="Employes" Relationship="Self.FK_Employes_Societe" FromRole="Societe" ToRole="Employes" />
           <NavigationProperty Name="EquipeTravail" Relationship="Self.FK_EquipeTravail_Societe" FromRole="Societe" ToRole="EquipeTravail" />
+          <NavigationProperty Name="SiteTravail" Relationship="PointisModel.FK_SiteTravail_Societe" FromRole="Societe" ToRole="SiteTravail" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -612,7 +685,81 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
             <End Role="Societe" EntitySet="Societe" />
             <End Role="EquipeTravail" EntitySet="EquipeTravail" />
           </AssociationSet>
+          <EntitySet Name="SiteTravail" EntityType="PointisModel.SiteTravail" />
+          <AssociationSet Name="FK_SiteTravail_Societe" Association="PointisModel.FK_SiteTravail_Societe">
+            <End Role="Societe" EntitySet="Societe" />
+            <End Role="SiteTravail" EntitySet="SiteTravail" />
+          </AssociationSet>
+          <EntitySet Name="Responsable" EntityType="PointisModel.Responsable" />
+          <AssociationSet Name="FK_Responsable_Employes" Association="PointisModel.FK_Responsable_Employes">
+            <End Role="Employes" EntitySet="Employes" />
+            <End Role="Responsable" EntitySet="Responsable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Responsable_Employes1" Association="PointisModel.FK_Responsable_Employes1">
+            <End Role="Employes" EntitySet="Employes" />
+            <End Role="Responsable" EntitySet="Responsable" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="SiteTravail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SocieteID" Type="Int64" Nullable="false" />
+          <Property Name="Commune" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Ville" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CoordonnerGPS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Quartier" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Pays" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Libelle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Societe" Relationship="PointisModel.FK_SiteTravail_Societe" FromRole="SiteTravail" ToRole="Societe" />
+        </EntityType>
+        <Association Name="FK_SiteTravail_Societe">
+          <End Type="PointisModel.Societe" Role="Societe" Multiplicity="1" />
+          <End Type="PointisModel.SiteTravail" Role="SiteTravail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Societe">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SiteTravail">
+              <PropertyRef Name="SocieteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Responsable">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="EmployesID" Type="Int64" Nullable="false" />
+          <Property Name="ResponsableID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Employes" Relationship="PointisModel.FK_Responsable_Employes" FromRole="Responsable" ToRole="Employes" />
+          <NavigationProperty Name="Employes1" Relationship="PointisModel.FK_Responsable_Employes1" FromRole="Responsable" ToRole="Employes" />
+        </EntityType>
+        <Association Name="FK_Responsable_Employes">
+          <End Type="PointisModel.Employes" Role="Employes" Multiplicity="1" />
+          <End Type="PointisModel.Responsable" Role="Responsable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employes">
+              <PropertyRef Name="EmployeID" />
+            </Principal>
+            <Dependent Role="Responsable">
+              <PropertyRef Name="ResponsableID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Responsable_Employes1">
+          <End Type="PointisModel.Employes" Role="Employes" Multiplicity="1" />
+          <End Type="PointisModel.Responsable" Role="Responsable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employes">
+              <PropertyRef Name="EmployeID" />
+            </Principal>
+            <Dependent Role="Responsable">
+              <PropertyRef Name="EmployesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -780,6 +927,29 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
                 <ScalarProperty Name="EquipeHeureFin" ColumnName="EquipeHeureFin" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SiteTravail">
+            <EntityTypeMapping TypeName="PointisModel.SiteTravail">
+              <MappingFragment StoreEntitySet="SiteTravail">
+                <ScalarProperty Name="Libelle" ColumnName="Libelle" />
+                <ScalarProperty Name="Pays" ColumnName="Pays" />
+                <ScalarProperty Name="Quartier" ColumnName="Quartier" />
+                <ScalarProperty Name="CoordonnerGPS" ColumnName="CoordonnerGPS" />
+                <ScalarProperty Name="Ville" ColumnName="Ville" />
+                <ScalarProperty Name="Commune" ColumnName="Commune" />
+                <ScalarProperty Name="SocieteID" ColumnName="SocieteID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Responsable">
+            <EntityTypeMapping TypeName="PointisModel.Responsable">
+              <MappingFragment StoreEntitySet="Responsable">
+                <ScalarProperty Name="ResponsableID" ColumnName="ResponsableID" />
+                <ScalarProperty Name="EmployesID" ColumnName="EmployesID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

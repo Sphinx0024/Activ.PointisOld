@@ -337,7 +337,8 @@
       const space = " ";
       //const defaultMDPConst = password;
       const idConConst = idconnex;
-      const lien = "http://localhost:8080/POINTISDEMO/PointisWeb/emailverifie.html?mail=" + emailAdConst + "&id=" + idConConst;
+      const lien = "https://pointis.activactions.net/emailverifie.html?mail=" + emailAdConst + "&id=" + idConConst;
+      //const lien = "http://localhost:8080/POINTISDEMO/PointisWeb/emailverifie.html?mail=" + emailAdConst + "&id=" + idConConst;
       //format text 
       let ebody = `
                 <p>Cher, </p> ${preAdConst} ${space} ${nomAdConst}

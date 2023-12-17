@@ -17,7 +17,9 @@ namespace Activ.Pointis.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employes()
         {
-            this.Pointage = new List<Pointage>();
+            this.Pointage = new HashSet<Pointage>();
+            this.Responsable1 = new HashSet<Responsable>();
+            this.Responsable2 = new HashSet<Responsable>();
         }
     
         public long EmployeID { get; set; }
@@ -33,9 +35,13 @@ namespace Activ.Pointis.Data
         public string Password { get; set; }
         public string Responsable { get; set; }
     
-        public EquipeTravail EquipeTravail { get; set; }
-        public Societe Societe { get; set; }
+        public virtual EquipeTravail EquipeTravail { get; set; }
+        public virtual Societe Societe { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public ICollection<Pointage> Pointage { get; set; }
+        public virtual ICollection<Pointage> Pointage { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Responsable> Responsable1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Responsable> Responsable2 { get; set; }
     }
 }

@@ -12,44 +12,46 @@ using System.Text;
 using System.Web.Http;
 using System.Web.UI.WebControls;
 using System.Web.UI;
+using System.Web.Http.Cors;
 
 namespace Activ.Pointis.WebAPI.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/Connexion")]
     public class ConnexionController : ApiController
     {
         //[HttpPost]
         //[Route("connexion")]
        
-        public IHttpActionResult Connexion(Connexion connexion)
-        {
-            // validate user credentials
-            if (ConnexionModel.IsValidUser(connexion.Login, connexion.Password))
-            {
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.UTF8.GetBytes("Activ.Pointis.WebAPI");
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new Claim[]
-                    {
-                    new Claim(ClaimTypes.Name, connexion.Login)
-                    }),
-                    Expires = DateTime.UtcNow.AddDays(7),
-                    SigningCredentials = new SigningCredentials(
-                        new SymmetricSecurityKey(key),
-                        SecurityAlgorithms.HmacSha256Signature)
-                };
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-                var tokenString = tokenHandler.WriteToken(token);
+        //public IHttpActionResult Connexion(Connexion connexion)
+        //{
+        //    // validate user credentials
+        //    if (ConnexionModel.IsValidUser(connexion.Login, connexion.Password))
+        //    {
+        //        var tokenHandler = new JwtSecurityTokenHandler();
+        //        var key = Encoding.UTF8.GetBytes("Activ.Pointis.WebAPI");
+        //        var tokenDescriptor = new SecurityTokenDescriptor
+        //        {
+        //            Subject = new ClaimsIdentity(new Claim[]
+        //            {
+        //            new Claim(ClaimTypes.Name, connexion.Login)
+        //            }),
+        //            Expires = DateTime.UtcNow.AddDays(7),
+        //            SigningCredentials = new SigningCredentials(
+        //                new SymmetricSecurityKey(key),
+        //                SecurityAlgorithms.HmacSha256Signature)
+        //        };
+        //        var token = tokenHandler.CreateToken(tokenDescriptor);
+        //        var tokenString = tokenHandler.WriteToken(token);
 
-                // return the JWT token as a response
-                return Ok(new { Token = tokenString });
-            }
-            else
-            {
-                return Unauthorized();
-            }
-        }
+        //        // return the JWT token as a response
+        //        return Ok(new { Token = tokenString });
+        //    }
+        //    else
+        //    {
+        //        return Unauthorized();
+        //    }
+        //}
 
         // GET: api/Pointage
         [HttpGet]
