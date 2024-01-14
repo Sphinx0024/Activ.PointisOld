@@ -17,10 +17,10 @@ namespace Activ.Pointis.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Societe()
         {
-            this.Connexion = new HashSet<Connexion>();
-            this.Employes = new HashSet<Employes>();
-            this.EquipeTravail = new HashSet<EquipeTravail>();
-            this.SiteTravail = new HashSet<SiteTravail>();
+            this.Connexion = new List<Connexion>();
+            this.Employes = new List<Employes>();
+            this.EquipeTravail = new List<EquipeTravail>();
+            this.SiteTravail = new List<SiteTravail>();
         }
     
         public long ID { get; set; }
@@ -31,12 +31,12 @@ namespace Activ.Pointis.Data
         public string Localisation { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Connexion> Connexion { get; set; }
+        public ICollection<Connexion> Connexion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employes> Employes { get; set; }
+        public ICollection<Employes> Employes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EquipeTravail> EquipeTravail { get; set; }
+        public ICollection<EquipeTravail> EquipeTravail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SiteTravail> SiteTravail { get; set; }
+        public ICollection<SiteTravail> SiteTravail { get; set; }
     }
 }

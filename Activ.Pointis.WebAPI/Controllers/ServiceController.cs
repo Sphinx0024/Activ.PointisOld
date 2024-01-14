@@ -33,7 +33,7 @@ namespace Activ.Pointis.WebAPI.Controllers
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            PointageModel.GetAbsenceJour(id);
+            //PointageModel.GetAbsenceJour(id);
 
             // Mettez ici le code de l'action que vous souhaitez exécuter
             Console.WriteLine("Action exécutée à l'heure spécifiée !");

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\source\\repos\\Pointis\\Activ.Pointis.Android.PersonnelUI\\Activ.Pointis.Android.PersonnelUI.csproj": {}
+    "D:\\source\\repos\\VS\\Activ.PointisOld\\Activ.Pointis.Android.PersonnelUI\\Activ.Pointis.Android.PersonnelUI.csproj": {}
   },
   "projects": {
-    "D:\\source\\repos\\Pointis\\Activ.Pointis.Android.PersonnelUI\\Activ.Pointis.Android.PersonnelUI.csproj": {
+    "D:\\source\\repos\\VS\\Activ.PointisOld\\Activ.Pointis.Android.PersonnelUI\\Activ.Pointis.Android.PersonnelUI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\source\\repos\\Pointis\\Activ.Pointis.Android.PersonnelUI\\Activ.Pointis.Android.PersonnelUI.csproj",
+        "projectUniqueName": "D:\\source\\repos\\VS\\Activ.PointisOld\\Activ.Pointis.Android.PersonnelUI\\Activ.Pointis.Android.PersonnelUI.csproj",
         "projectName": "Activ.Pointis.Android.PersonnelUI",
-        "projectPath": "D:\\source\\repos\\Pointis\\Activ.Pointis.Android.PersonnelUI\\Activ.Pointis.Android.PersonnelUI.csproj",
+        "projectPath": "D:\\source\\repos\\VS\\Activ.PointisOld\\Activ.Pointis.Android.PersonnelUI\\Activ.Pointis.Android.PersonnelUI.csproj",
         "packagesPath": "C:\\Users\\activ\\.nuget\\packages\\",
-        "outputPath": "D:\\source\\repos\\Pointis\\Activ.Pointis.Android.PersonnelUI\\obj\\",
+        "outputPath": "D:\\source\\repos\\VS\\Activ.PointisOld\\Activ.Pointis.Android.PersonnelUI\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [

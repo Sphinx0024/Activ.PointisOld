@@ -51,12 +51,13 @@ public partial class AccueilPage : ContentPage, INotifyPropertyChanged
     {
 		string passe = Password.Text;
 		string npasse = PasswordN.Text;
-		string cpasse = PasswordC.Text;
-        long id = LoginPage.identsociete;
+		string cpasse = PasswordC.Text; 
+        //long id = LoginPage.identsociete;
+        long id = LoginPage.identconnexion;
 
-        
 
-		if (npasse == cpasse)
+
+        if (npasse == cpasse)
 		{
             Password password = new Password()
             {

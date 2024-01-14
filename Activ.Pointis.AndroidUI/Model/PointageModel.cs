@@ -19,5 +19,9 @@ namespace ProjetScan.Model
         public string longitude_sortie { get; set; }
         public string latitude_entree { get; set; }
         public string latitude_sortie { get; set; }
+        public string support { get; set; }
+        public string userPointage { get; set; }
+        public string token { get; set; }
+        public Nullable<long> Statut { get; set; }
     }
 }

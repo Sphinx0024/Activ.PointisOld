@@ -21,6 +21,26 @@ namespace Activ.Pointis.WebAPI.Models
             }
         }
 
+        public static string afficherParMail(long id, string mail)
+        {
+            using (PointisEntities _db = new PointisEntities())
+            {
+                string nom = "";
+                var donnees = (from p in _db.Employes
+                               where p.SocieteID == id && p.Email== mail select p).FirstOrDefault();
+                if(donnees != null)
+                {
+                    nom += donnees.Prenom +" "+ donnees.Nom;
+                    return nom;
+                }
+                else
+                {
+                    return nom;
+                }
+                
+            }
+        }
+
         public static List<Employes> AfficherUnSeul(long id)
         {
             using (PointisEntities _db = new PointisEntities())
@@ -58,8 +78,6 @@ namespace Activ.Pointis.WebAPI.Models
                 return donnees;
             }
         }
-
-
 
         // public static long Ajouter(Employes employes)
         public static long Ajouter(Employes employes)
@@ -105,7 +123,6 @@ namespace Activ.Pointis.WebAPI.Models
             }
         }
 
-
         public static void Modifier(long id,Employes employes) {
             using (PointisEntities _db = new PointisEntities())
             {
@@ -126,6 +143,26 @@ namespace Activ.Pointis.WebAPI.Models
                     emp.EquipeID= employes.EquipeID;
                     emp.Password = employes.Password;
                     emp.Responsable = employes.Responsable;
+                }
+                _db.SaveChanges();
+            }
+        }
+
+        public static void ModifierToken(long id, Employes employes)
+        {
+            using (PointisEntities _db = new PointisEntities())
+            {
+                List<Employes> donnees = (from p in _db.Employes
+                                          where p.EmployeID == id
+                                          select p).ToList();
+
+                foreach (Employes emp in donnees)
+                {
+                    emp.Token = employes.Token;
+                    emp.UserGenerate = employes.UserGenerate;
+                    emp.DateGenerationBadge = DateTime.Now;
+                    emp.Support = employes.Support;
+
                 }
                 _db.SaveChanges();
             }
@@ -156,7 +193,6 @@ namespace Activ.Pointis.WebAPI.Models
                 _db.SaveChanges();
             }
         }
-
 
         public static void supprimer(long id)
         {

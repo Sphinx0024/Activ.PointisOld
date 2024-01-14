@@ -16,7 +16,7 @@ namespace Activ.Pointis.Data
     {
         public long PointageID { get; set; }
         public System.DateTime Jour { get; set; }
-        public System.DateTime HeureEntree { get; set; }
+        public Nullable<System.DateTime> HeureEntree { get; set; }
         public Nullable<System.DateTime> HeureSortie { get; set; }
         public long EmployesID { get; set; }
         public string Imei_employe_entree { get; set; }
@@ -25,7 +25,12 @@ namespace Activ.Pointis.Data
         public string longitude_sortie { get; set; }
         public string latitude_entree { get; set; }
         public string latitude_sortie { get; set; }
+        public string support { get; set; }
+        public string token { get; set; }
+        public Nullable<long> Statut { get; set; }
+        public string userPointageEntree { get; set; }
+        public string userPointageSortie { get; set; }
     
-        public virtual Employes Employes { get; set; }
+        public Employes Employes { get; set; }
     }
 }

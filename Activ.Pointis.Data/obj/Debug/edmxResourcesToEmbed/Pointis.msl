@@ -29,6 +29,10 @@
     <EntitySetMapping Name="Employes">
       <EntityTypeMapping TypeName="PointisModel.Employes">
         <MappingFragment StoreEntitySet="Employes">
+          <ScalarProperty Name="Support" ColumnName="Support" />
+          <ScalarProperty Name="UserGenerate" ColumnName="UserGenerate" />
+          <ScalarProperty Name="DateGenerationBadge" ColumnName="DateGenerationBadge" />
+          <ScalarProperty Name="Token" ColumnName="Token" />
           <ScalarProperty Name="EmployeID" ColumnName="EmployeID" />
           <ScalarProperty Name="Nom" ColumnName="Nom" />
           <ScalarProperty Name="Prenom" ColumnName="Prenom" />
@@ -73,6 +77,11 @@
     <EntitySetMapping Name="Pointage">
       <EntityTypeMapping TypeName="PointisModel.Pointage">
         <MappingFragment StoreEntitySet="Pointage">
+          <ScalarProperty Name="userPointageSortie" ColumnName="userPointageSortie" />
+          <ScalarProperty Name="userPointageEntree" ColumnName="userPointageEntree" />
+          <ScalarProperty Name="Statut" ColumnName="Statut" />
+          <ScalarProperty Name="token" ColumnName="token" />
+          <ScalarProperty Name="support" ColumnName="support" />
           <ScalarProperty Name="PointageID" ColumnName="PointageID" />
           <ScalarProperty Name="Jour" ColumnName="Jour" />
           <ScalarProperty Name="HeureEntree" ColumnName="HeureEntree" />
@@ -136,6 +145,9 @@
     <EntitySetMapping Name="V_Pointage">
       <EntityTypeMapping TypeName="PointisModel.V_Pointage">
         <MappingFragment StoreEntitySet="V_Pointage">
+          <ScalarProperty Name="token" ColumnName="token" />
+          <ScalarProperty Name="support" ColumnName="support" />
+          <ScalarProperty Name="Statut" ColumnName="Statut" />
           <ScalarProperty Name="EmployeID" ColumnName="EmployeID" />
           <ScalarProperty Name="EmployeNom" ColumnName="EmployeNom" />
           <ScalarProperty Name="EmployePrenom" ColumnName="EmployePrenom" />
@@ -175,6 +187,15 @@
           <ScalarProperty Name="Ville" ColumnName="Ville" />
           <ScalarProperty Name="Commune" ColumnName="Commune" />
           <ScalarProperty Name="SocieteID" ColumnName="SocieteID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Responsable">
+      <EntityTypeMapping TypeName="PointisModel.Responsable">
+        <MappingFragment StoreEntitySet="Responsable">
+          <ScalarProperty Name="ResponsableID" ColumnName="ResponsableID" />
+          <ScalarProperty Name="EmployesID" ColumnName="EmployesID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -74,7 +74,8 @@ public partial class ScanSortiePage : ContentPage
         {
             HeureSortie = DateTime.Now,
             longitude_sortie = "nb014jhgg01hhgff12hgff",
-            latitude_sortie = "nb014jhgg01hhgff12hgff"
+            latitude_sortie = "nb014jhgg01hhgff12hgff",
+            Statut = 2
         };
 
            await Put(i, pointage);

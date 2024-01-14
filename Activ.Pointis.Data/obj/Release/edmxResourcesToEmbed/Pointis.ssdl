@@ -39,6 +39,10 @@
     <Property Name="EquipeID" Type="bigint" Nullable="false" />
     <Property Name="Password" Type="varchar" MaxLength="50" />
     <Property Name="Responsable" Type="varchar" MaxLength="50" />
+    <Property Name="Token" Type="varchar" MaxLength="50" />
+    <Property Name="DateGenerationBadge" Type="datetime" />
+    <Property Name="UserGenerate" Type="datetime" />
+    <Property Name="Support" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="EquipeTravail">
     <Key>
@@ -70,15 +74,28 @@
     </Key>
     <Property Name="PointageID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Jour" Type="date" Nullable="false" />
-    <Property Name="HeureEntree" Type="datetime" Nullable="false" />
+    <Property Name="HeureEntree" Type="datetime" />
     <Property Name="HeureSortie" Type="datetime" />
     <Property Name="EmployesID" Type="bigint" Nullable="false" />
-    <Property Name="Imei_employe_entree" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Imei_employe_entree" Type="varchar" MaxLength="50" />
     <Property Name="Imei_employe_sortie" Type="varchar" MaxLength="50" />
-    <Property Name="longitude_entree" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="longitude_entree" Type="varchar" MaxLength="50" />
     <Property Name="longitude_sortie" Type="varchar" MaxLength="50" />
-    <Property Name="latitude_entree" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="latitude_entree" Type="varchar" MaxLength="50" />
     <Property Name="latitude_sortie" Type="varchar" MaxLength="50" />
+    <Property Name="support" Type="varchar" MaxLength="50" />
+    <Property Name="userPointageEntree" Type="varchar" MaxLength="50" />
+    <Property Name="token" Type="varchar" MaxLength="50" />
+    <Property Name="Statut" Type="bigint" />
+    <Property Name="userPointageSortie" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Responsable">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmployesID" Type="bigint" Nullable="false" />
+    <Property Name="ResponsableID" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="SiteTravail">
     <Key>
@@ -162,11 +179,11 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
       <PropertyRef Name="SocieteEmail" />
       <PropertyRef Name="SocieteTelephone" />
       <PropertyRef Name="PointageID" />
-      <PropertyRef Name="PointageHeureEntree" />
       <PropertyRef Name="EquipeHeureDebut" />
       <PropertyRef Name="EquipeHeureFin" />
       <PropertyRef Name="ID" />
       <PropertyRef Name="Expr1" />
+      <PropertyRef Name="PointageHeureEntree" />
     </Key>
     <Property Name="EmployeID" Type="bigint" Nullable="false" />
     <Property Name="EmployeNom" Type="varchar" MaxLength="50" Nullable="false" />
@@ -194,6 +211,9 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
     <Property Name="EquipeHeureFin" Type="varchar" MaxLength="5" Nullable="false" />
     <Property Name="ID" Type="bigint" Nullable="false" />
     <Property Name="Expr1" Type="bigint" Nullable="false" />
+    <Property Name="Statut" Type="bigint" />
+    <Property Name="support" Type="varchar" MaxLength="50" />
+    <Property Name="token" Type="varchar" MaxLength="50" />
   </EntityType>
   <Association Name="FK_Connexion_Societe">
     <End Role="Societe" Type="Self.Societe" Multiplicity="1" />
@@ -255,6 +275,30 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Responsable_Employes">
+    <End Role="Employes" Type="Self.Employes" Multiplicity="1" />
+    <End Role="Responsable" Type="Self.Responsable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employes">
+        <PropertyRef Name="EmployeID" />
+      </Principal>
+      <Dependent Role="Responsable">
+        <PropertyRef Name="ResponsableID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Responsable_Employes1">
+    <End Role="Employes" Type="Self.Employes" Multiplicity="1" />
+    <End Role="Responsable" Type="Self.Responsable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employes">
+        <PropertyRef Name="EmployeID" />
+      </Principal>
+      <Dependent Role="Responsable">
+        <PropertyRef Name="EmployesID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_SiteTravail_Societe">
     <End Role="Societe" Type="Self.Societe" Multiplicity="1" />
     <End Role="SiteTravail" Type="Self.SiteTravail" Multiplicity="*" />
@@ -274,6 +318,7 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
     <EntitySet Name="EquipeTravail" EntityType="Self.EquipeTravail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Notifications" EntityType="Self.Notifications" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Pointage" EntityType="Self.Pointage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Responsable" EntityType="Self.Responsable" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SiteTravail" EntityType="Self.SiteTravail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Societe" EntityType="Self.Societe" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -325,7 +370,10 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
     [V_Pointage].[EquipeHeureDebut] AS [EquipeHeureDebut], 
     [V_Pointage].[EquipeHeureFin] AS [EquipeHeureFin], 
     [V_Pointage].[ID] AS [ID], 
-    [V_Pointage].[Expr1] AS [Expr1]
+    [V_Pointage].[Expr1] AS [Expr1], 
+    [V_Pointage].[Statut] AS [Statut], 
+    [V_Pointage].[support] AS [support], 
+    [V_Pointage].[token] AS [token]
     FROM [dbo].[V_Pointage] AS [V_Pointage]</DefiningQuery>
     </EntitySet>
     <AssociationSet Name="FK_Connexion_Societe" Association="Self.FK_Connexion_Societe">
@@ -347,6 +395,14 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
     <AssociationSet Name="FK_Pointage_Employes" Association="Self.FK_Pointage_Employes">
       <End Role="Employes" EntitySet="Employes" />
       <End Role="Pointage" EntitySet="Pointage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Responsable_Employes" Association="Self.FK_Responsable_Employes">
+      <End Role="Employes" EntitySet="Employes" />
+      <End Role="Responsable" EntitySet="Responsable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Responsable_Employes1" Association="Self.FK_Responsable_Employes1">
+      <End Role="Employes" EntitySet="Employes" />
+      <End Role="Responsable" EntitySet="Responsable" />
     </AssociationSet>
     <AssociationSet Name="FK_SiteTravail_Societe" Association="Self.FK_SiteTravail_Societe">
       <End Role="Societe" EntitySet="Societe" />

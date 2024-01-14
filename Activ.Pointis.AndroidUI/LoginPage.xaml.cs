@@ -36,7 +36,7 @@ public partial class LoginPage : ContentPage
         }
         else
         {
-            await Application.Current.MainPage.DisplayAlert("Echec", "Le numéro de téléphone est incorrect !", "OK");
+            await Application.Current.MainPage.DisplayAlert("Echec", "Le login ou le mot de passe est incorrect !", "OK");
             Console.WriteLine("Echec de l'ajout: " + response.StatusCode);
 
         }
@@ -65,7 +65,6 @@ public partial class LoginPage : ContentPage
             identsociete = idSociete;
 
             await Shell.Current.GoToAsync("//MainPage");
-
         }
 
         else

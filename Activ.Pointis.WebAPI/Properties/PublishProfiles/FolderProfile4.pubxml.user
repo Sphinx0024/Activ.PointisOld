@@ -5,24 +5,24 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>D:\PointisAPIPUBLIER\15-12-23</_PublishTargetUrl>
-    <History>True|2023-12-15T08:23:38.8398414Z;True|2023-12-15T06:56:11.5016850+00:00;</History>
+    <History>True|2023-12-28T07:48:00.2744699Z;True|2023-12-27T14:31:49.4759637+00:00;True|2023-12-27T09:10:08.5493148+00:00;True|2023-12-27T07:32:32.7344242+00:00;True|2023-12-21T16:15:59.7309658+00:00;True|2023-12-21T14:54:07.9015591+00:00;True|2023-12-19T15:51:40.8585555+00:00;True|2023-12-19T09:04:01.1949482+00:00;True|2023-12-18T11:44:36.0724005+00:00;True|2023-12-18T11:26:08.4528522+00:00;True|2023-12-18T11:11:14.8398633+00:00;True|2023-12-18T09:04:58.6964929+00:00;True|2023-12-15T08:23:38.8398414+00:00;True|2023-12-15T06:56:11.5016850+00:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Activ.Pointis.Data.dll">
-      <publishTime>12/15/2023 08:23:36</publishTime>
+      <publishTime>12/21/2023 14:54:06</publishTime>
     </File>
     <File Include="bin/Activ.Pointis.Data.dll.config">
       <publishTime>06/05/2023 13:50:27</publishTime>
     </File>
     <File Include="bin/Activ.Pointis.Data.pdb">
-      <publishTime>12/15/2023 08:23:36</publishTime>
+      <publishTime>12/21/2023 14:54:06</publishTime>
     </File>
     <File Include="bin/Activ.Pointis.WebAPI.dll">
-      <publishTime>12/15/2023 16:17:21</publishTime>
+      <publishTime>12/28/2023 07:47:58</publishTime>
     </File>
     <File Include="bin/Activ.Pointis.WebAPI.pdb">
-      <publishTime>12/15/2023 16:17:21</publishTime>
+      <publishTime>12/28/2023 07:47:58</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/14/2023 12:38:26</publishTime>
@@ -286,13 +286,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/14/2023 12:38:29</publishTime>
     </File>
     <File Include="DocTemplates/MailTempBody.html">
-      <publishTime>12/13/2023 07:49:14</publishTime>
+      <publishTime>12/28/2023 07:38:16</publishTime>
     </File>
     <File Include="Global.asax">
       <publishTime>04/14/2023 12:38:26</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/15/2023 16:17:59</publishTime>
+      <publishTime>12/27/2023 14:31:48</publishTime>
     </File>
   </ItemGroup>
 </Project>

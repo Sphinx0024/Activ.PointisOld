@@ -10,6 +10,9 @@ namespace Activ.Pointis.WebAPI.Utilities
 {
     public class Mapping
     {
+
+        public static DateTime dateExecutionNotificationJour ;
+
         public static string CORS_Allow = Helper.TraiteListeString(ConfigurationManager.AppSettings["CORS_Allowed"].ToString(), new string[] { ";", "," }).Trim().Replace("#;", ",");
         public static string Url_Client = (ConfigurationManager.AppSettings["Url_Client"] != null ? ConfigurationManager.AppSettings["Url_Client"].ToString() : "");
         public static string Url_Active_Client = (ConfigurationManager.AppSettings["Url_Active_Client"] != null ? ConfigurationManager.AppSettings["Url_Active_Client"].ToString() : "");

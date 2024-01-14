@@ -18,7 +18,7 @@ namespace Activ.Pointis.Data
         public long EmployesID { get; set; }
         public long ResponsableID { get; set; }
     
-        public virtual Employes Employes { get; set; }
-        public virtual Employes Employes1 { get; set; }
+        public  Employes Employes { get; set; }
+        public  Employes Employes1 { get; set; }
     }
 }

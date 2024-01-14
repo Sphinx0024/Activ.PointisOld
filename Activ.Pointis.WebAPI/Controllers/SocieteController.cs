@@ -18,6 +18,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         // GET: api/Societe
         public IEnumerable<Societe> Get()
         {
+            PointageModel.RappelAbsence();
             return SocieteModel.afficher() ;
         }
 
@@ -25,6 +26,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         // GET: api/Societe/5
         public List<Societe> Get(int id)
         {
+            PointageModel.RappelAbsence();
             return SocieteModel.AfficherUnSeul(id);
         }
 
@@ -32,6 +34,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         // POST: api/Societe
         public IHttpActionResult Post([FromBody] Societe societe)
         {
+            PointageModel.RappelAbsence();
             long id = SocieteModel.Ajouter(societe);
             return Ok(id);
         }
@@ -48,7 +51,8 @@ namespace Activ.Pointis.WebAPI.Controllers
         //public IHttpActionResult Inscription(string email,ConnexionClasse connexionClasse)
         public IHttpActionResult Inscription([FromBody] ConnexionClasse connexionClasse)
         {
-           string result =SocieteModel.Inscription(connexionClasse);
+            PointageModel.RappelAbsence();
+            string result =SocieteModel.Inscription(connexionClasse);
             return Ok(result);
         }
 
@@ -57,6 +61,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         // PUT: api/Societe/5
         public void Put(long id, [FromBody] Societe societe)
         {
+            PointageModel.RappelAbsence();
             SocieteModel.Modifier(id, societe);
         }
 
@@ -64,6 +69,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         // DELETE: api/Societe/5
         public void Delete(long id)
         {
+            PointageModel.RappelAbsence();
             SocieteModel.supprimer(id);
         }
     }

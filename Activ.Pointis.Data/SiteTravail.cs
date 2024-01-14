@@ -23,6 +23,6 @@ namespace Activ.Pointis.Data
         public string Pays { get; set; }
         public string Libelle { get; set; }
     
-        public virtual Societe Societe { get; set; }
+        public Societe Societe { get; set; }
     }
 }

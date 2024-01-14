@@ -14,6 +14,7 @@ using System.Web.Http;
 using System.Text;
 using System.Web.Configuration;
 using System.Web.Services.Description;
+using System.Security.Policy;
 
 namespace Activ.Pointis.WebAPI.Models
 {
@@ -78,18 +79,43 @@ namespace Activ.Pointis.WebAPI.Models
                 DateTime now = DateTime.Today;
                 long ident = 0;
 
-                List<V_Pointage> donnees = _db.V_Pointage.Where(d => d.PointageJour == now && d.EmployeID == id).OrderByDescending(d => d.PointageID).ToList();
+                var donnees = _db.V_Pointage.Where(d => d.PointageJour == now && d.EmployeID == id).OrderByDescending(d => d.PointageID).FirstOrDefault();
+                //List<V_Pointage> donnees = _db.V_Pointage.Where(d => d.PointageJour == now && d.EmployeID == id).OrderByDescending(d => d.PointageID).ToList();
+
+                //if (donnees.Count > 0)
+                if (donnees != null)
+                    {
+                    //foreach (var item in donnees)
+                    //{
+                        ident = donnees.PointageID;
+                        //ident = item.PointageID;
+                    //}  
+                }
+                return ident;
+            }
+        }
+
+
+        public static long PointageExistant(long id)
+        {
+            using (PointisEntities _db = new PointisEntities())
+            {
+                DateTime now = DateTime.Today;
+                long ident = 0;
+
+                List<V_Pointage> donnees = _db.V_Pointage.Where(d => d.PointageJour == now && d.EmployeID == id && d.Statut == 1).OrderByDescending(d => d.PointageID).ToList();
 
                 if (donnees.Count > 0)
                 {
                     foreach (var item in donnees)
                     {
                         ident = item.PointageID;
-                    }  
+                    }
                 }
                 return ident;
             }
         }
+
 
         public static List<V_Pointage> Day(long id)
         {
@@ -850,12 +876,36 @@ namespace Activ.Pointis.WebAPI.Models
 
         }
 
+        public static List<Pointage> TodayPointage(long id)
+        {
+            using(PointisEntities pointis = new PointisEntities())
+            {
+                DateTime now = DateTime.Now;
+                DateTime Jour = now.Date;
+                List<Pointage> donnees = (from p in pointis.Pointage where p.Jour == Jour &&  p.HeureEntree != null && p.HeureSortie == null && p.EmployesID == id select p).OrderByDescending(d => d.PointageID).ToList();
+
+                return donnees;
+            }
+        }
+
         public static List<V_Pointage> LastPointage(long id)
         {
             using (PointisEntities _db = new PointisEntities())
             {
                 DateTime now = DateTime.Now;
-                DateTime Jour = now.Date.AddDays(-1);
+                DateTime Jour;
+                DayOfWeek jourSemaine = now.DayOfWeek;
+
+                if (jourSemaine == DayOfWeek.Monday)
+                {
+                    Jour = now.Date.AddDays(-3);
+                }
+
+                else
+                {
+                    Jour = now.Date.AddDays(-1);
+                }
+
                 List<V_Pointage> donnees = (from p in _db.V_Pointage
                                             where p.EmployeID == id && p.PointageJour == Jour && p.PointageHeureSortie == null
                                             orderby p.PointageID descending
@@ -873,9 +923,14 @@ namespace Activ.Pointis.WebAPI.Models
                 List<Employes> donnees = EmployesModel.AfficherUnSeul(id);
 
                 List<V_Pointage> IncompPoint = LastPointage(id);
+                List<Pointage> PointDay = TodayPointage(id);
 
-                    
-                    foreach(Employes emp in donnees) 
+                if(PointDay.Count() == 0)
+                {
+                    CultureInfo cultureFrancaise = new CultureInfo("fr-FR");
+
+
+                    foreach (Employes emp in donnees)
                     {
                         string mail = emp.Email;
                         string nom = emp.Prenom + " " + emp.Nom;
@@ -912,14 +967,16 @@ namespace Activ.Pointis.WebAPI.Models
 
                         List<EquipeTravail> equip = EquipeTravailModel.AfficherUnSeul(idEquip);
 
-                        foreach(EquipeTravail q in equip)
+                        foreach (EquipeTravail q in equip)
                         {
-                            string[] decoupheure  = q.HeureDebutService.Split('h');
+                            string[] decoupheure = q.HeureDebutService.Split('h');
                             string heuredebutstring = decoupheure[0] + ":" + decoupheure[1];
                             var heuredebut = DateTime.Parse(heuredebutstring);
                             heuredebut = heuredebut.AddHours(1);
                             var heure = pointage.HeureEntree;
-                            if (heure.TimeOfDay.CompareTo(heuredebut.TimeOfDay) > 0)
+                            //if (heure!=null && heure.HasValue && heure.TimeOfDay.CompareTo(heuredebut.TimeOfDay) > 0)
+                            //{
+                            if (heure.HasValue && heure.Value.TimeOfDay.CompareTo(heuredebut.TimeOfDay) > 0)
                             {
                                 if (respo != null)
                                 {
@@ -929,12 +986,15 @@ namespace Activ.Pointis.WebAPI.Models
                                     string prenomresp = detailresp[1].Trim();
                                     string telresp = detailresp[2].Trim();
                                     long socID = emp.SocieteID;
+                                    //string heureminute = heure.ToString("HH:mm");
+                                    //heureminute = heureminute.Replace("H", "h");
+                                    //heureminute = heureminute.Replace("m", "mn");
 
                                     List<Employes> donneesResp = EmployesModel.AfficherParDetailResponsable(socID, nomresp, prenomresp, telresp);
                                     foreach (Employes p in donneesResp)
                                     {
                                         string mailres = p.Email;
-                                        string msg = string.Format(Logics.ConstanteNotification.msg_retard_emp, nom, heure.TimeOfDay, heure.Date);
+                                        string msg = string.Format(Logics.ConstanteNotification.msg_retard, nom, DateTime.Today.ToString("dd MMMM yyyy", cultureFrancaise), heure?.ToString("HH'h'mm'mn'"));
                                         Mailling.EnvoyerMailAvecCopie(Mapping.MailConfig, msg, Logics.ConstanteNotification.obj_retard, new List<string>() { mail, mailres }, null);
                                     }
 
@@ -942,7 +1002,7 @@ namespace Activ.Pointis.WebAPI.Models
                                 }
                                 else
                                 {
-                                    string msg = string.Format(Logics.ConstanteNotification.msg_retard_emp, nom, heure.TimeOfDay, heure.Date);
+                                    string msg = string.Format(Logics.ConstanteNotification.msg_retard, nom, DateTime.Today.ToString("dd MMMM yyyy", cultureFrancaise), heure?.ToString("HH:mm"));
                                     Mailling.EnvoyerMailAvecCopie(Mapping.MailConfig, msg, Logics.ConstanteNotification.obj_retard, new List<string>() { mail }, null);
                                 }
                             }
@@ -951,11 +1011,67 @@ namespace Activ.Pointis.WebAPI.Models
 
                     }
 
-                _db.Pointage.Add(pointage);
-                _db.SaveChanges();
+                    _db.Pointage.Add(pointage);
+                    _db.SaveChanges();
+                }
+
+                
             }
 
         }
+
+
+
+        //public static void AjouterAutomatique(Pointage pointage)
+        public static void AjouterAutomatique()
+        {
+            using (PointisEntities _db = new PointisEntities())
+            {
+                DateTime now = DateTime.Now;
+                DateTime Jour = now.Date;
+                var soc = SocieteModel.afficher();
+
+                foreach(var societe in soc)
+                {
+                    //long ident = societe.ID;
+                    //var donnees = (from p in _db.Employes where p.SocieteID == societe.ID select p).ToList();
+                    var donnees = EmployesModel.afficher(societe.ID);
+
+                    foreach (var donne in donnees)
+                    {
+                        Pointage pointage = new Pointage
+                        {
+                            EmployesID = donne.EmployeID,
+                            Jour = Jour,
+                            Statut = 0
+                        };
+
+                        //pointage.EmployesID = donne.EmployeID;
+                        //pointage.Jour = Jour;
+                        //pointage.Statut = 0;
+
+
+
+                    //Pointage pointage1 = new Pointage
+                    //{
+                    //    Jour = Jour,
+                    //    EmployesID = donne.EmployeID,
+                    //    Statut = 0
+                    //};
+
+                    _db.Pointage.Add(pointage);
+                        _db.SaveChanges();
+                    }
+                }
+                
+
+                //_db.Pointage.Add(pointage);
+                //_db.SaveChanges();
+            }
+
+        }
+
+
 
 
         //public static void GetAbsenceJour(long id)
@@ -991,6 +1107,104 @@ namespace Activ.Pointis.WebAPI.Models
         //}
 
 
+        public static List<Employes> RappelPointageSortie(long id)
+        {
+
+            using (PointisEntities _db = new PointisEntities())
+            {
+
+                DateTime now = DateTime.Now;
+                DateTime Jour = now.Date;
+
+                var donnees = (from e in _db.Employes
+                               where _db.Pointage.Any(p => p.EmployesID == e.EmployeID && p.Jour == Jour && p.HeureSortie==null) && e.SocieteID == id
+                               select e).ToList();
+
+                foreach (Employes employes in donnees)
+                {
+                    string mail = employes.Email;
+                    string nom = employes.Prenom + " " + employes.Nom;
+                    //string respo = employes.Responsable;
+                    string msg = string.Format(Logics.ConstanteNotification.msg_pointage, nom);
+                    Mailling.EnvoyerMailAvecCopie(Mapping.MailConfig, msg, Logics.ConstanteNotification.obj_pointage, new List<string>() { mail }, null);
+                }
+
+                return donnees;
+            }
+        }
+
+
+        public static void AddPointage()
+        {
+            using (PointisEntities _db = new PointisEntities())
+            {
+                        DateTime dateExeAujourdui = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 09, 00, 00);
+
+                        if (Mapping.dateExecutionNotificationJour == null || Mapping.dateExecutionNotificationJour > dateExeAujourdui)
+                        {
+                            try
+                            {
+                                PointageModel.AjouterAutomatique();
+                                //emps = PointageModel.GetAbsenceJour(idsoc);
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
+
+                            Mapping.dateExecutionNotificationJour = DateTime.Now;
+                        }
+
+            }
+        }
+
+
+        public static void RappelAbsence()
+        {
+            using(PointisEntities _db = new PointisEntities())
+            {
+                var donnees = (from s in _db.Societe select s).ToList();
+                //IEnumerable<Employes> emps = null;
+                if (donnees.Count > 0)
+                {
+                    foreach(Societe soc in donnees)
+                    {
+                        long idsoc = soc.ID;
+                        DateTime dateExeAujourdui = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 09, 00, 00);
+
+                        if (Mapping.dateExecutionNotificationJour == null || Mapping.dateExecutionNotificationJour > dateExeAujourdui)
+                        {
+                            try
+                            {
+                                PointageModel.GetAbsenceJour(idsoc);
+                                //emps = PointageModel.GetAbsenceJour(idsoc);
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
+
+                            try
+                            {
+                                PointageModel.GetAbsenceJourResponsable(idsoc);
+                                //PointageModel.GetAbsenceJourResponsable(idsoc);
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
+
+                            Mapping.dateExecutionNotificationJour = DateTime.Now;
+                        }
+
+                        //return emps;
+                    }
+                    //return emps;
+                }
+                //return emps;
+
+            }
+        }
 
         public static List<Employes> GetAbsenceJour(long id)
         {
@@ -1000,6 +1214,7 @@ namespace Activ.Pointis.WebAPI.Models
 
                 DateTime now = DateTime.Now;
                 DateTime Jour = now.Date;
+                CultureInfo cultureFrancaise = new CultureInfo("fr-FR");
 
                 var donnees = (from e in _db.Employes
                                where !_db.Pointage.Any(p => p.EmployesID == e.EmployeID && p.Jour == Jour) && e.SocieteID == id
@@ -1033,7 +1248,7 @@ namespace Activ.Pointis.WebAPI.Models
                     //}
                     //else
                     //{
-                    string msg = string.Format(Logics.ConstanteNotification.msg_absence, nom);
+                    string msg = string.Format(Logics.ConstanteNotification.msg_absence, nom, Jour.ToString("dd MMMM yyyy", cultureFrancaise));
                     Mailling.EnvoyerMailAvecCopie(Mapping.MailConfig, msg, Logics.ConstanteNotification.obj_absence, new List<string>() { mail }, null);
                     //}
 
@@ -1053,6 +1268,7 @@ namespace Activ.Pointis.WebAPI.Models
 
                 DateTime now = DateTime.Now;
                 DateTime Jour = now.Date;
+                CultureInfo cultureFrancaise = new CultureInfo("fr-FR");
 
                 var donnees = (from e in _db.Employes
                                where !_db.Pointage.Any(p => p.EmployesID == e.EmployeID && p.Jour == Jour) && e.SocieteID == id
@@ -1072,7 +1288,7 @@ namespace Activ.Pointis.WebAPI.Models
                     string mailres = "";
                     int compter = 0;
 
-                    string msg = string.Format(Logics.ConstanteNotification.msg_absence_responsable, nomresp);
+                    string msg = string.Format(Logics.ConstanteNotification.msg_absence_responsable, nomresp, DateTime.Today.ToString("dd MMMM yyyy", cultureFrancaise));
                     foreach (var employe in responsable.Employes)
                     {
                         long socID = employe.SocieteID;
@@ -1092,17 +1308,472 @@ namespace Activ.Pointis.WebAPI.Models
             }
         }
 
+        public static List<Employes> GetAbsenceJourEmployesParSociete(long id)
+        {
 
-        public static void Modifier(long id, Pointage pointage)
+            using (PointisEntities _db = new PointisEntities())
+            {
+
+                DateTime now = DateTime.Now;
+                DateTime Jour = now.Date;
+
+                var donnees = (from e in _db.Employes
+                               where !_db.Pointage.Any(p => p.EmployesID == e.EmployeID && p.Jour == Jour) && e.SocieteID == id
+                               select e
+                               ).ToList();
+
+                return donnees;
+            }
+        }
+
+
+        //public static List<Employes> GetAbsenceSemaineEmployesParSociete(long id)
+        //{
+
+        //    using (PointisEntities _db = new PointisEntities())
+        //    {
+        //        DateTime dateDuJour = DateTime.Today;
+        //        int delta = DayOfWeek.Monday - dateDuJour.DayOfWeek;
+        //        DateTime debutDeLaSemaine = dateDuJour.AddDays(delta);
+        //        DateTime finDeLaSemaine = debutDeLaSemaine.AddDays(6);
+
+        //        var donnees = (from e in _db.Employes
+        //                       where !_db.Pointage.Any(p => p.EmployesID == e.EmployeID && p.Jour >= debutDeLaSemaine && p.Jour<=finDeLaSemaine) && e.SocieteID == id
+        //                       select e
+        //                       ).ToList();
+
+        //        return donnees;
+        //    }
+        //}
+
+
+        public static List<RespModel> GetAbsenceSemaineEmployesParResponsable(long id)
         {
             using (PointisEntities _db = new PointisEntities())
             {
-                List<Pointage> donnees = (from p in _db.Pointage
-                                          where p.PointageID == id
+                DateTime dateDuJour = DateTime.Today;
+                int delta = DayOfWeek.Monday - dateDuJour.DayOfWeek;
+                DateTime debutDeLaSemaine = dateDuJour.AddDays(delta);
+                CultureInfo cultureFrancaise = new CultureInfo("fr-FR");
+
+                List<RespModel> donnees = new List<RespModel>();
+
+                // Boucle sur chaque jour de la semaine
+                for (DateTime jour = debutDeLaSemaine; jour <= dateDuJour; jour = jour.AddDays(1))
+                {
+                    var employesAbsentsParResponsable = (from e in _db.Employes
+                                                         where !_db.Pointage.Any(p => p.EmployesID == e.EmployeID && p.Jour == jour) && e.SocieteID == id
+                                                         group e by e.Responsable into g
+                                                         select new RespModel
+                                                         {
+                                                             Jour = jour,
+                                                             Responsable = g.Key,
+                                                             Employes = g.ToList()
+                                                         }).ToList();
+
+                    // Ajouter les employés absents au modèle de réponse
+                    donnees.AddRange(employesAbsentsParResponsable);
+                }
+
+                //for(DateTime jours = debutDeLaSemaine; jours <= dateDuJour; jours = jours.AddDays(1))
+                //{
+
+                //}
+
+                foreach (var responsable in donnees)
+                {
+                    string[] detailresp = responsable.Responsable.Split('-');
+                    string nomresp = detailresp[0].Trim();
+                    string prenomresp = detailresp[1].Trim();
+                    string telresp = detailresp[2].Trim();
+                    string mailres = "";
+                    int compter = 0;
+
+                    //string jour = responsable.Jour.ToString("dd MMMM yyyy", cultureFrancaise);
+
+                    string msg = string.Format(Logics.ConstanteNotification.msg_absence_semaine_responsable, nomresp, debutDeLaSemaine.ToString("dd MMMM yyyy", cultureFrancaise), DateTime.Today.ToString("dd MMMM yyyy", cultureFrancaise));
+
+                    DateTime joursem = responsable.Jour;
+                    if(joursem.Date <= dateDuJour.Date)
+                    {
+                        msg += string.Format("\n**Le {0} :**\n", joursem.ToString("dd MMMM yyyy", cultureFrancaise));
+                        foreach (var employe in responsable.Employes)
+                        {
+
+                            long socID = employe.SocieteID;
+                            List<Employes> donneesResp = EmployesModel.AfficherParDetailResponsable(socID, nomresp, prenomresp, telresp);
+
+                            foreach (Employes p in donneesResp)
+                            {
+                                mailres = p.Email;
+                                compter++;
+                                msg += string.Format("{0}- {1} {2} {3}<br/>", compter, employe.Matricule, employe.Prenom, employe.Nom);
+
+                                //msg += string.Format("- {0} {1} {2}<br/>", employe.Matricule, employe.Prenom, employe.Nom);
+                            }
+                        }
+
+                    }
+                    Mailling.EnvoyerMailAvecCopie(Mapping.MailConfig, msg, Logics.ConstanteNotification.obj_absence, new List<string>() { mailres }, null);
+
+
+                    //foreach (var employe in responsable.Employes)
+                    //{
+
+                    //    long socID = employe.SocieteID;
+                    //    List<Employes> donneesResp = EmployesModel.AfficherParDetailResponsable(socID, nomresp, prenomresp, telresp);
+
+                    //    foreach (Employes p in donneesResp)
+                    //    {
+                    //        mailres = p.Email;
+                    //        compter++;
+                    //        msg += string.Format("{0}- {1} {2} {3}<br/>", compter, employe.Matricule, employe.Prenom, employe.Nom);
+
+                    //        //msg += string.Format("- {0} {1} {2}<br/>", employe.Matricule, employe.Prenom, employe.Nom);
+                    //    }
+                    //}
+                    //Mailling.EnvoyerMailAvecCopie(Mapping.MailConfig, msg, Logics.ConstanteNotification.obj_absence, new List<string>() { mailres }, null);
+
+                }
+
+                return donnees;
+            }
+        }
+
+
+        public static List<RespModel> GetAbsenceSemaineEmployesParSociete(long id)
+        {
+            using (PointisEntities _db = new PointisEntities())
+            {
+                DateTime dateDuJour = DateTime.Today;
+                int delta = DayOfWeek.Monday - dateDuJour.DayOfWeek;
+                DateTime debutDeLaSemaine = dateDuJour.AddDays(delta);
+
+                List<RespModel> donnees = new List<RespModel>();
+
+                // Boucle sur chaque jour de la semaine
+                for (DateTime jour = debutDeLaSemaine; jour <= dateDuJour; jour = jour.AddDays(1))
+                {
+
+                    //Récupérer les employés dont le pointage est null pour le jour actuel
+                    var employesAbsents = (from e in _db.Employes
+                                           where !_db.Pointage.Any(p => p.EmployesID == e.EmployeID && p.Jour == jour) && e.SocieteID == id
+                                           select e).ToList();
+
+                    // Ajouter les employés absents au modèle de réponse
+                    donnees.Add(new RespModel
+                    {
+                        Jour = jour,
+                        Employes = employesAbsents
+                    });
+                }
+
+                return donnees;
+            }
+        }
+
+
+
+        //public static List<RespModel> GetAbsenceSemaineEmployesParSociete(long id)
+        //{
+
+        //    using (PointisEntities _db = new PointisEntities())
+        //    {
+        //        DateTime dateDuJour = DateTime.Today;
+        //        int delta = DayOfWeek.Monday - dateDuJour.DayOfWeek;
+        //        DateTime debutDeLaSemaine = dateDuJour.AddDays(delta);
+        //        //DateTime finDeLaSemaine = debutDeLaSemaine.AddDays(6);
+
+        //        var donnees = (from e in _db.Employes
+        //                       where !_db.Pointage.Any(p => p.EmployesID == e.EmployeID && p.Jour >= debutDeLaSemaine && p.Jour <= dateDuJour) && e.SocieteID == id
+        //                       join p in _db.Pointage on e.EmployeID equals p.EmployesID into pointages
+        //                       from pt in pointages.DefaultIfEmpty()
+        //                       group new { e, pt } by pt.Jour into g
+        //                       select new RespModel
+        //                       {
+        //                           Jour = g.Key,
+        //                           Employes = g.Select(x => x.e).ToList()
+        //                       }).ToList();
+
+
+        //        return donnees;
+        //    }
+        //}
+
+
+
+        //public static List<RespModel> GetAbsenceSemaineEmployesParSociete(long id)
+        //{
+        //    using (PointisEntities _db = new PointisEntities())
+        //    {
+        //        DateTime dateDuJour = DateTime.Today;
+        //        int delta = DayOfWeek.Monday - dateDuJour.DayOfWeek;
+        //        DateTime debutDeLaSemaine = dateDuJour.AddDays(delta);
+
+        //        var donnees = (from e in _db.Employes
+        //                       where !_db.Pointage.Any(p => p.EmployesID == e.EmployeID && p.Jour >= debutDeLaSemaine.Date && p.Jour <= dateDuJour.Date) && e.SocieteID == id
+        //                       join p in _db.Pointage on e.EmployeID equals p.EmployesID into pointages
+        //                       from pt in pointages.DefaultIfEmpty()
+        //                       group new { e, pt } by new { e.Responsable, pt.Jour } into g
+        //                       select new RespModel
+        //                       {
+        //                           Jour = g.Key.Jour,
+        //                           Responsable = g.Key.Responsable,
+        //                           Employes = g.Select(x => x.e).ToList()
+        //                       }).ToList();
+
+        //        return donnees;
+        //    }
+        //}
+
+
+        public static List<Employes> GetAbsenceMoisEmployesParSociete(long id)
+        {
+
+            using (PointisEntities _db = new PointisEntities())
+            {
+
+                DateTime now = DateTime.Now;
+                DateTime Jour = now.Date;
+
+                var donnees = (from e in _db.Employes
+                               where !_db.Pointage.Any(p => p.EmployesID == e.EmployeID && p.Jour == Jour) && e.SocieteID == id
+                               select e
+                               ).ToList();
+
+                return donnees;
+            }
+        }
+
+        public static List<Employes> GetAbsenceTrimestreEmployesParSociete(long id)
+        {
+
+            using (PointisEntities _db = new PointisEntities())
+            {
+
+                DateTime now = DateTime.Now;
+                DateTime Jour = now.Date;
+
+                var donnees = (from e in _db.Employes
+                               where !_db.Pointage.Any(p => p.EmployesID == e.EmployeID && p.Jour == Jour) && e.SocieteID == id
+                               select e
+                               ).ToList();
+
+                return donnees;
+            }
+        }
+
+        public static List<Employes> GetAbsenceAnneeEmployesParSociete(long id)
+        {
+
+            using (PointisEntities _db = new PointisEntities())
+            {
+
+                DateTime now = DateTime.Now;
+                DateTime Jour = now.Date;
+
+                var donnees = (from e in _db.Employes
+                               where !_db.Pointage.Any(p => p.EmployesID == e.EmployeID && p.Jour == Jour) && e.SocieteID == id
+                               select e
+                               ).ToList();
+
+                return donnees;
+            }
+        }
+
+
+        public static void ModifierEntrer(long ident, Pointage pointage)
+        {
+            using (PointisEntities _db = new PointisEntities())
+            {
+                List<Pointage> donnees1 = (from p in _db.Pointage
+                                           where p.PointageID == ident && p.Statut == 0
+                                           select p).ToList();
+                if (donnees1.Count() > 0)
+                {
+                    foreach (Pointage point in donnees1)
+                    {
+
+                        long id = pointage.EmployesID;
+                        List<Employes> donnees = EmployesModel.AfficherUnSeul(id);
+
+                        List<V_Pointage> IncompPoint = LastPointage(id);
+                        CultureInfo cultureFrancaise = new CultureInfo("fr-FR");
+
+
+                        foreach (Employes emp in donnees)
+                        {
+                            string mail = emp.Email;
+                            string nom = emp.Prenom + " " + emp.Nom;
+                            string respo = emp.Responsable;
+                            long idEquip = emp.EquipeID;
+
+                            if (IncompPoint.Count > 0)
+                            {
+                                if (respo != null)
+                                {
+                                    //string nomresp = respo.Substring(0, respo.IndexOf(' '));
+                                    string[] detailresp = respo.Split('-');
+                                    string nomresp = detailresp[0].Trim();
+                                    string prenomresp = detailresp[1].Trim();
+                                    string telresp = detailresp[2].Trim();
+                                    long socID = emp.SocieteID;
+
+                                    List<Employes> donneesResp = EmployesModel.AfficherParDetailResponsable(socID, nomresp, prenomresp, telresp);
+                                    foreach (Employes p in donneesResp)
+                                    {
+                                        string mailres = p.Email;
+                                        string msg = string.Format(Logics.ConstanteNotification.msg_fraude_emp, nom);
+                                        Mailling.EnvoyerMailAvecCopie(Mapping.MailConfig, msg, Logics.ConstanteNotification.obj_fraude, new List<string>() { mail, mailres }, null);
+                                    }
+
+                                }
+                                else
+                                {
+                                    string msg = string.Format(Logics.ConstanteNotification.msg_fraude_emp, nom);
+                                    Mailling.EnvoyerMailAvecCopie(Mapping.MailConfig, msg, Logics.ConstanteNotification.obj_fraude, new List<string>() { mail }, null);
+                                }
+                            }
+
+                            List<EquipeTravail> equip = EquipeTravailModel.AfficherUnSeul(idEquip);
+
+                            foreach (EquipeTravail q in equip)
+                            {
+                                string[] decoupheure = q.HeureDebutService.Split('h');
+                                string heuredebutstring = decoupheure[0] + ":" + decoupheure[1];
+                                var heuredebut = DateTime.Parse(heuredebutstring);
+                                heuredebut = heuredebut.AddHours(1);
+                                var heure = pointage.HeureEntree;
+
+                                string[] decoupheuresortie = q.HeureFinService.Split('h');
+                                string heuresortiestring = decoupheuresortie[0] + ":" + decoupheuresortie[1];
+                                var heuresortie = DateTime.Parse(heuresortiestring);
+                                heuresortie = heuresortie.AddHours(2);
+                                var sortie = pointage.HeureSortie;
+                                if (heure.HasValue && heure.Value.TimeOfDay.CompareTo(heuredebut.TimeOfDay) > 0)
+                                {
+                                    if (respo != null)
+                                    {
+                                        string[] detailresp = respo.Split('-');
+                                        string nomresp = detailresp[0].Trim();
+                                        string prenomresp = detailresp[1].Trim();
+                                        string telresp = detailresp[2].Trim();
+                                        long socID = emp.SocieteID;
+
+                                        List<Employes> donneesResp = EmployesModel.AfficherParDetailResponsable(socID, nomresp, prenomresp, telresp);
+                                        foreach (Employes p in donneesResp)
+                                        {
+                                            string mailres = p.Email;
+                                            string msg = string.Format(Logics.ConstanteNotification.msg_retard, nom, DateTime.Today.ToString("dd MMMM yyyy", cultureFrancaise), heure?.ToString("HH'h'mm'mn'"));
+                                            Mailling.EnvoyerMailAvecCopie(Mapping.MailConfig, msg, Logics.ConstanteNotification.obj_retard, new List<string>() { mail, mailres }, null);
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        string msg = string.Format(Logics.ConstanteNotification.msg_retard, nom, DateTime.Today.ToString("dd MMMM yyyy", cultureFrancaise), heure?.ToString("HH:mm"));
+                                        Mailling.EnvoyerMailAvecCopie(Mapping.MailConfig, msg, Logics.ConstanteNotification.obj_retard, new List<string>() { mail }, null);
+                                    }
+                                }
+
+                            }
+
+                        }
+
+
+                        point.Jour = point.Jour;
+                        point.HeureEntree = point.HeureEntree;
+                        point.EmployesID = point.EmployesID;
+                        point.Imei_employe_entree = point.Imei_employe_entree;
+                        point.latitude_entree = point.latitude_entree;
+                        point.longitude_entree = point.longitude_entree;
+                        point.support = pointage.support;
+                        point.userPointageEntree = point.userPointageEntree;
+                        point.token = pointage.token;
+                        point.Statut = pointage.Statut;
+
+
+                        _db.SaveChanges();
+                    }
+
+                }
+
+
+            }
+        }
+
+
+        public static void Modifier(long ident, Pointage pointage)
+        {
+            using (PointisEntities _db = new PointisEntities())
+            {
+                List<Pointage> donnees1 = (from p in _db.Pointage
+                //var point = (from p in _db.Pointage
+                                           where p.PointageID == ident
                                           select p).ToList();
 
-                foreach (Pointage point in donnees)
-                {
+                foreach (Pointage point in donnees1)
+                //if (point != null)
+                    {
+
+                    long id = point.EmployesID;
+                    List<Employes> donnees = EmployesModel.AfficherUnSeul(id);
+
+                    //List<V_Pointage> IncompPoint = LastPointage(id);
+                    CultureInfo cultureFrancaise = new CultureInfo("fr-FR");
+
+
+                    foreach (Employes emp in donnees)
+                    {
+                        string mail = emp.Email;
+                        string nom = emp.Prenom + " " + emp.Nom;
+                        string respo = emp.Responsable;
+                        long idEquip = emp.EquipeID;
+
+
+                        List<EquipeTravail> equip = EquipeTravailModel.AfficherUnSeul(idEquip);
+
+                        foreach (EquipeTravail q in equip)
+                        {
+
+                            string[] decoupheuresortie = q.HeureFinService.Split('h');
+                            string heuresortiestring = decoupheuresortie[0] + ":" + decoupheuresortie[1];
+                            var heuresortie = DateTime.Parse(heuresortiestring);
+                            //heuresortie = heuresortie.AddHours(1);
+                            heuresortie = heuresortie.AddHours(2);
+                            var sortie = pointage.HeureSortie;
+                        
+                                if (sortie.HasValue && sortie.Value.TimeOfDay.CompareTo(heuresortie.TimeOfDay) > 0)
+                                {
+                                    if (respo != null)
+                                    {
+                                        string[] detailresp = respo.Split('-');
+                                        string nomresp = detailresp[0].Trim();
+                                        string prenomresp = detailresp[1].Trim();
+                                        string telresp = detailresp[2].Trim();
+                                        long socID = emp.SocieteID;
+
+                                        List<Employes> donneesResp = EmployesModel.AfficherParDetailResponsable(socID, nomresp, prenomresp, telresp);
+                                        foreach (Employes p in donneesResp)
+                                        {
+                                            string mailres = p.Email;
+                                            string msg = string.Format(Logics.ConstanteNotification.msg_retard_sortie, nom, sortie?.ToString("HH'h'mm'mn'"), "16h30mn");
+                                            Mailling.EnvoyerMailAvecCopie(Mapping.MailConfig, msg, Logics.ConstanteNotification.obj_retard_sortie, new List<string>() { mail, mailres }, null);
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        string msg = string.Format(Logics.ConstanteNotification.msg_retard_sortie, nom, sortie?.ToString("HH'h'mm'mn'"), "16h30mn");
+                                        Mailling.EnvoyerMailAvecCopie(Mapping.MailConfig, msg, Logics.ConstanteNotification.obj_retard_sortie, new List<string>() { mail }, null);
+                                    }
+                                }
+
+                        }
+
+                    }
+
+
                     point.Jour = point.Jour;
                     point.HeureEntree = point.HeureEntree;
                     point.HeureSortie = pointage.HeureSortie;
@@ -1113,7 +1784,11 @@ namespace Activ.Pointis.WebAPI.Models
                     point.latitude_sortie = pointage.latitude_sortie;
                     point.longitude_entree = point.longitude_entree;
                     point.longitude_sortie = pointage.longitude_sortie;
-
+                    point.support = pointage.support;
+                    point.userPointageEntree = point.userPointageEntree;
+                    point.userPointageSortie = pointage.userPointageSortie;
+                    point.token = pointage.token;
+                    point.Statut = pointage.Statut;
 
                     _db.SaveChanges();
                 }

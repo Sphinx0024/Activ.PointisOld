@@ -57,6 +57,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         [HttpGet]
         public IEnumerable<Connexion> Get(long id)
         {
+            PointageModel.RappelAbsence();
             return ConnexionModel.afficher(id);
         }
 
@@ -64,6 +65,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         [HttpGet]
         public IEnumerable<Connexion> GetUn(long id)
         {
+            PointageModel.RappelAbsence();
             return ConnexionModel.AfficherUnSeul(id);
         }
 
@@ -71,16 +73,16 @@ namespace Activ.Pointis.WebAPI.Controllers
         //[Route("connecter")]
         public IHttpActionResult Connecter(ConnexionInfos connexionInfos)
         {
+            PointageModel.RappelAbsence();
             string id = ConnexionModel.Connecter(connexionInfos);
-
             return Ok(id);
         }
 
         [Route("connect/{login}/{passe}")]
         public IHttpActionResult Connect(string login, string passe)
         {
+            PointageModel.RappelAbsence();
             string id = ConnexionModel.Connect(login, passe);
-
             return Ok(id);
         }
 
@@ -88,8 +90,8 @@ namespace Activ.Pointis.WebAPI.Controllers
         [Route("VerifierCompte")]
         public IHttpActionResult VerifierConnexion([FromUri]long id, [FromUri] string email)
         {
+            PointageModel.RappelAbsence();
             bool resp = ConnexionModel.VerifierConnexion(id,email);
-
             return Ok(resp);
         }
 
@@ -106,16 +108,16 @@ namespace Activ.Pointis.WebAPI.Controllers
         //[HttpGet("{name}")]
         public IHttpActionResult verifier(string name)
         {
+            PointageModel.RappelAbsence();
             string verif = ConnexionModel.Verifier(name);
-
             return Ok(verif);
         }
 
         [Route("confirmer/{name}")]
         public IHttpActionResult confirmer(string login, string passe)
         {
+            PointageModel.RappelAbsence();
             long verif = ConnexionModel.Confirmer(login,passe);
-
             return Ok(verif);
         }
 
@@ -123,6 +125,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         [HttpPost]
         public IHttpActionResult Post([FromBody] Connexion connexion)
         {
+            PointageModel.RappelAbsence();
             long id = ConnexionModel.Ajouter(connexion);
             return Ok(id);
         }
@@ -131,6 +134,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         [Route("Add")]
         public IHttpActionResult Add([FromBody] Connexion connexion)
         {
+            PointageModel.RappelAbsence();
             long id = ConnexionModel.Add(connexion);
             return Ok(id);
         }
@@ -139,6 +143,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         [Route("EditPasse/{id}")]
         public IHttpActionResult EditPasse(long id, Password password)
         {
+            PointageModel.RappelAbsence();
             ConnexionModel.ModifierPasse(id,password);
             return Ok();
         }
@@ -147,6 +152,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         //[HttpPut]
         public void Put(long id, [FromBody] Connexion connexion)
         {
+            PointageModel.RappelAbsence();
             ConnexionModel.Modifier(id, connexion);
         }
 
@@ -160,6 +166,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         [HttpDelete]
         public void Delete(long id)
         {
+            PointageModel.RappelAbsence();
             ConnexionModel.supprimer(id);
         }
     }

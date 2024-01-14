@@ -66,7 +66,6 @@
 		<!-- App Icon -->
 
 		<!-- Splash Screen -->
-		<MauiImage Include="Resources\Splash\logopointis.png" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -81,13 +80,15 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\AppIcon\appicon.png" />
+	  <None Remove="Resources\AppIcon\appiconfg.svg" />
 	  <None Remove="Resources\AppIcon\logopointis.png" />
 	  <None Remove="Resources\AppIcon\logopointis.png" />
+	  <None Remove="Resources\Splash\logo.jpg" />
 	  <None Remove="Resources\Splash\splash.png" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiFont Include="Resources\AppIcon\appiconfg.png" />
+	  <MauiFont Include="Resources\AppIcon\appiconfg.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -145,7 +146,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiSplashScreen Include="Resources\Splash\splash.png" />
+	  <MauiSplashScreen Include="Resources\Splash\logo.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiIcon Include="Resources\Splash\splash.png" />
 	</ItemGroup>
 
 </Project>

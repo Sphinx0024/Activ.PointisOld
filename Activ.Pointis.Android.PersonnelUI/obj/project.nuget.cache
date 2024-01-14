@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "iEXzXqvWtM1ETHD2A+SVplB75DhGnflaSO8L4t+zGgwIV/RlAEftPZ10icuQ/NYMs0ZnpNfs5uxQeNx6D1gDSQ==",
+  "dgSpecHash": "uzwVYPD/GQsMH3CNowil09QdVhFwVmD0011OUlugelcDKbE3k1aFu0iHN5UZIyfUHD2OjUhx1q5Ml9qtrY4h+Q==",
   "success": true,
-  "projectFilePath": "D:\\source\\repos\\Pointis\\Activ.Pointis.Android.PersonnelUI\\Activ.Pointis.Android.PersonnelUI.csproj",
+  "projectFilePath": "D:\\source\\repos\\VS\\Activ.PointisOld\\Activ.Pointis.Android.PersonnelUI\\Activ.Pointis.Android.PersonnelUI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\activ\\.nuget\\packages\\googlegson\\2.9.1.1\\googlegson.2.9.1.1.nupkg.sha512",
     "C:\\Users\\activ\\.nuget\\packages\\microsoft.extensions.configuration\\7.0.0\\microsoft.extensions.configuration.7.0.0.nupkg.sha512",

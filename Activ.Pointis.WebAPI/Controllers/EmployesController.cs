@@ -25,6 +25,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         [HttpGet]
         public List<Employes> Get(long id)
         {
+            PointageModel.RappelAbsence();
             return EmployesModel.afficher(id);
         }
 
@@ -33,6 +34,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         [ActionName("GetUn")]
         public List<Employes> GetUn(long id)
         {
+            PointageModel.RappelAbsence();
             return EmployesModel.AfficherUnSeul(id);
         }
 
@@ -41,24 +43,28 @@ namespace Activ.Pointis.WebAPI.Controllers
         [ActionName("GetRespo")]
         public List<Employes> GetParRespo([FromUri] long id, [FromUri] string nom, [FromUri] string prenom)
         {
+            PointageModel.RappelAbsence();
             return EmployesModel.AfficherParResponsable(id,nom,prenom);
         }
 
         [ActionName("GenerateQrcode")]
         public System.Drawing.Image GenerateQrcodeEmploye(Employes employes)
         {
+            PointageModel.RappelAbsence();
             return EmployesModel.GenererQrcode(employes);
         }
 
         [ActionName("Generate")]
         public System.Drawing.Image GenerateQrcode(long id)
         {
+            PointageModel.RappelAbsence();
             return EmployesModel.GenererQrcodeParId(id);
         }
 
         [Route("verifier/{name}")]
         public IHttpActionResult Verifier(string name)
         {
+            PointageModel.RappelAbsence();
             long id = EmployesModel.Verifier(name);
             return Ok(id);
         }
@@ -67,7 +73,8 @@ namespace Activ.Pointis.WebAPI.Controllers
         [HttpPost]
         public IHttpActionResult Post([FromBody]Employes employes)
         {
-           long id =EmployesModel.Ajouter(employes);
+            PointageModel.RappelAbsence();
+            long id =EmployesModel.Ajouter(employes);
            return Ok( id);
         }
 
@@ -75,6 +82,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         [HttpPost]
         public IHttpActionResult Add(long id, [FromBody] Employes employes)
         {
+            PointageModel.RappelAbsence();
             long ret = EmployesModel.AjouterStrict(id,employes);
             return Ok(ret);
         }
@@ -83,13 +91,23 @@ namespace Activ.Pointis.WebAPI.Controllers
         [HttpPut]
         public void Put(long id, [FromBody] Employes employes)
         {
+            PointageModel.RappelAbsence();
             EmployesModel.Modifier(id, employes);
         }
 
         [Route("Passe/{id}")]
         public IHttpActionResult Passe(long id, Employes employes)
         {
+            PointageModel.RappelAbsence();
             EmployesModel.Passe(id, employes);
+            return Ok(id);
+        }
+
+        [Route("ModifierToken/{id}")]
+        public IHttpActionResult ModifierToken(long id, Employes employes)
+        {
+            PointageModel.RappelAbsence();
+            EmployesModel.ModifierToken(id, employes);
             return Ok(id);
         }
 
@@ -97,6 +115,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         [HttpDelete]
         public void Delete(long id)
         {
+            PointageModel.RappelAbsence();
             EmployesModel.supprimer(id);
         }
     }

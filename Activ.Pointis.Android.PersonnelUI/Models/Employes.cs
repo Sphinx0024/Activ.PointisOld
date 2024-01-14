@@ -19,5 +19,9 @@ namespace Activ.Pointis.Android.PersonnelUI.Models
         public string Matricule { get; set; }
         public long EquipeID { get; set; }
         public string Password { get; set; }
+        public string Token { get; set; }
+        public Nullable<System.DateTime> DateGenerationBadge { get; set; }
+        public Nullable<System.DateTime> UserGenerate { get; set; }
+        public string Support { get; set; }
     }
 }

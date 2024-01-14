@@ -1,0 +1,78 @@
+18/12/2023 11:29:22 :: System.Net.Mail.SmtpException: Échec d'envoi du courrier. ---> System.Net.WebException: Impossible de se connecter au serveur distant ---> System.Net.Sockets.SocketException: Une tentative de connexion a échoué car le parti connecté n’a pas répondu convenablement au-delà d’une certaine durée ou une connexion établie a échoué car l’hôte de connexion n’a pas répondu 213.246.45.161:25
+   à System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   à System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- Fin de la trace de la pile d'exception interne ---
+   à System.Net.ServicePoint.GetConnection(PooledStream PooledStream, Object owner, Boolean async, IPAddress& address, Socket& abortSocket, Socket& abortSocket6)
+   à System.Net.PooledStream.Activate(Object owningObject, Boolean async, GeneralAsyncDelegate asyncCallback)
+   à System.Net.ConnectionPool.GetConnection(Object owningObject, GeneralAsyncDelegate asyncCallback, Int32 creationTimeout)
+   à System.Net.Mail.SmtpConnection.GetConnection(ServicePoint servicePoint)
+   à System.Net.Mail.SmtpClient.GetConnection()
+   à System.Net.Mail.SmtpClient.Send(MailMessage message)
+   --- Fin de la trace de la pile d'exception interne ---
+   à System.Net.Mail.SmtpClient.Send(MailMessage message)
+   à Activ.Pointis.WebAPI.Utilities.Mailling.EnvoyerMailAvecCopie(MailConfig Config, String Message, String objet, List`1 Adresse, List`1 CC) dans D:\source\repos\VS\Activ.PointisOld\Activ.Pointis.WebAPI\Utilities\mail\Mailling.cs:ligne 73
+18/12/2023 11:29:44 :: System.Net.Mail.SmtpException: Échec d'envoi du courrier. ---> System.Net.WebException: Impossible de se connecter au serveur distant ---> System.Net.Sockets.SocketException: Une tentative de connexion a échoué car le parti connecté n’a pas répondu convenablement au-delà d’une certaine durée ou une connexion établie a échoué car l’hôte de connexion n’a pas répondu 213.246.45.161:25
+   à System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   à System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- Fin de la trace de la pile d'exception interne ---
+   à System.Net.ServicePoint.GetConnection(PooledStream PooledStream, Object owner, Boolean async, IPAddress& address, Socket& abortSocket, Socket& abortSocket6)
+   à System.Net.PooledStream.Activate(Object owningObject, Boolean async, GeneralAsyncDelegate asyncCallback)
+   à System.Net.ConnectionPool.GetConnection(Object owningObject, GeneralAsyncDelegate asyncCallback, Int32 creationTimeout)
+   à System.Net.Mail.SmtpConnection.GetConnection(ServicePoint servicePoint)
+   à System.Net.Mail.SmtpClient.GetConnection()
+   à System.Net.Mail.SmtpClient.Send(MailMessage message)
+   --- Fin de la trace de la pile d'exception interne ---
+   à System.Net.Mail.SmtpClient.Send(MailMessage message)
+   à Activ.Pointis.WebAPI.Utilities.Mailling.EnvoyerMailAvecCopie(MailConfig Config, String Message, String objet, List`1 Adresse, List`1 CC) dans D:\source\repos\VS\Activ.PointisOld\Activ.Pointis.WebAPI\Utilities\mail\Mailling.cs:ligne 73
+18/12/2023 11:30:07 :: System.Net.Mail.SmtpException: Échec d'envoi du courrier. ---> System.Net.WebException: Impossible de se connecter au serveur distant ---> System.Net.Sockets.SocketException: Une tentative de connexion a échoué car le parti connecté n’a pas répondu convenablement au-delà d’une certaine durée ou une connexion établie a échoué car l’hôte de connexion n’a pas répondu 213.246.45.161:25
+   à System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   à System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- Fin de la trace de la pile d'exception interne ---
+   à System.Net.ServicePoint.GetConnection(PooledStream PooledStream, Object owner, Boolean async, IPAddress& address, Socket& abortSocket, Socket& abortSocket6)
+   à System.Net.PooledStream.Activate(Object owningObject, Boolean async, GeneralAsyncDelegate asyncCallback)
+   à System.Net.ConnectionPool.GetConnection(Object owningObject, GeneralAsyncDelegate asyncCallback, Int32 creationTimeout)
+   à System.Net.Mail.SmtpConnection.GetConnection(ServicePoint servicePoint)
+   à System.Net.Mail.SmtpClient.GetConnection()
+   à System.Net.Mail.SmtpClient.Send(MailMessage message)
+   --- Fin de la trace de la pile d'exception interne ---
+   à System.Net.Mail.SmtpClient.Send(MailMessage message)
+   à Activ.Pointis.WebAPI.Utilities.Mailling.EnvoyerMailAvecCopie(MailConfig Config, String Message, String objet, List`1 Adresse, List`1 CC) dans D:\source\repos\VS\Activ.PointisOld\Activ.Pointis.WebAPI\Utilities\mail\Mailling.cs:ligne 73
+18/12/2023 11:31:27 :: System.Net.Mail.SmtpException: Échec d'envoi du courrier. ---> System.Net.WebException: Impossible de se connecter au serveur distant ---> System.Net.Sockets.SocketException: Une tentative de connexion a échoué car le parti connecté n’a pas répondu convenablement au-delà d’une certaine durée ou une connexion établie a échoué car l’hôte de connexion n’a pas répondu 213.246.45.161:25
+   à System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   à System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- Fin de la trace de la pile d'exception interne ---
+   à System.Net.ServicePoint.GetConnection(PooledStream PooledStream, Object owner, Boolean async, IPAddress& address, Socket& abortSocket, Socket& abortSocket6)
+   à System.Net.PooledStream.Activate(Object owningObject, Boolean async, GeneralAsyncDelegate asyncCallback)
+   à System.Net.ConnectionPool.GetConnection(Object owningObject, GeneralAsyncDelegate asyncCallback, Int32 creationTimeout)
+   à System.Net.Mail.SmtpConnection.GetConnection(ServicePoint servicePoint)
+   à System.Net.Mail.SmtpClient.GetConnection()
+   à System.Net.Mail.SmtpClient.Send(MailMessage message)
+   --- Fin de la trace de la pile d'exception interne ---
+   à System.Net.Mail.SmtpClient.Send(MailMessage message)
+   à Activ.Pointis.WebAPI.Utilities.Mailling.EnvoyerMailAvecCopie(MailConfig Config, String Message, String objet, List`1 Adresse, List`1 CC) dans D:\source\repos\VS\Activ.PointisOld\Activ.Pointis.WebAPI\Utilities\mail\Mailling.cs:ligne 73
+18/12/2023 11:31:49 :: System.Net.Mail.SmtpException: Échec d'envoi du courrier. ---> System.Net.WebException: Impossible de se connecter au serveur distant ---> System.Net.Sockets.SocketException: Une tentative de connexion a échoué car le parti connecté n’a pas répondu convenablement au-delà d’une certaine durée ou une connexion établie a échoué car l’hôte de connexion n’a pas répondu 213.246.45.161:25
+   à System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   à System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- Fin de la trace de la pile d'exception interne ---
+   à System.Net.ServicePoint.GetConnection(PooledStream PooledStream, Object owner, Boolean async, IPAddress& address, Socket& abortSocket, Socket& abortSocket6)
+   à System.Net.PooledStream.Activate(Object owningObject, Boolean async, GeneralAsyncDelegate asyncCallback)
+   à System.Net.ConnectionPool.GetConnection(Object owningObject, GeneralAsyncDelegate asyncCallback, Int32 creationTimeout)
+   à System.Net.Mail.SmtpConnection.GetConnection(ServicePoint servicePoint)
+   à System.Net.Mail.SmtpClient.GetConnection()
+   à System.Net.Mail.SmtpClient.Send(MailMessage message)
+   --- Fin de la trace de la pile d'exception interne ---
+   à System.Net.Mail.SmtpClient.Send(MailMessage message)
+   à Activ.Pointis.WebAPI.Utilities.Mailling.EnvoyerMailAvecCopie(MailConfig Config, String Message, String objet, List`1 Adresse, List`1 CC) dans D:\source\repos\VS\Activ.PointisOld\Activ.Pointis.WebAPI\Utilities\mail\Mailling.cs:ligne 73
+18/12/2023 11:32:14 :: System.Net.Mail.SmtpException: Échec d'envoi du courrier. ---> System.Net.WebException: Impossible de se connecter au serveur distant ---> System.Net.Sockets.SocketException: Une tentative de connexion a échoué car le parti connecté n’a pas répondu convenablement au-delà d’une certaine durée ou une connexion établie a échoué car l’hôte de connexion n’a pas répondu 213.246.45.161:25
+   à System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   à System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- Fin de la trace de la pile d'exception interne ---
+   à System.Net.ServicePoint.GetConnection(PooledStream PooledStream, Object owner, Boolean async, IPAddress& address, Socket& abortSocket, Socket& abortSocket6)
+   à System.Net.PooledStream.Activate(Object owningObject, Boolean async, GeneralAsyncDelegate asyncCallback)
+   à System.Net.ConnectionPool.GetConnection(Object owningObject, GeneralAsyncDelegate asyncCallback, Int32 creationTimeout)
+   à System.Net.Mail.SmtpConnection.GetConnection(ServicePoint servicePoint)
+   à System.Net.Mail.SmtpClient.GetConnection()
+   à System.Net.Mail.SmtpClient.Send(MailMessage message)
+   --- Fin de la trace de la pile d'exception interne ---
+   à System.Net.Mail.SmtpClient.Send(MailMessage message)
+   à Activ.Pointis.WebAPI.Utilities.Mailling.EnvoyerMailAvecCopie(MailConfig Config, String Message, String objet, List`1 Adresse, List`1 CC) dans D:\source\repos\VS\Activ.PointisOld\Activ.Pointis.WebAPI\Utilities\mail\Mailling.cs:ligne 73

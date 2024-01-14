@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Activ.Pointis.WebAPI.Utilities;
 
 namespace Activ.Pointis.WebAPI.Models
 {
@@ -181,6 +182,13 @@ namespace Activ.Pointis.WebAPI.Models
         {
             using (PointisEntities _db = new PointisEntities())
             {
+                
+
+                string nom = EmployesModel.afficherParMail(connexion.SocieteID, connexion.Login);
+
+                string msg = string.Format(Logics.ConstanteNotification.msg_user, nom, connexion.Role, connexion.Login, connexion.Password, Logics.ConstanteNotification.lien_store, Logics.ConstanteNotification.lien_login);
+                Mailling.EnvoyerMailAvecCopie(Mapping.MailConfig, msg, Logics.ConstanteNotification.obj_user, new List<string>() { connexion.Login }, null);
+
                 _db.Connexion.Add(connexion);
                 _db.SaveChanges();
 

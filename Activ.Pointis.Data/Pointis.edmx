@@ -44,6 +44,10 @@
           <Property Name="EquipeID" Type="bigint" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="50" />
           <Property Name="Responsable" Type="varchar" MaxLength="50" />
+          <Property Name="Token" Type="varchar" MaxLength="50" />
+          <Property Name="DateGenerationBadge" Type="datetime" />
+          <Property Name="UserGenerate" Type="datetime" />
+          <Property Name="Support" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="EquipeTravail">
           <Key>
@@ -75,21 +79,26 @@
           </Key>
           <Property Name="PointageID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Jour" Type="date" Nullable="false" />
-          <Property Name="HeureEntree" Type="datetime" Nullable="false" />
+          <Property Name="HeureEntree" Type="datetime" />
           <Property Name="HeureSortie" Type="datetime" />
           <Property Name="EmployesID" Type="bigint" Nullable="false" />
-          <Property Name="Imei_employe_entree" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Imei_employe_entree" Type="varchar" MaxLength="50" />
           <Property Name="Imei_employe_sortie" Type="varchar" MaxLength="50" />
-          <Property Name="longitude_entree" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="longitude_entree" Type="varchar" MaxLength="50" />
           <Property Name="longitude_sortie" Type="varchar" MaxLength="50" />
-          <Property Name="latitude_entree" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="latitude_entree" Type="varchar" MaxLength="50" />
           <Property Name="latitude_sortie" Type="varchar" MaxLength="50" />
+          <Property Name="support" Type="varchar" MaxLength="50" />
+          <Property Name="userPointageEntree" Type="varchar" MaxLength="50" />
+          <Property Name="token" Type="varchar" MaxLength="50" />
+          <Property Name="Statut" Type="bigint" />
+          <Property Name="userPointageSortie" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Responsable">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmployesID" Type="bigint" Nullable="false" />
           <Property Name="ResponsableID" Type="bigint" Nullable="false" />
         </EntityType>
@@ -175,11 +184,11 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
             <PropertyRef Name="SocieteEmail" />
             <PropertyRef Name="SocieteTelephone" />
             <PropertyRef Name="PointageID" />
-            <PropertyRef Name="PointageHeureEntree" />
             <PropertyRef Name="EquipeHeureDebut" />
             <PropertyRef Name="EquipeHeureFin" />
             <PropertyRef Name="ID" />
             <PropertyRef Name="Expr1" />
+            <PropertyRef Name="PointageHeureEntree" />
           </Key>
           <Property Name="EmployeID" Type="bigint" Nullable="false" />
           <Property Name="EmployeNom" Type="varchar" MaxLength="50" Nullable="false" />
@@ -207,6 +216,9 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
           <Property Name="EquipeHeureFin" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="ID" Type="bigint" Nullable="false" />
           <Property Name="Expr1" Type="bigint" Nullable="false" />
+          <Property Name="Statut" Type="bigint" />
+          <Property Name="support" Type="varchar" MaxLength="50" />
+          <Property Name="token" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_Connexion_Societe">
           <End Role="Societe" Type="Self.Societe" Multiplicity="1" />
@@ -363,7 +375,10 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
     [V_Pointage].[EquipeHeureDebut] AS [EquipeHeureDebut], 
     [V_Pointage].[EquipeHeureFin] AS [EquipeHeureFin], 
     [V_Pointage].[ID] AS [ID], 
-    [V_Pointage].[Expr1] AS [Expr1]
+    [V_Pointage].[Expr1] AS [Expr1], 
+    [V_Pointage].[Statut] AS [Statut], 
+    [V_Pointage].[support] AS [support], 
+    [V_Pointage].[token] AS [token]
     FROM [dbo].[V_Pointage] AS [V_Pointage]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Connexion_Societe" Association="Self.FK_Connexion_Societe">
@@ -448,6 +463,10 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
           <NavigationProperty Name="Pointage" Relationship="Self.FK_Pointage_Employes" FromRole="Employes" ToRole="Pointage" />
           <NavigationProperty Name="Responsable1" Relationship="PointisModel.FK_Responsable_Employes" FromRole="Employes" ToRole="Responsable" />
           <NavigationProperty Name="Responsable2" Relationship="PointisModel.FK_Responsable_Employes1" FromRole="Employes" ToRole="Responsable" />
+          <Property Name="Token" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateGenerationBadge" Type="DateTime" Precision="3" />
+          <Property Name="UserGenerate" Type="DateTime" Precision="3" />
+          <Property Name="Support" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="EquipeTravail">
           <Key>
@@ -481,16 +500,21 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
           </Key>
           <Property Name="PointageID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Jour" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="HeureEntree" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="HeureEntree" Type="DateTime" Precision="3" />
           <Property Name="HeureSortie" Type="DateTime" Precision="3" />
           <Property Name="EmployesID" Type="Int64" Nullable="false" />
-          <Property Name="Imei_employe_entree" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Imei_employe_entree" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Imei_employe_sortie" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="longitude_entree" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="longitude_entree" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="longitude_sortie" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="latitude_entree" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="latitude_entree" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="latitude_sortie" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Employes" Relationship="Self.FK_Pointage_Employes" FromRole="Pointage" ToRole="Employes" />
+          <Property Name="support" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="token" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Statut" Type="Int64" />
+          <Property Name="userPointageEntree" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="userPointageSortie" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Societe">
           <Key>
@@ -593,6 +617,9 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
           <Property Name="EquipeHeureFin" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ID" Type="Int64" Nullable="false" />
           <Property Name="Expr1" Type="Int64" Nullable="false" />
+          <Property Name="Statut" Type="Int64" />
+          <Property Name="support" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="token" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_Connexion_Societe">
           <End Role="Societe" Type="Self.Societe" Multiplicity="1" />
@@ -794,6 +821,10 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
           <EntitySetMapping Name="Employes">
             <EntityTypeMapping TypeName="PointisModel.Employes">
               <MappingFragment StoreEntitySet="Employes">
+                <ScalarProperty Name="Support" ColumnName="Support" />
+                <ScalarProperty Name="UserGenerate" ColumnName="UserGenerate" />
+                <ScalarProperty Name="DateGenerationBadge" ColumnName="DateGenerationBadge" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
                 <ScalarProperty Name="EmployeID" ColumnName="EmployeID" />
                 <ScalarProperty Name="Nom" ColumnName="Nom" />
                 <ScalarProperty Name="Prenom" ColumnName="Prenom" />
@@ -838,6 +869,11 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
           <EntitySetMapping Name="Pointage">
             <EntityTypeMapping TypeName="PointisModel.Pointage">
               <MappingFragment StoreEntitySet="Pointage">
+                <ScalarProperty Name="userPointageSortie" ColumnName="userPointageSortie" />
+                <ScalarProperty Name="userPointageEntree" ColumnName="userPointageEntree" />
+                <ScalarProperty Name="Statut" ColumnName="Statut" />
+                <ScalarProperty Name="token" ColumnName="token" />
+                <ScalarProperty Name="support" ColumnName="support" />
                 <ScalarProperty Name="PointageID" ColumnName="PointageID" />
                 <ScalarProperty Name="Jour" ColumnName="Jour" />
                 <ScalarProperty Name="HeureEntree" ColumnName="HeureEntree" />
@@ -901,6 +937,9 @@ avertissement 6002: La table/vue 'Pointis.dbo.V_Pointage' n'a pas de clé primai
           <EntitySetMapping Name="V_Pointage">
             <EntityTypeMapping TypeName="PointisModel.V_Pointage">
               <MappingFragment StoreEntitySet="V_Pointage">
+                <ScalarProperty Name="token" ColumnName="token" />
+                <ScalarProperty Name="support" ColumnName="support" />
+                <ScalarProperty Name="Statut" ColumnName="Statut" />
                 <ScalarProperty Name="EmployeID" ColumnName="EmployeID" />
                 <ScalarProperty Name="EmployeNom" ColumnName="EmployeNom" />
                 <ScalarProperty Name="EmployePrenom" ColumnName="EmployePrenom" />

@@ -18,6 +18,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         // GET: api/Societe
         public IEnumerable<Responsable> Get()
         {
+            PointageModel.RappelAbsence();
             return ResponsableModel.afficher();
         }
 
@@ -25,6 +26,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         // GET: api/Societe/5
         public List<Responsable> Get(int id)
         {
+            PointageModel.RappelAbsence();
             return ResponsableModel.AfficherUnSeul(id);
         }
 
@@ -33,6 +35,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         // GET: api/Societe/5
         public List<Responsable> AfficherParResponsable(int id)
         {
+            PointageModel.RappelAbsence();
             return ResponsableModel.AfficherParResponsable(id);
         }
 
@@ -41,6 +44,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         // GET: api/Societe/5
         public List<Responsable> AfficherParEmploye(int id)
         {
+            PointageModel.RappelAbsence();
             return ResponsableModel.AfficherParEmploye(id);
         }
 
@@ -48,6 +52,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         // POST: api/Societe
         public IHttpActionResult Post([FromBody] Responsable responsable)
         {
+            PointageModel.RappelAbsence();
             long id = ResponsableModel.Ajouter(responsable);
             return Ok(id);
         }
@@ -56,6 +61,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         // PUT: api/Societe/5
         public void Put(long id, [FromBody] Responsable responsable)
         {
+            PointageModel.RappelAbsence();
             ResponsableModel.Modifier(id, responsable);
         }
 
@@ -63,6 +69,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         // DELETE: api/Societe/5
         public void Delete(long id)
         {
+            PointageModel.RappelAbsence();
             ResponsableModel.supprimer(id);
         }
 

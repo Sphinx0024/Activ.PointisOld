@@ -1,1 +1,1 @@
-<Devices><Device id="100383732I002273"><ResultingAbi>arm64-v8a</ResultingAbi><ToolsAbi /><SdkVersion>31</SdkVersion><LongOutput>product:BF7-GL;model:TECNO_BF7;device:TECNO-BF7;transport_id:9</LongOutput></Device></Devices>
+<Devices><Device id="SGKS113B21060200912"><ResultingAbi>armeabi-v7a</ResultingAbi><ToolsAbi /><SdkVersion>27</SdkVersion><LongOutput>product:HWCD103E;model:Hisense_U50_lite;device:HS7731ESP;transport_id:5</LongOutput></Device></Devices>

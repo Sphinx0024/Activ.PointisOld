@@ -17,9 +17,9 @@ namespace Activ.Pointis.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employes()
         {
-            this.Pointage = new HashSet<Pointage>();
-            this.Responsable1 = new HashSet<Responsable>();
-            this.Responsable2 = new HashSet<Responsable>();
+            this.Pointage = new List<Pointage>();
+            this.Responsable1 = new List<Responsable>();
+            this.Responsable2 = new List<Responsable>();
         }
     
         public long EmployeID { get; set; }
@@ -34,14 +34,18 @@ namespace Activ.Pointis.Data
         public long EquipeID { get; set; }
         public string Password { get; set; }
         public string Responsable { get; set; }
+        public string Token { get; set; }
+        public Nullable<System.DateTime> DateGenerationBadge { get; set; }
+        public Nullable<System.DateTime> UserGenerate { get; set; }
+        public string Support { get; set; }
     
-        public virtual EquipeTravail EquipeTravail { get; set; }
-        public virtual Societe Societe { get; set; }
+        public  EquipeTravail EquipeTravail { get; set; }
+        public  Societe Societe { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Pointage> Pointage { get; set; }
+        public  ICollection<Pointage> Pointage { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Responsable> Responsable1 { get; set; }
+        public  ICollection<Responsable> Responsable1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Responsable> Responsable2 { get; set; }
+        public  ICollection<Responsable> Responsable2 { get; set; }
     }
 }

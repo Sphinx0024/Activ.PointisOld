@@ -105,7 +105,7 @@ public partial class MainPage : ContentPage
         foreach(var item in donnees)
         {
             var imei = "354341952889277";
-            var qr= item.EmployeID + "#" + imei + "#" + item.Nom + "#" + item.Prenom + "#" + item.Telephone + "#" + item.Email;
+            var qr= item.EmployeID + "#" + imei + "#" + item.Nom + "#" + item.Prenom + "#" + item.Telephone + "#" + item.Email + "#" + item.Token + "#" + item.Support;
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(qr.ToString(), QRCodeGenerator.ECCLevel.L);
             PngByteQRCode qRCode = new PngByteQRCode(qrCodeData);

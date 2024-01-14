@@ -40,5 +40,8 @@ namespace Activ.Pointis.Data
         public string EquipeHeureFin { get; set; }
         public long ID { get; set; }
         public long Expr1 { get; set; }
+        public Nullable<long> Statut { get; set; }
+        public string support { get; set; }
+        public string token { get; set; }
     }
 }

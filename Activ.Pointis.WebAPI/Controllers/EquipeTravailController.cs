@@ -19,6 +19,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         // GET: api/Societe
         public IEnumerable<EquipeTravail> Get(long id)
         {
+            PointageModel.RappelAbsence();
             return EquipeTravailModel.afficher(id);
         }
 
@@ -27,6 +28,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         // GET: api/Societe/5
         public List<EquipeTravail> GetUn(int id)
         {
+            PointageModel.RappelAbsence();
             return EquipeTravailModel.AfficherUnSeul(id);
         }
 
@@ -35,6 +37,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         // GET: api/Societe/5
         public IHttpActionResult GetID(long id, string entree, string sortie)
         {
+            PointageModel.RappelAbsence();
             long ident = EquipeTravailModel.AfficherId(id,entree,sortie);
             return Ok(ident);
         }
@@ -43,6 +46,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         // POST: api/Societe
         public IHttpActionResult Post([FromBody] EquipeTravail equipeTravail)
         {
+            PointageModel.RappelAbsence();
             long id = EquipeTravailModel.Ajouter(equipeTravail);
             return Ok(id);
         }
@@ -51,6 +55,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         // PUT: api/Societe/5
         public void Put(long id, [FromBody] EquipeTravail equipeTravail)
         {
+            PointageModel.RappelAbsence();
             EquipeTravailModel.Modifier(id, equipeTravail);
         }
 
@@ -58,6 +63,7 @@ namespace Activ.Pointis.WebAPI.Controllers
         // DELETE: api/Societe/5
         public void Delete(long id)
         {
+            PointageModel.RappelAbsence();
             EquipeTravailModel.supprimer(id);
         }
     }
